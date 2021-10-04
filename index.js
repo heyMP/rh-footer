@@ -1,0 +1,1 @@
+export { RhFooter } from './src/RhFooter.js';
