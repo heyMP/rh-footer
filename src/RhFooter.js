@@ -156,6 +156,9 @@ export class RhFooter extends LitElement {
       logoTitle: {
         type: String,
       },
+      links: {
+        type: Array,
+      },
       socialLinks: {
         type: Array,
       },
@@ -167,6 +170,7 @@ export class RhFooter extends LitElement {
     this.logo =
       'https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--on-dark.svg';
     this.logoTitle = 'Red Hat logo';
+    this.links = [];
     this.socialLinks = [];
   }
 
@@ -184,6 +188,9 @@ export class RhFooter extends LitElement {
         break;
       case 'social-links':
         this.inferSocialLinks();
+        break;
+      case 'links':
+        this.inferLinks();
         break;
       default:
         break;
@@ -229,6 +236,17 @@ export class RhFooter extends LitElement {
     this.socialLinks = links;
   }
 
+  inferLinks() {
+    const links = this.shadowRoot
+      .querySelector(`slot[name="links"]`)
+      .assignedNodes()
+      .map(item => ({
+        header: item.querySelector('[data-header]'),
+        ul: item.querySelector('ul'),
+      }));
+    this.links = links;
+  }
+
   renderLogo() {
     return html`
       <div id="logo">
@@ -260,6 +278,21 @@ export class RhFooter extends LitElement {
     `;
   }
 
+  renderLinks(links) {
+    return html`
+      ${links.map(link => this.renderLink(link))}
+    `;
+  }
+
+  renderLink(link) {
+    return html`
+      <div class="footer--list">
+        <h1 class="footer--list-header">${link.header.innerHTML}</h1>
+        ${link.ul}
+      </div>
+    `;
+  }
+
   render() {
     return html`
       <slot name="styles" hidden></slot>
@@ -273,57 +306,14 @@ export class RhFooter extends LitElement {
               ${
                 this.socialLinks ? this.renderSocialLinks(this.socialLinks) : ``
               }
+              <slot name="social-links" hidden></slot>
             </div>
-            <slot name="social-links" hidden></slot>
           </section>
           <section class="footer--body">
             <div class="footer--body-container">
               <div class="footer--list-container">
-                <div class="footer--list">
-                  <p class="footer--list-header">Products</p>
-                  <ul>
-                    <li><a href="#">Red Hat Ansible Automation Platform</a></li>
-                    <li><a href="#">Red Hat Enterprise Linux</a></li>
-                    <li><a href="#">Red Hat OpenShift</a></li>
-                    <li><a href="#">Red Hat OpenShift Container Storage</a></li>
-                    <li><a href="#">Red Hat OpenStack Platform</a></li>
-                    <li><a href="#">See all products</a></li>
-                  </ul>
-                </div>
-                <div class="footer--list">
-                  <p class="footer--list-header">Tools</p>
-                  <ul>
-                    <li><a href="#">My account</a></li>
-                    <li><a href="#">Customer support</a></li>
-                    <li><a href="#">Red Hat OpenShift</a></li>
-                    <li><a href="#">Contact training</a></li>
-                    <li><a href="#">Red Hat OpenStack Platform</a></li>
-                    <li><a href="#">See all products</a></li>
-                  </ul>
-                </div>
-
-                <div class="footer--list">
-                  <p class="footer--list-header">Try, buy, sell</p>
-                  <ul>
-                    <li><a href="#">Red Hat Store</a></li>
-                    <li><a href="#">Red Hat Enterprise Linux</a></li>
-                    <li><a href="#">Red Hat OpenShift</a></li>
-                    <li><a href="#">Contact training</a></li>
-                    <li><a href="#">Red Hat OpenStack Platform</a></li>
-                    <li><a href="#">See all products</a></li>
-                  </ul>
-                </div>
-
-                <div class="footer--list">
-                  <p class="footer--list-header">Communicate</p>
-                  <ul>
-                    <li><a href="#">Contact us</a></li>
-                    <li><a href="#">Feedback</a></li>
-                    <li><a href="#">Social</a></li>
-                    <li><a href="#">Red Hat newsletter</a></li>
-                    <li><a href="#">Email preferences</a></li>
-                  </ul>
-                </div>
+                ${this.links ? html`${this.renderLinks(this.links)}` : ''}
+                <slot name="links" hidden></slot>
               </div>
               <div class="footer--container-item">
                 <div class="footer--description">

@@ -43,6 +43,7 @@
       href="https://static.redhat.com/libs/redhat/redhat-theme/6/advanced-theme.css"
       media="all"
     />
+    <script type="module" src="../rh-footer.js"></script>
     <style>
       body {
         padding: 0;
@@ -51,79 +52,62 @@
     </style>
   </head>
   <body>
-    <div id="demo"></div>
-
-    <script type="module">
-      import { html, render } from 'lit';
-      import '../rh-footer.js';
-
-      const title = 'Hello owc World!';
-      render(
-        html`
-          <rh-footer>
-            <template slot="styles">
-              <style>
-                :host {
-                  color: pink;
-                }
-              </style>
-            </template>
-            <ul slot="social-links">
-              <li data-icon="linkedin"><a href="#">LinkedIn</a></li>
-              <li data-icon="youtube"><a href="#">LinkedIn</a></li>
-              <li data-icon="twitter"><a href="#">LinkedIn</a></li>
-            </ul>
-            <div slot="links">
-              <div class="footer--list">
-                <p class="footer--list-header">Products</p>
-                <ul>
-                  <li><a href="#">Red Hat Ansible Automation Platform</a></li>
-                  <li><a href="#">Red Hat Enterprise Linux</a></li>
-                  <li><a href="#">Red Hat OpenShift</a></li>
-                  <li><a href="#">Red Hat OpenShift Container Storage</a></li>
-                  <li><a href="#">Red Hat OpenStack Platform</a></li>
-                  <li><a href="#">See all products</a></li>
-                </ul>
-              </div>
-              <div class="footer--list">
-                <p class="footer--list-header">Tools</p>
-                <ul>
-                  <li><a href="#">My account</a></li>
-                  <li><a href="#">Customer support</a></li>
-                  <li><a href="#">Red Hat OpenShift</a></li>
-                  <li><a href="#">Contact training</a></li>
-                  <li><a href="#">Red Hat OpenStack Platform</a></li>
-                  <li><a href="#">See all products</a></li>
-                </ul>
-              </div>
-
-              <div class="footer--list">
-                <p class="footer--list-header">Try, buy, sell</p>
-                <ul>
-                  <li><a href="#">Red Hat Store</a></li>
-                  <li><a href="#">Red Hat Enterprise Linux</a></li>
-                  <li><a href="#">Red Hat OpenShift</a></li>
-                  <li><a href="#">Contact training</a></li>
-                  <li><a href="#">Red Hat OpenStack Platform</a></li>
-                  <li><a href="#">See all products</a></li>
-                </ul>
-              </div>
-
-              <div class="footer--list">
-                <p class="footer--list-header">Communicate</p>
-                <ul>
-                  <li><a href="#">Contact us</a></li>
-                  <li><a href="#">Feedback</a></li>
-                  <li><a href="#">Social</a></li>
-                  <li><a href="#">Red Hat newsletter</a></li>
-                  <li><a href="#">Email preferences</a></li>
-                </ul>
-              </div>
-            </div>
-          </rh-footer>
-        `,
-        document.querySelector('#demo')
-      );
-    </script>
+    <rh-footer>
+      <template slot="styles">
+        <style>
+          :host {
+            color: pink;
+          }
+        </style>
+      </template>
+      <ul slot="social-links">
+        <li data-icon="linkedin"><a href="#">LinkedIn</a></li>
+        <li data-icon="youtube"><a href="#">LinkedIn</a></li>
+        <li data-icon="twitter"><a href="#">LinkedIn</a></li>
+      </ul>
+      <div slot="links">
+        <p data-header>Products</p>
+        <ul>
+          <li><a href="#">Red Hat Ansible Automation Platform</a></li>
+          <li><a href="#">Red Hat Enterprise Linux</a></li>
+          <li><a href="#">Red Hat OpenShift</a></li>
+          <li><a href="#">Red Hat OpenShift Container Storage</a></li>
+          <li><a href="#">Red Hat OpenStack Platform</a></li>
+          <li><a href="#">See all products</a></li>
+        </ul>
+      </div>
+      <div slot="links">
+        <p data-header>Tools</p>
+        <ul>
+          <li><a href="#">My account</a></li>
+          <li><a href="#">Customer support</a></li>
+          <li><a href="#">Red Hat OpenShift</a></li>
+          <li><a href="#">Contact training</a></li>
+          <li><a href="#">Red Hat OpenStack Platform</a></li>
+          <li><a href="#">See all products</a></li>
+        </ul>
+      </div>
+      <div slot="links">
+        <p data-header>Try, buy, sell</p>
+        <ul>
+          <li><a href="#">Red Hat Store</a></li>
+          <li><a href="#">Red Hat Enterprise Linux</a></li>
+          <li><a href="#">Red Hat OpenShift</a></li>
+          <li><a href="#">Contact training</a></li>
+          <li><a href="#">Red Hat OpenStack Platform</a></li>
+          <li><a href="#">See all products</a></li>
+        </ul>
+      </div>
+      <div slot="links">
+        <p data-header>Communicate</p>
+        <ul>
+          <li><a href="#">Contact us</a></li>
+          <li><a href="#">Feedback</a></li>
+          <li><a href="#">Social</a></li>
+          <li><a href="#">Red Hat newsletter</a></li>
+          <li><a href="#">Email preferences</a></li>
+        </ul>
+      </div>
+    </rh-footer>
   </body>
 </html>
