@@ -1,13 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en-GB">
   <head>
     <meta charset="utf-8" />
     <link rel="dns-prefetch" href="//static.redhat.com" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://static.redhat.com">
-    <link rel="preload" href="/assets/rh-web-iconfont.woff" as="font" type="font/woff" crossorigin>
-    <link rel="preload" href="/assets/RedHatTextVFModified.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="preload" href="/assets//RedHatDisplayVFModified.woff2" as="font" type="font/woff2" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://static.redhat.com" />
+    <link
+      rel="preload"
+      href="/assets/rh-web-iconfont.woff"
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/RedHatTextVFModified.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets//RedHatDisplayVFModified.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     <script
       nomodule
@@ -19,7 +37,12 @@
       src="https://unpkg.com/@webcomponents/webcomponentsjs@2.5.0/webcomponents-loader.js"
     ></script>
     <!-- Load your application code anytime after loader.js -->
-    <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-theme/6/advanced-theme.css" media="all">
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://static.redhat.com/libs/redhat/redhat-theme/6/advanced-theme.css"
+      media="all"
+    />
     <style>
       body {
         padding: 0;
@@ -27,33 +50,80 @@
       }
     </style>
   </head>
-<body>
-  <div id="demo"></div>
+  <body>
+    <div id="demo"></div>
 
-  <script type="module">
-    import { html, render } from 'lit';
-    import '../rh-footer.js';
+    <script type="module">
+      import { html, render } from 'lit';
+      import '../rh-footer.js';
 
-    const title = 'Hello owc World!';
-    render(
-      html`
-        <rh-footer>
-          <rh-footer-social-icon slot="header__right" icon="linkedin">
-            <a href="#linkedin">linkedin</a>
-          </rh-footer-social-icon>
-          <rh-footer-social-icon slot="header__right" icon="youtube">
-            <a href="#youtube">Youtube</a>
-          </rh-footer-social-icon>
-          <rh-footer-social-icon slot="header__right" icon="facebook">
-            <a href="#facebook">facebook</a>
-          </rh-footer-social-icon>
-          <rh-footer-social-icon slot="header__right" icon="twitter">
-            <a href="#twitter">twitter</a>
-          </rh-footer-social-icon>
-        </rh-footer>
-      `,
-      document.querySelector('#demo')
-    );
-  </script>
-</body>
+      const title = 'Hello owc World!';
+      render(
+        html`
+          <rh-footer>
+            <template slot="styles">
+              <style>
+                :host {
+                  color: pink;
+                }
+              </style>
+            </template>
+            <ul slot="social-links">
+              <li data-icon="linkedin"><a href="#">LinkedIn</a></li>
+              <li data-icon="youtube"><a href="#">LinkedIn</a></li>
+              <li data-icon="twitter"><a href="#">LinkedIn</a></li>
+            </ul>
+            <div slot="links">
+              <div class="footer--list">
+                <p class="footer--list-header">Products</p>
+                <ul>
+                  <li><a href="#">Red Hat Ansible Automation Platform</a></li>
+                  <li><a href="#">Red Hat Enterprise Linux</a></li>
+                  <li><a href="#">Red Hat OpenShift</a></li>
+                  <li><a href="#">Red Hat OpenShift Container Storage</a></li>
+                  <li><a href="#">Red Hat OpenStack Platform</a></li>
+                  <li><a href="#">See all products</a></li>
+                </ul>
+              </div>
+              <div class="footer--list">
+                <p class="footer--list-header">Tools</p>
+                <ul>
+                  <li><a href="#">My account</a></li>
+                  <li><a href="#">Customer support</a></li>
+                  <li><a href="#">Red Hat OpenShift</a></li>
+                  <li><a href="#">Contact training</a></li>
+                  <li><a href="#">Red Hat OpenStack Platform</a></li>
+                  <li><a href="#">See all products</a></li>
+                </ul>
+              </div>
+
+              <div class="footer--list">
+                <p class="footer--list-header">Try, buy, sell</p>
+                <ul>
+                  <li><a href="#">Red Hat Store</a></li>
+                  <li><a href="#">Red Hat Enterprise Linux</a></li>
+                  <li><a href="#">Red Hat OpenShift</a></li>
+                  <li><a href="#">Contact training</a></li>
+                  <li><a href="#">Red Hat OpenStack Platform</a></li>
+                  <li><a href="#">See all products</a></li>
+                </ul>
+              </div>
+
+              <div class="footer--list">
+                <p class="footer--list-header">Communicate</p>
+                <ul>
+                  <li><a href="#">Contact us</a></li>
+                  <li><a href="#">Feedback</a></li>
+                  <li><a href="#">Social</a></li>
+                  <li><a href="#">Red Hat newsletter</a></li>
+                  <li><a href="#">Email preferences</a></li>
+                </ul>
+              </div>
+            </div>
+          </rh-footer>
+        `,
+        document.querySelector('#demo')
+      );
+    </script>
+  </body>
 </html>
