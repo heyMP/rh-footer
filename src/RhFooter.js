@@ -165,7 +165,7 @@ export class RhFooter extends LitElement {
         type: Array,
       },
       description: {
-        type: Array,
+        type: Object,
       },
     };
   }
@@ -177,7 +177,7 @@ export class RhFooter extends LitElement {
     this.logoTitle = 'Red Hat logo';
     this.links = [];
     this.socialLinks = [];
-    this.description = [];
+    this.description = {};
   }
 
   firstUpdated() {
@@ -193,13 +193,13 @@ export class RhFooter extends LitElement {
         this.getAdoptedStyles();
         break;
       case 'social-links':
-        this.inferSocialLinks();
+        this.updateSocialLinks();
         break;
       case 'links':
-        this.inferLinks();
+        this.updateLinks();
         break;
       case 'description':
-        this.inferDescription();
+        this.updateDescription();
         break;
       default:
         break;
@@ -226,7 +226,7 @@ export class RhFooter extends LitElement {
     }
   }
 
-  inferSocialLinks() {
+  updateSocialLinks() {
     const socialLinksUL = [
       ...this.shadowRoot
         .querySelector(`slot[name="social-links"]`)
@@ -245,7 +245,7 @@ export class RhFooter extends LitElement {
     this.socialLinks = links;
   }
 
-  inferLinks() {
+  updateLinks() {
     const links = this.shadowRoot
       .querySelector(`slot[name="links"]`)
       .assignedNodes()
@@ -256,7 +256,7 @@ export class RhFooter extends LitElement {
     this.links = links;
   }
 
-  inferDescription() {
+  updateDescription() {
     const description = this.shadowRoot
       .querySelector(`slot[name="description"]`)
       .assignedNodes()
@@ -269,8 +269,9 @@ export class RhFooter extends LitElement {
         }
         return item;
       });
-    console.log(description);
-    this.description = description;
+    const title = description.find(i => i.hasAttribute('data-title'));
+    const paragraphs = description.filter(i => i !== title);
+    this.description = Object.assign({ title, paragraphs });
   }
 
   renderLogo() {
@@ -319,10 +320,19 @@ export class RhFooter extends LitElement {
     `;
   }
 
-  renderDescription(description) {
+  renderDescription({ title = null, paragraphs = [] }) {
     return html`
-      ${description.map(item => html`${unsafeHTML(item.outerHTML)}`)}
-      <p class="footer--description-paragraph">We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.</p>
+      ${title
+        ? html`${unsafeHTML(title.outerHTML)}`
+        : html` <h3 class="footer--description-title">About Red Hat</h3> `}
+      ${paragraphs.map(paragraph => html`${unsafeHTML(paragraph.outerHTML)}`)}
+      <p class="footer--description-paragraph">
+        We’re the world’s leading provider of enterprise open source
+        solutions―including Linux, cloud, container, and Kubernetes. We deliver
+        hardened solutions that make it easier for enterprises to work across
+        platforms and environments, from the core datacenter to the network
+        edge.
+      </p>
     `;
   }
 
