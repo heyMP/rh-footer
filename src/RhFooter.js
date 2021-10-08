@@ -1,5 +1,6 @@
 import { html, css, LitElement, adoptStyles, unsafeCSS } from 'lit';
 import "@patternfly/pfe-icon/dist/pfe-icon.js";
+import "@patternfly/pfe-cta/dist/pfe-cta.js";
 
 export class RhFooter extends LitElement {
   static get styles() {
@@ -273,7 +274,7 @@ export class RhFooter extends LitElement {
   renderSocialLink(link) {
     return html`
       <a href=${link.href}
-        ><pfe-icon size="2x" icon="web-icon-${link.icon}"></pfe-icon
+        ><pfe-icon size="1x" icon="web-icon-${link.icon}"></pfe-icon
       ></a>
     `;
   }
@@ -359,13 +360,13 @@ export class RhFooter extends LitElement {
                   </ul>
             </div>
           </div>
-            <div class="footer--promo">
-              <img src="http://via.placeholder.com/73x40" />
-            </div>
-    </section>
-    </div>
-    <slot hidden></slot>
-  </footer>
+          <div class="footer--promo">
+            <img src="http://via.placeholder.com/73x40" />
+          </div>
+        </section>
+      </div>
+      <slot hidden></slot>
+    </footer>
     `;
   }
 }
