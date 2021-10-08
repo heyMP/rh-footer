@@ -1,4 +1,5 @@
 import { html, css, LitElement, adoptStyles, unsafeCSS } from 'lit';
+import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import "@patternfly/pfe-icon/dist/pfe-icon.js";
 import "@patternfly/pfe-cta/dist/pfe-cta.js";
 
@@ -163,6 +164,9 @@ export class RhFooter extends LitElement {
       socialLinks: {
         type: Array,
       },
+      description: {
+        type: Array,
+      },
     };
   }
 
@@ -173,6 +177,7 @@ export class RhFooter extends LitElement {
     this.logoTitle = 'Red Hat logo';
     this.links = [];
     this.socialLinks = [];
+    this.description = [];
   }
 
   firstUpdated() {
@@ -192,6 +197,9 @@ export class RhFooter extends LitElement {
         break;
       case 'links':
         this.inferLinks();
+        break;
+      case 'description':
+        this.inferDescription();
         break;
       default:
         break;
@@ -248,6 +256,23 @@ export class RhFooter extends LitElement {
     this.links = links;
   }
 
+  inferDescription() {
+    const description = this.shadowRoot
+      .querySelector(`slot[name="description"]`)
+      .assignedNodes()
+      .map(item => {
+        if (item.hasAttribute('data-title')) {
+          item.classList.add('footer--description-title');
+        }
+        else {
+          item.classList.add('footer--description-paragraph');
+        }
+        return item;
+      });
+    console.log(description);
+    this.description = description;
+  }
+
   renderLogo() {
     return html`
       <div id="logo">
@@ -288,9 +313,22 @@ export class RhFooter extends LitElement {
   renderLink(link) {
     return html`
       <div class="footer--list">
-        <h1 class="footer--list-header">${link.header.innerHTML}</h1>
+        ${link.header.classList.add('footer--list-header') ?? link.header}
         ${link.ul}
       </div>
+    `;
+  }
+
+  renderDescription(description) {
+    return html`
+      ${description.map(item => html`${unsafeHTML(item.outerHTML)}`)}
+      <p class="footer--description-paragraph">We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.</p>
+    `;
+  }
+
+  renderDescriptionItem(item) {
+    return html`
+      ${item}
     `;
   }
 
@@ -318,8 +356,9 @@ export class RhFooter extends LitElement {
               </div>
               <div class="footer--container-item">
                 <div class="footer--description">
-                  <p class="footer--description-title">About Red Hat</p>
-                  <p class="footer--description-paragraph">We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.</p>
+
+                  ${this.renderDescription(this.description)}
+                  <slot name="description" hidden></slot>
 
                   <p class="footer--description-title">Subscribe to our free newsletter, Red Hat Shares</p>
                   <pfe-cta on="dark" context="dark" pfelement class="PFElement">
