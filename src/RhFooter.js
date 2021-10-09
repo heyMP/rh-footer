@@ -51,11 +51,12 @@ export class RhFooter extends LitElement {
           margin-left: 0;
           padding-left: 0;
         }
-        .footer--social-links li {
+        .footer--social-link {
           display: inline-block;
-          margin-right: 24px;
+          margin-right: 18px;
+          --pfe-icon--size: var(--rh-social-icon--size, 32px);
         }
-        .footer--social-links li:last-child {
+        .footer--social-link:last-child {
           margin-right: 0;
         }
 
@@ -88,7 +89,8 @@ export class RhFooter extends LitElement {
           margin-bottom: 32px;
           line-height: 21px;
         }
-        .footer--description-title {
+        .footer--description-title,
+        slot[name="description-tray"]::slotted([data-title]) {
           font-weight: 500;
           font-size: 14px;
           color: #fff;
@@ -167,6 +169,10 @@ export class RhFooter extends LitElement {
       description: {
         type: Object,
       },
+      languageSwitcher: {
+        type: Boolean,
+        attribute: 'language-switcher'
+      }
     };
   }
 
@@ -178,6 +184,7 @@ export class RhFooter extends LitElement {
     this.links = [];
     this.socialLinks = [];
     this.description = {};
+    this.languageSwitcher = false;
   }
 
   firstUpdated() {
@@ -284,14 +291,16 @@ export class RhFooter extends LitElement {
 
   renderSocialLinks(socialLinks) {
     return html`
-      ${socialLinks.map(link => html`${this.renderSocialLink(link)}`)}
+      <div class="footer--social-links">
+        ${socialLinks.map(link => html`${this.renderSocialLink(link)}`)}
+      </div>
     `;
   }
 
   renderSocialLink(link) {
     return html`
-      <a href=${link.querySelector('a').getAttribute('data-icon')} class=${link.getAttribute('class')}
-        ><pfe-icon size="2x" icon="web-icon-${link.getAttribute('data-icon')}"></pfe-icon
+      <a href=${link.querySelector('a').getAttribute('data-icon')} class="footer--social-link ${link.getAttribute('class')}"
+        ><pfe-icon icon="web-icon-${link.getAttribute('data-icon')}"></pfe-icon
       ></a>
     `;
   }
@@ -361,13 +370,20 @@ export class RhFooter extends LitElement {
                   ${this.renderDescription(this.description)}
                   <slot name="description" hidden></slot>
 
-                  <p class="footer--description-title">Subscribe to our free newsletter, Red Hat Shares</p>
-                  <pfe-cta on="dark" context="dark" pfelement class="PFElement">
-                    <a href="#">Sign up now</a>
-                  </pfe-cta>
+                  <slot name="description-tray"></slot>
                   <hr>
-                  <p class="footer--description-title">Select a language</p>
-                  [language switcher]
+                  <slot name="description-tray-footer"></slot>
+
+                  ${
+                    this.languageSwitcher
+                      ? html`
+                          <p class="footer--description-title">
+                            Select a language
+                          </p>
+                          <img src=${new URL('../assets/language-switcher.png', import.meta.url)}>
+                        `
+                      : ''
+                  }
                 </div>
               </div>
             </div>

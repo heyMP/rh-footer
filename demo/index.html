@@ -55,14 +55,14 @@
     </style>
   </head>
   <body>
-    <rh-footer>
+    <rh-footer language-switcher>
       <template slot="styles">
         <style>
-          :host {
-            color: pink;
-          }
+          /* CSS tweaks escape hatch */
         </style>
       </template>
+      <h3 data-title slot="description">About Customer Portal</h3>
+      <p slot="description">Cupidatat deserunt excepteur sit duis consectetur. Minim Lorem esse ullamco dolore dolor ad Lorem deserunt. Officia occaecat ullamco nisi exercitation.</p>
       <ul slot="social-links">
         <li data-icon="linkedin"><a href="#">LinkedIn</a></li>
         <li data-icon="youtube"><a href="#">Youtube</a></li>
@@ -112,6 +112,11 @@
           <li><a href="#">Email preferences</a></li>
         </ul>
       </div>
+      <p slot="description-tray" data-title>Subscribe to our free newsletter, Red Hat Shares</p>
+      <pfe-cta slot="description-tray" on="dark" context="dark" pfelement class="PFElement">
+        <a href="#">Sign up now</a>
+      </pfe-cta>
+      <img slot="description-tray-footer" src="https://via.placeholder.com/200x100">
     </rh-footer>
   </body>
 </html>
