@@ -232,16 +232,7 @@ export class RhFooter extends LitElement {
         .querySelector(`slot[name="social-links"]`)
         .assignedNodes(),
     ].filter(item => item.nodeName === 'UL')[0];
-    const links = [...socialLinksUL.querySelectorAll('li')].map(li =>
-      Object.assign(
-        {},
-        {
-          icon: li.getAttribute('data-icon'),
-          href: li.querySelector('a').getAttribute('href'),
-          title: li.querySelector('a').getAttribute('title'),
-        }
-      )
-    );
+    const links = [...socialLinksUL.querySelectorAll('li')];
     this.socialLinks = links;
   }
 
@@ -299,8 +290,8 @@ export class RhFooter extends LitElement {
 
   renderSocialLink(link) {
     return html`
-      <a href=${link.href}
-        ><pfe-icon size="1x" icon="web-icon-${link.icon}"></pfe-icon
+      <a href=${link.querySelector('a').getAttribute('data-icon')} class=${link.getAttribute('class')}
+        ><pfe-icon size="2x" icon="web-icon-${link.getAttribute('data-icon')}"></pfe-icon
       ></a>
     `;
   }
