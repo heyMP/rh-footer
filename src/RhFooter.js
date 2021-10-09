@@ -1,9 +1,52 @@
 import { html, css, LitElement, adoptStyles, unsafeCSS } from 'lit';
-import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import "@patternfly/pfe-icon/dist/pfe-icon.js";
 import "@patternfly/pfe-cta/dist/pfe-cta.js";
 
 export class RhFooter extends LitElement {
+  static get translations() {
+    return {
+      'es': {
+        "About Red Hat": "Acerca de Red Hat",
+        "Jobs": "Trabajos",
+        "Events": "Eventos",
+        "Locations": "Ubicaciones",
+        "Contact Red Hat": "Comuníquese con Red Hat",
+        "Red Hat Blog": "Blog de Red Hat",
+        "Cool Stuff Store": "Tienda Cool Stuff",
+        "Privacy statement": "Declaracion de privacidad",
+        "Terms of use": "Condiciones de uso",
+        "All policies and guidelines": "Todas las políticas y pautas",
+        "Cookie preferences and Do not sell my info": "Preferencias de cookies y No vender mi información"
+      },
+      'zh': {
+        "About Red Hat": "关于红帽",
+        "Jobs": "工作",
+        "Events": "活动",
+        "Locations": "地点",
+        "Contact Red Hat": "联系红帽",
+        "Red Hat Blog": "红帽博客",
+        "Cool Stuff Store": "很酷的东西商店",
+        "Privacy statement": "Declaracion de privacidad",
+        "Terms of use": "隐私声明",
+        "All policies and guidelines": "使用条款",
+        "Cookie preferences and Do not sell my info": "Cookie 所有政策和指南"
+      }
+    }
+  }
+
+  translate(string) {
+    if (
+      typeof this.constructor.translations[this._lang] !== "undefined" &&
+      typeof this.constructor.translations[this._lang][string] !== "undefined"
+    ) {
+      return this.constructor.translations[this._lang][string];
+    }
+    else {
+      return string;
+    }
+  }
+
   static get styles() {
     return [
       css`
@@ -172,6 +215,9 @@ export class RhFooter extends LitElement {
       languageSwitcher: {
         type: Boolean,
         attribute: 'language-switcher'
+      },
+      _lang: {
+        type: String
       }
     };
   }
@@ -185,6 +231,18 @@ export class RhFooter extends LitElement {
     this.socialLinks = [];
     this.description = {};
     this.languageSwitcher = false;
+    this._lang = 'en';
+    this._langChangeHandler();
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    window.addEventListener('languagechange', this._langChangeHandler.bind(this));
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('languagechange', this._langChangeHandler.bind(this));
+    super.disconnectedCallback();
   }
 
   firstUpdated() {
@@ -392,37 +450,44 @@ export class RhFooter extends LitElement {
           <div class="footer--container">
             <div class="footer--layout-special">
               <div class="footer--logo">
-                <img src="http://via.placeholder.com/42x30" />
+                <img src="${new URL('../assets/small-logo-on-dark.png', import.meta.url)}" />
               </div>
               <div class="group">
                 <div class="footer--global-list">
                   <ul>
-                    <li><a href="#">About Red Hat</a></li>
-                    <li><a href="#">Jobs</a></li>
-                    <li><a href="#">Events</a></li>
-                    <li><a href="#">Locations</a></li>
-                    <li><a href="#">Contact Red Hat</a></li>
-                    <li><a href="#">Red Hat Blog</a></li>
-                    <li><a href="#">Cool Stuff Store</a></li>
+                    <li><a href="#">${this.translate('About Red Hat')}</a></li>
+                    <li><a href="#">${this.translate('Jobs')}</a></li>
+                    <li><a href="#">${this.translate('Events')}</a></li>
+                    <li><a href="#">${this.translate('Locations')}</a></li>
+                    <li><a href="#">${this.translate('Contact Red Hat')}</a></li>
+                    <li><a href="#">${this.translate('Red Hat Blog')}</a></li>
+                    <li><a href="#">${this.translate('Cool Stuff Store')}</a></li>
                   </ul>
                 </div>
                 <div class="footer--legal">
                   <p>Copyright ®2021 Red Hat, Inc.</p>
                   <ul>
-                    <li><a href="#">Privacy statement</a></li>
-                    <li><a href="#">Terms of use</a></li>
-                    <li><a href="#">All policies and guidelines</a></li>
-                    <li><a href="#">Cookie preferences and Do not sell my info</a></li>
+                    <li><a href="#">${this.translate('Privacy statement')}</a></li>
+                    <li><a href="#">${this.translate('Terms of use')}</a></li>
+                    <li><a href="#">${this.translate('All policies and guidelines')}</a></li>
+                    <li><a href="#">${this.translate('Cookie preferences and Do not sell my info')}</a></li>
                   </ul>
             </div>
           </div>
           <div class="footer--promo">
-            <img src="http://via.placeholder.com/73x40" />
+            <img src="${new URL('../assets/summit-logo.png', import.meta.url)}" />
           </div>
         </section>
       </div>
       <slot hidden></slot>
     </footer>
     `;
+  }
+
+  _langChangeHandler() {
+    const lang = document?.querySelector('[lang]')?.getAttribute('lang');
+    if (lang) {
+      this._lang = lang;
+    }
   }
 }
