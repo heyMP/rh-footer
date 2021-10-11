@@ -1,10 +1,6 @@
 import { html, css, LitElement, adoptStyles, unsafeCSS } from 'lit';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
-export const renderLightdom = () => {
-  return html`<rh-footer>lightdom</rh-footer>`;
-}
-
 export class RhFooter extends LitElement {
   static get translations() {
     return {
@@ -216,7 +212,8 @@ export class RhFooter extends LitElement {
       },
       languageSwitcher: {
         type: Boolean,
-        attribute: 'language-switcher'
+        attribute: 'language-switcher',
+        reflect: true
       },
       _lang: {
         type: String
@@ -239,10 +236,10 @@ export class RhFooter extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    // load these lazily. Must do this for SSR to work
+    window.addEventListener('languagechange', this._langChangeHandler.bind(this));
+    // load these lazily, outside of the constructor. Must do this for SSR to work
     import("@patternfly/pfe-icon/dist/pfe-icon.js");
     import("@patternfly/pfe-cta/dist/pfe-cta.js");
-    window.addEventListener('languagechange', this._langChangeHandler.bind(this));
   }
 
   disconnectedCallback() {
@@ -254,10 +251,6 @@ export class RhFooter extends LitElement {
     [...this.shadowRoot.querySelectorAll('slot')].forEach(slot => {
       slot.addEventListener('slotchange', this._slotChangeHandler.bind(this));
     });
-  }
-
-  static get renderTest() {
-    return html`This is a test`;
   }
 
   _slotChangeHandler(e) {
@@ -302,18 +295,14 @@ export class RhFooter extends LitElement {
 
   updateSocialLinks() {
     const socialLinksUL = [
-      ...this.shadowRoot
-        .querySelector(`slot[name="social-links"]`)
-        .assignedNodes(),
+      ...this.querySelectorAll(`[slot="social-links"]`)
     ].filter(item => item.nodeName === 'UL')[0];
     const links = [...socialLinksUL.querySelectorAll('li')];
     this.socialLinks = links;
   }
 
   updateLinks() {
-    const links = this.shadowRoot
-      .querySelector(`slot[name="links"]`)
-      .assignedNodes()
+    const links = [...this.querySelectorAll(`[slot="links"]`)]
       .map(item => ({
         header: item.querySelector('[data-header]'),
         ul: item.querySelector('ul'),
@@ -322,9 +311,7 @@ export class RhFooter extends LitElement {
   }
 
   updateDescription() {
-    const description = this.shadowRoot
-      .querySelector(`slot[name="description"]`)
-      .assignedNodes()
+    const description = [...this.querySelectorAll(`[slot="description"]`)]
       .map(item => {
         if (item.hasAttribute('data-title')) {
           item.classList.add('footer--description-title');
@@ -407,10 +394,6 @@ export class RhFooter extends LitElement {
     return html`
       ${item}
     `;
-  }
-
-  renderGlobalLinks() {
-    return html``;
   }
 
   render() {
