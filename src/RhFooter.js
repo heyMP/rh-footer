@@ -1,7 +1,9 @@
 import { html, css, LitElement, adoptStyles, unsafeCSS } from 'lit';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import "@patternfly/pfe-icon/dist/pfe-icon.js";
-import "@patternfly/pfe-cta/dist/pfe-cta.js";
+
+export const renderLightdom = () => {
+  return html`<rh-footer>lightdom</rh-footer>`;
+}
 
 export class RhFooter extends LitElement {
   static get translations() {
@@ -237,6 +239,9 @@ export class RhFooter extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+    // load these lazily. Must do this for SSR to work
+    import("@patternfly/pfe-icon/dist/pfe-icon.js");
+    import("@patternfly/pfe-cta/dist/pfe-cta.js");
     window.addEventListener('languagechange', this._langChangeHandler.bind(this));
   }
 
@@ -249,6 +254,10 @@ export class RhFooter extends LitElement {
     [...this.shadowRoot.querySelectorAll('slot')].forEach(slot => {
       slot.addEventListener('slotchange', this._slotChangeHandler.bind(this));
     });
+  }
+
+  static get renderTest() {
+    return html`This is a test`;
   }
 
   _slotChangeHandler(e) {
@@ -400,6 +409,10 @@ export class RhFooter extends LitElement {
     `;
   }
 
+  renderGlobalLinks() {
+    return html``;
+  }
+
   render() {
     return html`
       <slot name="styles" hidden></slot>
@@ -485,9 +498,11 @@ export class RhFooter extends LitElement {
   }
 
   _langChangeHandler() {
-    const lang = document?.querySelector('[lang]')?.getAttribute('lang');
-    if (lang) {
-      this._lang = lang;
+    if (document.querySelector) {
+      const lang = document?.querySelector('[lang]')?.getAttribute('lang');
+      if (lang) {
+        this._lang = lang;
+      }
     }
   }
 }
