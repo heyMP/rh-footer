@@ -253,7 +253,7 @@ export class RhFooter extends LitElement {
   }
 
   _slotChangeHandler(e) {
-    const name = e.path[0].name ?? '';
+    const name = e.target.name ?? '';
     switch (name) {
       case 'styles':
         this.getAdoptedStyles();
