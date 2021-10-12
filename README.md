@@ -1,62 +1,31 @@
 # \<rh-footer>
 
-This webcomponent follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
+This is an experiment with mixing traditional slot based approach with a 'lightdom as data'
+approach where we derrive values for reactive properties from semantic lightdom that are 
+decorated with data attributes.
 
-## Installation
+## Start Development Server
 
-```bash
-npm i rh-footer
-```
-
-## Usage
-
-```html
-<script type="module">
-  import 'rh-footer/rh-footer.js';
-</script>
-
-<rh-footer></rh-footer>
-```
-
-## Linting and formatting
-
-To scan the project for linting and formatting errors, run
+Start the web-dev-server.
 
 ```bash
-npm run lint
+npm run start
 ```
 
-To automatically fix linting and formatting errors, run
+Visit http://localhost:8000/demo/
+
+## Server Side Rendering Proxy
+
+This is an experiment with using the @lit-labs/ssr package to provide
+server side rendering for this component.
+
+
+### Start the proxy server
+
+While the web-dev-server is running on port 8000, start the proxy server.
 
 ```bash
-npm run format
+npm run start:proxy
 ```
 
-## Testing with Web Test Runner
-
-To execute a single test run:
-
-```bash
-npm run test
-```
-
-To run the tests in interactive watch mode run:
-
-```bash
-npm run test:watch
-```
-
-
-## Tooling configs
-
-For most of the tools, the configuration is in the `package.json` to minimize the amount of files in your project.
-
-If you customize the configuration a lot, you can consider moving them to individual files.
-
-## Local Demo with `web-dev-server`
-
-```bash
-npm start
-```
-
-To run a local development server that serves the basic demo located in `demo/index.html`
+Visit http://localhost:3000/demo/
