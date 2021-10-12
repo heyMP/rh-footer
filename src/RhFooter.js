@@ -239,7 +239,6 @@ export class RhFooter extends LitElement {
     window.addEventListener('languagechange', this._langChangeHandler.bind(this));
     // load these lazily, outside of the constructor. Must do this for SSR to work
     import("@patternfly/pfe-icon/dist/pfe-icon.js");
-    import("@patternfly/pfe-cta/dist/pfe-cta.js");
   }
 
   disconnectedCallback() {
@@ -297,7 +296,12 @@ export class RhFooter extends LitElement {
     const socialLinksUL = [
       ...this.querySelectorAll(`[slot="social-links"]`)
     ].filter(item => item.nodeName === 'UL')[0];
-    const links = [...socialLinksUL.querySelectorAll('li')];
+    const links = [...socialLinksUL.querySelectorAll('li')]
+      .map(i => ({
+        href: i.querySelector('a')?.getAttribute('href'),
+        icon: i.getAttribute('data-icon'),
+        content: i.innerHTML
+      }));
     this.socialLinks = links;
   }
 
@@ -353,9 +357,9 @@ export class RhFooter extends LitElement {
 
   renderSocialLink(link) {
     return html`
-      <a href=${link.querySelector('a').getAttribute('data-icon')} class="footer--social-link ${link.getAttribute('class')}"
-        ><pfe-icon icon="web-icon-${link.getAttribute('data-icon')}"></pfe-icon
-      ></a>
+      <a href=${link.href} class="footer--social-link">
+        <pfe-icon icon="web-icon-${link.icon}">${unsafeHTML(link.content)}</pfe-icon>
+      </a>
     `;
   }
 
