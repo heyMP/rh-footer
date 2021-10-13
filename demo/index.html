@@ -62,14 +62,23 @@
           /* CSS tweaks escape hatch */
         </style>
       </template>
+
+      <!-- thought experiment: develop a template DSL for interpolations -->
+      <!-- OTOH, YAGNI -->
+      <!-- <template slot="social-link">
+        <div class="footer--social-links">
+          <a data-repeat href={{item.href}} class="footer--social-link">
+            <pfe-icon icon="web-icon-{{item.icon}}">{{item.content}}</pfe-icon>
+          </a>
+        </div>
+      </template> -->
+
       <h3 data-title slot="description">About Customer Portal</h3>
       <p slot="description">Cupidatat deserunt excepteur sit duis consectetur. Minim Lorem esse ullamco dolore dolor ad Lorem deserunt. Officia occaecat ullamco nisi exercitation.</p>
-      <ul slot="social-links">
-        <li data-icon="linkedin"><a href="#LinkedIn">LinkedIn</a></li>
-        <li data-icon="youtube"><a href="#Youtube">Youtube</a></li>
-        <li data-icon="facebook"><a href="#Facebook">Facebook</a></li>
-        <li data-icon="twitter"><a href="#Twitter">Twitter</a></li>
-      </ul>
+      <li slot="social" data-icon="linkedin"><a href="#LinkedIn">LinkedIn</a></li>
+      <li slot="social" data-icon="youtube"><a href="#Youtube">Youtube</a></li>
+      <li slot="social" data-icon="facebook"><a href="#Facebook">Facebook</a></li>
+      <li slot="social" data-icon="twitter"><a href="#Twitter">Twitter</a></li>
       <div slot="links">
         <h3 data-header>Products</h3>
         <ul>
