@@ -327,7 +327,7 @@ export class RhFooter extends LitElement {
       });
     const title = description.find(i => i.hasAttribute('data-title'));
     const paragraphs = description.filter(i => i !== title);
-    this.description = Object.assign({ title, paragraphs });
+    this.description = {title, paragraphs};
   }
 
   renderLogo() {
@@ -347,6 +347,25 @@ export class RhFooter extends LitElement {
     `;
   }
 
+  /**
+   * Imperatively generate icons _in light DOM_ from light-DOM data attrs
+   * other approaches considered:
+   *   - get svg icon url from pfe-icon config and use as a background in css
+   */
+  onMutation() {
+    // is the MO observing childList? infinite loop - maybe just do it in slotchange
+    for (const link of this.querySelector('[slot="social"]')) {
+      const icon = document.createElement("pfe-icon");
+      icon.icon = link.dataset.icon;
+      link.prependChild(icon);
+    }
+  }
+
+  // NOTES: WRT render props, probably YAGNI, and they increase the API surface significantly.
+  // alternatively, put the default templates in the 'big template' in render, for readability,
+  // but just check for the existence of the render prop first
+  // recommend passing `this` as the argument to renderprop functions
+  
   renderSocialLinks(socialLinks) {
     return html`
       <div class="footer--social-links">
