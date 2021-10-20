@@ -1,5 +1,7 @@
 import { html, css, LitElement, adoptStyles, unsafeCSS } from 'lit';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import './rh-footer-links.js';
+import './rh-footer-social-link.js';
 
 export class RhFooter extends LitElement {
   static get translations() {
@@ -92,32 +94,15 @@ export class RhFooter extends LitElement {
           margin-left: 0;
           padding-left: 0;
         }
-        .footer--social-link {
+        .footer--social-link,
+        slot[name="social-links"]::slotted(*) {
           display: inline-block;
           margin-right: 18px;
-          --pfe-icon--size: var(--rh-social-icon--size, 32px);
         }
         .footer--social-link:last-child {
           margin-right: 0;
         }
 
-        .footer--list-header {
-          font-weight: 500;
-          font-size: 14px;
-        }
-        .footer--list ul {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-        }
-        .footer--list ul li {
-          margin-bottom: 16px;
-        }
-        .footer--list ul li a {
-          color: #fff;
-          font-size: 14px;
-          text-decoration: none;
-        }
         .footer--list-container {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
@@ -258,9 +243,6 @@ export class RhFooter extends LitElement {
       case 'styles':
         this.getAdoptedStyles();
         break;
-      case 'social-links':
-        this.updateSocialLinks();
-        break;
       case 'links':
         this.updateLinks();
         break;
@@ -290,19 +272,6 @@ export class RhFooter extends LitElement {
         console.error(e.message);
       }
     }
-  }
-
-  updateSocialLinks() {
-    const socialLinksUL = [
-      ...this.querySelectorAll(`[slot="social-links"]`)
-    ].filter(item => item.nodeName === 'UL')[0];
-    const links = [...socialLinksUL.querySelectorAll('li')]
-      .map(i => ({
-        href: i.querySelector('a')?.getAttribute('href'),
-        icon: i.getAttribute('data-icon'),
-        content: i.innerHTML
-      }));
-    this.socialLinks = links;
   }
 
   updateLinks() {
@@ -410,17 +379,13 @@ export class RhFooter extends LitElement {
               <img src=${this.logo} alt=${this.logoTitle}>
             </div>
             <div class="footer--header-section">
-              ${
-                this.socialLinks ? this.renderSocialLinks(this.socialLinks) : ``
-              }
-              <slot name="social-links" hidden></slot>
+              <slot name="social-links"></slot>
             </div>
           </section>
           <section class="footer--body">
             <div class="footer--body-container">
               <div class="footer--list-container">
-                ${this.links ? html`${this.renderLinks(this.links)}` : ''}
-                <slot name="links" hidden></slot>
+                <slot name="links"></slot>
               </div>
               <div class="footer--container-item">
                 <div class="footer--description">
@@ -438,7 +403,7 @@ export class RhFooter extends LitElement {
                           <p class="footer--description-title">
                             Select a language
                           </p>
-                          <img src=${new URL('../assets/language-switcher.png', import.meta.url)}>
+                          <img src="../assets/language-switcher.png">
                         `
                       : ''
                   }
@@ -450,7 +415,7 @@ export class RhFooter extends LitElement {
           <div class="footer--container">
             <div class="footer--layout-special">
               <div class="footer--logo">
-                <img src="${new URL('../assets/small-logo-on-dark.png', import.meta.url)}" />
+                <img src="../assets/small-logo-on-dark.png" />
               </div>
               <div class="group">
                 <div class="footer--global-list">
@@ -475,7 +440,7 @@ export class RhFooter extends LitElement {
             </div>
           </div>
           <div class="footer--promo">
-            <img src="${new URL('../assets/summit-logo.png', import.meta.url)}" />
+            <slot name="promo"></slot>
           </div>
         </section>
       </div>

@@ -2,7 +2,9 @@ import express from 'express';
 import proxy from 'express-http-proxy';
 import {render} from '@lit-labs/ssr/lib/render-with-global-dom-shim.js';
 import { Readable } from 'stream';
-import rhFooterSSR from './src/rh-footer-ssr.js';
+import { html } from 'lit';
+import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import './rh-footer.js';
 
 const app = express();
 
@@ -23,9 +25,9 @@ app.use('/', proxy('http://localhost:8000', {
 }));
 
 // lit-ssr version
-const rhEdgeProcess = async (html) => {
-	const ssrFooter = await readStream(Readable.from(render(rhFooterSSR(html))));
-	return ssrFooter;
+const rhEdgeProcess = async (content) => {
+	const SSRcontent = await readStream(Readable.from(render(html`${unsafeHTML(content)}`)));
+	return SSRcontent;
 }
 
 function readStream(stream, encoding = "utf8") {
