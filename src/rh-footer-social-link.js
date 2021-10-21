@@ -19,7 +19,7 @@ export class RhFooterSocialLink extends LitElement {
 	}
 	render() {
 		return html`
-			<!-- <pfe-icon icon=${this.icon}><slot></slot></pfe-icon> -->
+			<pfe-icon icon=${this.icon}><slot></slot></pfe-icon>
 		`;
 	}
 }
