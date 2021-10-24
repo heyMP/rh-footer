@@ -2,9 +2,11 @@ import express from 'express';
 import proxy from 'express-http-proxy';
 import { render } from '@lit-labs/ssr/lib/render-with-global-dom-shim.js';
 import { Readable } from 'stream';
-import { css } from 'lit';
+import { html } from 'lit';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import './rh-footer.js';
+import './src/rh-footer-social-links.js';
+import './src/rh-footer-social-link.js';
 
 const app = express();
 

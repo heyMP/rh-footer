@@ -46,6 +46,7 @@
     <!-- Required css files -->
     <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/4/webfonts/red-hat-font.min.css" media="all" />
     <link type="text/css" rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles/dist/pfe-base.css" media="all" />
+    <script type="module" src="https://unpkg.com/lit/experimental-hydrate-support.js?module"></script>
     <script type="module" src="https://unpkg.com/@patternfly/pfe-cta?module"></script>
     <script type="module" src="../rh-footer.js"></script>
     <style>
@@ -64,12 +65,12 @@
       </template>
       <h3 data-title slot="description">About Customer Portal</h3>
       <p slot="description">Cupidatat deserunt excepteur sit duis consectetur. Minim Lorem esse ullamco dolore dolor ad Lorem deserunt. Officia occaecat ullamco nisi exercitation.</p>
-      <ul slot="social-links">
-        <li data-icon="linkedin"><a href="#LinkedIn">LinkedIn</a></li>
-        <li data-icon="youtube"><a href="#Youtube">Youtube</a></li>
-        <li data-icon="facebook"><a href="#Facebook">Facebook</a></li>
-        <li data-icon="twitter"><a href="#Twitter">Twitter</a></li>
-      </ul>
+      <rh-footer-social-links slot="social-links" role="list">
+        <rh-footer-social-link role="listitem" icon="web-icon-linkedin"><a href="#LinkedIn">LinkedIn</a></rh-footer-social-link>
+        <rh-footer-social-link role="listitem" icon="web-icon-youtube"><a href="#Youtube">Youtube</a></rh-footer-social-link>
+        <rh-footer-social-link role="listitem" icon="web-icon-facebook"><a href="#Facebook">Facebook</a></rh-footer-social-link>
+        <rh-footer-social-link role="listitem" icon="web-icon-twitter"><a href="#Twitter">Twitter</a></rh-footer-social-link>
+      </rh-footer-social-links>
       <div slot="links">
         <h3 data-header>Products</h3>
         <ul>

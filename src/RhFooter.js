@@ -1,5 +1,7 @@
-import { html, css, LitElement, adoptStyles, unsafeCSS } from 'lit';
+import { adoptStyles, css, html, LitElement, unsafeCSS } from 'lit';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import './rh-footer-social-links.js';
+import './rh-footer-social-link.js';
 
 export class RhFooter extends LitElement {
   static get translations() {
@@ -88,7 +90,7 @@ export class RhFooter extends LitElement {
         }
 
         .footer--social-links {
-          display: inline-block;
+          display: flex;
           margin-left: 0;
           padding-left: 0;
         }
@@ -100,7 +102,6 @@ export class RhFooter extends LitElement {
         .footer--social-link:last-child {
           margin-right: 0;
         }
-
         .footer--list-header {
           font-weight: 500;
           font-size: 14px;
@@ -247,29 +248,9 @@ export class RhFooter extends LitElement {
   }
 
   firstUpdated() {
-    [...this.shadowRoot.querySelectorAll('slot')].forEach(slot => {
-      slot.addEventListener('slotchange', this._slotChangeHandler.bind(this));
-    });
-  }
-
-  _slotChangeHandler(e) {
-    const name = e.target.name ?? '';
-    switch (name) {
-      case 'styles':
-        this.getAdoptedStyles();
-        break;
-      case 'social-links':
-        this.updateSocialLinks();
-        break;
-      case 'links':
-        this.updateLinks();
-        break;
-      case 'description':
-        this.updateDescription();
-        break;
-      default:
-        break;
-    }
+    // this.updateSocialLinks();
+    this.updateLinks();
+    this.updateDescription();
   }
 
   getAdoptedStyles() {
@@ -293,16 +274,24 @@ export class RhFooter extends LitElement {
   }
 
   updateSocialLinks() {
-    const socialLinksUL = [
-      ...this.querySelectorAll(`[slot="social-links"]`)
-    ].filter(item => item.nodeName === 'UL')[0];
-    const links = [...socialLinksUL.querySelectorAll('li')]
-      .map(i => ({
-        href: i.querySelector('a')?.getAttribute('href'),
-        icon: i.getAttribute('data-icon'),
-        content: i.innerHTML
-      }));
-    this.socialLinks = links;
+    const socialLinks = [...this.querySelectorAll(`[slot="social-links"]`)]
+      .flatMap(item => [...item.querySelectorAll('li')])
+
+    socialLinks.forEach(link => {
+      // find out if we need to add social-link-icons
+      if (!link.querySelector('rh-footer-social-link')) {
+        const newLink = link.cloneNode(true);
+        const aTag = newLink.querySelector('a');
+        const newTemplate = `<rh-footer-social-link icon="${link.dataset.icon}">${link.textContent}</rh-footer-social-link>`;
+        if (aTag) {
+          aTag.innerHTML = newTemplate;
+        }
+        else {
+          newLink.innerHTML = newTemplate;
+        }
+        link.parentNode.replaceChild(newLink, link);
+      }
+    });
   }
 
   updateLinks() {
@@ -410,10 +399,9 @@ export class RhFooter extends LitElement {
               <img src=${this.logo} alt=${this.logoTitle}>
             </div>
             <div class="footer--header-section">
-              ${
-                this.socialLinks ? this.renderSocialLinks(this.socialLinks) : ``
-              }
-              <slot name="social-links" hidden></slot>
+              <div class="footer--social-links">
+                <slot name="social-links"></slot>
+              </div>
             </div>
           </section>
           <section class="footer--body">
