@@ -2,6 +2,8 @@ import { adoptStyles, css, html, LitElement, unsafeCSS } from 'lit';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import './rh-footer-social-links.js';
 import './rh-footer-social-link.js';
+import './rh-footer-links.js';
+import './rh-footer-link.js';
 
 export class RhFooter extends LitElement {
   static get translations() {
@@ -249,7 +251,7 @@ export class RhFooter extends LitElement {
 
   firstUpdated() {
     // this.updateSocialLinks();
-    this.updateLinks();
+    // this.updateLinks();
     this.updateDescription();
   }
 
@@ -407,8 +409,7 @@ export class RhFooter extends LitElement {
           <section class="footer--body">
             <div class="footer--body-container">
               <div class="footer--list-container">
-                ${this.links ? html`${this.renderLinks(this.links)}` : ''}
-                <slot name="links" hidden></slot>
+                <slot name="links"></slot>
               </div>
               <div class="footer--container-item">
                 <div class="footer--description">
