@@ -54,63 +54,55 @@
         padding: 0;
         margin: 0;
       }
+
+      .header {
+        margin-top: 5rem;
+      }
     </style>
   </head>
   <body>
-    <rh-footer language-switcher>
-      <template slot="styles">
-        <style>
-          /* CSS tweaks escape hatch */
-        </style>
-      </template>
-      <h3 data-title slot="description">About Customer Portal</h3>
-      <p slot="description">Cupidatat deserunt excepteur sit duis consectetur. Minim Lorem esse ullamco dolore dolor ad Lorem deserunt. Officia occaecat ullamco nisi exercitation.</p>
-      <rh-footer-social-links slot="social-links" role="list">
-        <rh-footer-social-link role="listitem" icon="web-icon-linkedin"><a href="#LinkedIn">LinkedIn</a></rh-footer-social-link>
-        <rh-footer-social-link role="listitem" icon="web-icon-youtube"><a href="#Youtube">Youtube</a></rh-footer-social-link>
-        <rh-footer-social-link role="listitem" icon="web-icon-facebook"><a href="#Facebook">Facebook</a></rh-footer-social-link>
-        <rh-footer-social-link role="listitem" icon="web-icon-twitter"><a href="#Twitter">Twitter</a></rh-footer-social-link>
-      </rh-footer-social-links>
-      <rh-footer-links slot="links" role="list">
-        <h3>Products</h3>
-        <rh-footer-link role="listitem"><a href="#">Red Hat Ansible Automation Platform</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Red Hat OpenShift</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Red Hat OpenShift Container Storage</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">See all products</a></rh-footer-link>
-      </rh-footer-links>
-      <rh-footer-links slot="links" role="list">
-        <h3>Tools</h3>
-        <rh-footer-link role="listitem"><a href="#">My account</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Customer support</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Red Hat OpenShift</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Contact training</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">See all products</a></rh-footer-link>
-      </rh-footer-links>
-      <rh-footer-links slot="links" role="list">
-        <h3>Try, buy, sell</h3>
-        <rh-footer-link role="listitem"><a href="#">Red Hat Store</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Red Hat OpenShift</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Contact training</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">See all products</a></rh-footer-link>
-      </rh-footer-links>
-      <rh-footer-links slot="links" role="list">
-        <h3>Communicate</h3>
-        <rh-footer-link role="listitem"><a href="#">Contact us</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Feedback</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Social</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Red Hat newsletter</a></rh-footer-link>
-        <rh-footer-link role="listitem"><a href="#">Email preferences</a></rh-footer-link>
-      </rh-footer-links>
-      <p slot="description-tray" data-title>Subscribe to our free newsletter, Red Hat Shares</p>
-      <pfe-cta slot="description-tray" on="dark" context="dark" pfelement class="PFElement">
+    <h2 class="header">Default:</h2>
+    <rh-footer></rh-footer>
+
+    <h2 class="header">Custom Description Area:</h2>
+    <rh-footer>
+      <h3 slot="description--title">About Customer Portal</h3>
+      <p slot="description--header">This is a special statement about Customer Portal.</p>
+      <h3 slot="description--main">Subscribe to our free newsletter, Red Hat Shares</h3>
+      <pfe-cta slot="description--main" on="dark" context="dark" pfelement class="PFElement">
         <a href="#">Sign up now</a>
       </pfe-cta>
-      <img slot="description-tray-footer" src="https://via.placeholder.com/200x100">
+      <img slot="description--footer" alt="Cool image" src="https://via.placeholder.com/200x100?text=Cool_Promo">
+      <img slot="footer--promo" alt="Summit" src="https://via.placeholder.com/200x100">
     </rh-footer>
+
+    <h2 class="header">Custom extra links:</h2>
+    <rh-footer>
+      <rh-footer-links slot="links--end">
+        <h3>My extra Links</h3>
+        <rh-footer-link><a href="#">Link 1</a></rh-footer-link>
+        <rh-footer-link><a href="#">Link 2</a></rh-footer-link>
+        <rh-footer-link><a href="#">Link 3</a></rh-footer-link>
+        <rh-footer-link><a href="#">Link 4</a></rh-footer-link>
+      </rh-footer-links>
+      <rh-footer-links slot="links--end">
+        <h3>My extra Links</h3>
+        <rh-footer-link><a href="#">Link 1</a></rh-footer-link>
+        <rh-footer-link><a href="#">Link 2</a></rh-footer-link>
+        <rh-footer-link><a href="#">Link 3</a></rh-footer-link>
+        <rh-footer-link><a href="#">Link 4</a></rh-footer-link>
+      </rh-footer-links>
+    </rh-footer>
+
+    <h2 class="header">Custom social links: Github</h2>
+    <rh-footer>
+      <rh-footer-social-link slot="social-links--end" icon="web-icon-github"><a href="#github">Github</a></rh-footer-social-link>
+    </rh-footer>
+
+    <h2 class="header">Disable Language Switcher:</h2>
+    <rh-footer disable-language-switcher></rh-footer>
+
+    <h2 class="header">Change Language</h2>
+    <rh-footer _lang="es"></rh-footer>
   </body>
 </html>

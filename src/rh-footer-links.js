@@ -9,6 +9,7 @@ export class RhFooterLinks extends LitElement {
 			::slotted(:is(h1,h2,h3,h4,h5)) {
 				font-weight: 500;
 				font-size: 14px;
+				margin-top: 0;
 			}
 			::slotted(ul) {
 				list-style: none;
@@ -22,15 +23,9 @@ export class RhFooterLinks extends LitElement {
 		`;
 	}
 
-	static get properties() {
-		return {
-			content: { type: String }
-		};
-	}
-
 	constructor() {
 		super();
-		this.content = this;
+		this.setAttribute('role', 'list');
 	}
 
 	render() {

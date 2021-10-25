@@ -8,7 +8,35 @@ import './rh-footer-link.js';
 export class RhFooter extends LitElement {
   static get translations() {
     return {
-      'es': {
+      "es": {
+        "Select a language": "Selecciona un idioma",
+        "Products":	"Productos",
+        "Red Hat Ansible Automation Platform": "Plataforma Red Hat Ansible Automation",
+        "Red Hat Enterprise Linux": "Red Hat Enterprise Linux",
+        "Red Hat OpenShift": "Red Hat OpenShift",
+        "Red Hat OpenShift Container Storage": "Almacenamiento de contenedores Red Hat OpenShift",
+        "Red Hat OpenStack Platform": "Plataforma Red Hat OpenStack",
+        "See all products": "Ver todos los productos",
+        "Tools": "Instrumentos",
+        "My account": "Mi cuenta",
+        "Customer support": "Atención al cliente",
+        "Red Hat OpenShift": "Red Hat OpenShift",
+        "Contact training": "Entrenamiento de contacto",
+        "Red Hat OpenStack Platform": "Plataforma Red Hat OpenStack",
+        "See all products": "Ver todos los productos",
+        "Try, buy, sell": "Prueba, compra, vende",
+        "Red Hat Store": "Tienda Red Hat",
+        "Red Hat Enterprise Linux": "Red Hat Enterprise Linux",
+        "Red Hat OpenShift": "Red Hat OpenShift",
+        "Contact training": "Entrenamiento de contacto",
+        "Red Hat OpenStack Platform": "Plataforma Red Hat OpenStack",
+        "See all products": "Ver todos los productos",
+        "Communicate": "Comunicar",
+        "Contact us": "Contáctenos",
+        "Feedback": "Realimentación",
+        "Social": "Social",
+        "Red Hat newsletter": "Boletín de Red Hat",
+        "Email preferences": "Preferencias de correo electrónico",
         "About Red Hat": "Acerca de Red Hat",
         "Jobs": "Trabajos",
         "Events": "Eventos",
@@ -19,20 +47,8 @@ export class RhFooter extends LitElement {
         "Privacy statement": "Declaracion de privacidad",
         "Terms of use": "Condiciones de uso",
         "All policies and guidelines": "Todas las políticas y pautas",
-        "Cookie preferences and Do not sell my info": "Preferencias de cookies y No vender mi información"
-      },
-      'zh': {
-        "About Red Hat": "关于红帽",
-        "Jobs": "工作",
-        "Events": "活动",
-        "Locations": "地点",
-        "Contact Red Hat": "联系红帽",
-        "Red Hat Blog": "红帽博客",
-        "Cool Stuff Store": "很酷的东西商店",
-        "Privacy statement": "Declaracion de privacidad",
-        "Terms of use": "隐私声明",
-        "All policies and guidelines": "使用条款",
-        "Cookie preferences and Do not sell my info": "Cookie 所有政策和指南"
+        "Cookie preferences and Do not sell my info": "Preferencias de cookies y No vender mi información",
+        "We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.": "Somos el proveedor líder mundial de soluciones empresariales de código abierto, incluidos Linux, nube, contenedor y Kubernetes. Ofrecemos soluciones reforzadas que facilitan a las empresas el trabajo en plataformas y entornos, desde el centro de datos central hasta el borde de la red."
       }
     }
   }
@@ -127,21 +143,30 @@ export class RhFooter extends LitElement {
           grid-gap: 32px;
         }
 
-        .footer--description-paragraph {
-          color: #d2d2d2;
-          font-size: 14px;
-          margin-bottom: 32px;
-          line-height: 21px;
+        slot[name="header--logo"]::slotted(*),
+        slot[name="header--logo"] > * {
+          display: inline-flex;
         }
-        .footer--description-title,
-        slot[name="description-tray"]::slotted([data-title]) {
+
+        .footer--description *:is(h1,h2,h3,h4,h5,h6),
+        .footer--description slot::slotted(*:is(h1,h2,h3,h4,h5,h6)) {
           font-weight: 500;
           font-size: 14px;
           color: #fff;
+          margin-top: 0;
         }
-        .footer--description hr {
+        .footer--description *:not(h1,h2,h3,h4,h5,h6),
+        .footer--description slot::slotted(*:not(h1,h2,h3,h4,h5,h6)) {
+          color: #d2d2d2;
+          font-size: 14px;
+          line-height: 21px;
+        }
+
+        .footer--splitter {
           margin: 32px 0;
-          border-color: #6a6e73;
+          background-color: #6a6e73;
+          height: 1px;
+          width: auto;
         }
 
         .footer--global {
@@ -198,24 +223,9 @@ export class RhFooter extends LitElement {
 
   static get properties() {
     return {
-      logo: {
-        type: String,
-      },
-      logoTitle: {
-        type: String,
-      },
-      links: {
-        type: Array,
-      },
-      socialLinks: {
-        type: Array,
-      },
-      description: {
-        type: Object,
-      },
-      languageSwitcher: {
+      disableLanguageSwitcher: {
         type: Boolean,
-        attribute: 'language-switcher',
+        attribute: 'disable-language-switcher',
         reflect: true
       },
       _lang: {
@@ -226,13 +236,7 @@ export class RhFooter extends LitElement {
 
   constructor() {
     super();
-    this.logo =
-      'https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--on-dark.svg';
-    this.logoTitle = 'Red Hat logo';
-    this.links = [];
-    this.socialLinks = [];
-    this.description = {};
-    this.languageSwitcher = false;
+    this.disableLanguageSwitcher = false;
     this._lang = 'en';
     this._langChangeHandler();
   }
@@ -249,148 +253,6 @@ export class RhFooter extends LitElement {
     super.disconnectedCallback();
   }
 
-  firstUpdated() {
-    // this.updateSocialLinks();
-    // this.updateLinks();
-    this.updateDescription();
-  }
-
-  getAdoptedStyles() {
-    const stylesTemplate = this.shadowRoot
-      .querySelector('slot[name=styles]')
-      .assignedNodes()[0];
-    if (stylesTemplate) {
-      try {
-        const styles =
-          stylesTemplate.content.querySelector('style').textContent;
-        adoptStyles(this.shadowRoot, [
-          ...this.constructor.styles,
-          css`
-            ${unsafeCSS(styles)}
-          `,
-        ]);
-      } catch (e) {
-        console.error(e.message);
-      }
-    }
-  }
-
-  updateSocialLinks() {
-    const socialLinks = [...this.querySelectorAll(`[slot="social-links"]`)]
-      .flatMap(item => [...item.querySelectorAll('li')])
-
-    socialLinks.forEach(link => {
-      // find out if we need to add social-link-icons
-      if (!link.querySelector('rh-footer-social-link')) {
-        const newLink = link.cloneNode(true);
-        const aTag = newLink.querySelector('a');
-        const newTemplate = `<rh-footer-social-link icon="${link.dataset.icon}">${link.textContent}</rh-footer-social-link>`;
-        if (aTag) {
-          aTag.innerHTML = newTemplate;
-        }
-        else {
-          newLink.innerHTML = newTemplate;
-        }
-        link.parentNode.replaceChild(newLink, link);
-      }
-    });
-  }
-
-  updateLinks() {
-    const links = [...this.querySelectorAll(`[slot="links"]`)]
-      .map(item => ({
-        header: item.querySelector('[data-header]'),
-        ul: item.querySelector('ul'),
-      }));
-    this.links = links;
-  }
-
-  updateDescription() {
-    const description = [...this.querySelectorAll(`[slot="description"]`)]
-      .map(item => {
-        if (item.hasAttribute('data-title')) {
-          item.classList.add('footer--description-title');
-        }
-        else {
-          item.classList.add('footer--description-paragraph');
-        }
-        return item;
-      });
-    const title = description.find(i => i.hasAttribute('data-title'));
-    const paragraphs = description.filter(i => i !== title);
-    this.description = Object.assign({ title, paragraphs });
-  }
-
-  renderLogo() {
-    return html`
-      <div id="logo">
-        <a href="/en" title="Red Hat">
-          <img
-            id="logo__image"
-            class="redhat-logo"
-            src=${this.logo}
-            alt=""
-            aria-hidden="true"
-            style="width:156px;"
-          />
-        </a>
-      </div>
-    `;
-  }
-
-  renderSocialLinks(socialLinks) {
-    return html`
-      <div class="footer--social-links">
-        ${socialLinks.map(link => html`${this.renderSocialLink(link)}`)}
-      </div>
-    `;
-  }
-
-  renderSocialLink(link) {
-    return html`
-      <a href=${link.href} class="footer--social-link">
-        <pfe-icon icon="web-icon-${link.icon}">${unsafeHTML(link.content)}</pfe-icon>
-      </a>
-    `;
-  }
-
-  renderLinks(links) {
-    return html`
-      ${links.map(link => this.renderLink(link))}
-    `;
-  }
-
-  renderLink(link) {
-    return html`
-      <div class="footer--list">
-        ${link.header.classList.add('footer--list-header') ?? link.header}
-        ${link.ul}
-      </div>
-    `;
-  }
-
-  renderDescription({ title = null, paragraphs = [] }) {
-    return html`
-      ${title
-        ? html`${unsafeHTML(title.outerHTML)}`
-        : html` <h3 class="footer--description-title">About Red Hat</h3> `}
-      ${paragraphs.map(paragraph => html`${unsafeHTML(paragraph.outerHTML)}`)}
-      <p class="footer--description-paragraph">
-        We’re the world’s leading provider of enterprise open source
-        solutions―including Linux, cloud, container, and Kubernetes. We deliver
-        hardened solutions that make it easier for enterprises to work across
-        platforms and environments, from the core datacenter to the network
-        edge.
-      </p>
-    `;
-  }
-
-  renderDescriptionItem(item) {
-    return html`
-      ${item}
-    `;
-  }
-
   render() {
     return html`
       <slot name="styles" hidden></slot>
@@ -398,39 +260,111 @@ export class RhFooter extends LitElement {
         <div class="footer--container">
           <section class="footer--header">
             <div class="footer--header-section">
-              <img src=${this.logo} alt=${this.logoTitle}>
+              <slot name="header--logo">
+                <a href="/en" title="Red Hat">
+                  <img
+                    id="logo__image"
+                    class="redhat-logo"
+                    src="https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--on-dark.svg"
+                    aria-hidden="true"
+                    style="width:156px;"
+                  />
+                </a>
+              </slot>
             </div>
             <div class="footer--header-section">
               <div class="footer--social-links">
-                <slot name="social-links"></slot>
+                <slot name="social-links">
+                  <rh-footer-social-links slot="social-links">
+                    <h3>Social Media Links</h3>
+                    <slot name="social-links--start"></slot>
+                    <rh-footer-social-link icon="web-icon-linkedin"><a href="#LinkedIn">LinkedIn</a></rh-footer-social-link>
+                    <rh-footer-social-link icon="web-icon-youtube"><a href="#Youtube">Youtube</a></rh-footer-social-link>
+                    <rh-footer-social-link icon="web-icon-facebook"><a href="#Facebook">Facebook</a></rh-footer-social-link>
+                    <rh-footer-social-link icon="web-icon-twitter"><a href="#Twitter">Twitter</a></rh-footer-social-link>
+                    <slot name="social-links--end"></slot>
+                  </rh-footer-social-links>
+                </slot>
               </div>
             </div>
           </section>
           <section class="footer--body">
             <div class="footer--body-container">
               <div class="footer--list-container">
-                <slot name="links"></slot>
+                <slot name="links">
+                  <slot name="links--start"></slot>
+                  <slot name="links--column1">
+                    <rh-footer-links>
+                      <h3>${this.translate('Products')}</h3>
+                      <rh-footer-link><a href="#">${this.translate('Red Hat Ansible Automation Platform')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Red Hat Enterprise Linux')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Red Hat OpenShift')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Red Hat OpenShift Container Storage')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Red Hat OpenStack Platform')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('See all products')}</a></rh-footer-link>
+                    </rh-footer-links>
+                  </slot>
+                  <slot name="links--column2">
+                    <rh-footer-links>
+                      <h3>${this.translate('Tools')}</h3>
+                      <rh-footer-link><a href="#">${this.translate('My account')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Customer support')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Red Hat OpenShift')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Contact training')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Red Hat OpenStack Platform')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('See all products')}</a></rh-footer-link>
+                    </rh-footer-links>
+                  </slot>
+                  <slot name="links--column3">
+                    <rh-footer-links>
+                      <h3>${this.translate('Try, buy, sell')}</h3>
+                      <rh-footer-link><a href="#">${this.translate('Red Hat Store')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Red Hat Enterprise Linux')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Red Hat OpenShift')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Contact training')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Red Hat OpenStack Platform')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('See all products')}</a></rh-footer-link>
+                    </rh-footer-links>
+                  </slot>
+                  <slot name="links--column-4">
+                    <rh-footer-links>
+                      <h3>${this.translate('Communicate')}</h3>
+                      <rh-footer-link><a href="#">${this.translate('Contact us')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Feedback')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Social')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Red Hat newsletter')}</a></rh-footer-link>
+                      <rh-footer-link><a href="#">${this.translate('Email preferences')}</a></rh-footer-link>
+                    </rh-footer-links>
+                  </slot>
+                  <slot name="links--end"></slot>
+                </slot>
               </div>
               <div class="footer--container-item">
                 <div class="footer--description">
-
-                  ${this.renderDescription(this.description)}
-                  <slot name="description" hidden></slot>
-
-                  <slot name="description-tray"></slot>
-                  <hr>
-                  <slot name="description-tray-footer"></slot>
-
-                  ${
-                    this.languageSwitcher
-                      ? html`
-                          <p class="footer--description-title">
-                            Select a language
-                          </p>
-                          <img src=${new URL('../assets/language-switcher.png', import.meta.url)}>
-                        `
-                      : ''
-                  }
+                  <slot name="description">
+                    <slot name="description--title">
+                      <h3>${this.translate('About Red Hat')}</h3>
+                    </slot>
+                    <slot name="description--header"></slot>
+                    <slot name="description--about-redhat">
+                      <p>
+                        ${this.translate("We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.")}
+                      </p>
+                    </slot>
+                    <slot name="description--main"></slot>
+                    <div class="footer--splitter"></div>
+                    <slot name="description--footer"></slot>
+                    ${
+                      !this.disableLanguageSwitcher
+                        ? html`
+                            <p class="footer--description-title">
+                              ${this.translate('Select a language')}
+                            </p>
+                            <img src=${this.getImportURL('../assets/language-switcher.png')}>
+                          `
+                        : ''
+                    }
+                  </slot>
                 </div>
               </div>
             </div>
@@ -439,7 +373,7 @@ export class RhFooter extends LitElement {
           <div class="footer--container">
             <div class="footer--layout-special">
               <div class="footer--logo">
-                <img src="${new URL('../assets/small-logo-on-dark.png', import.meta.url)}" />
+                <img src=${this.getImportURL('../assets/small-logo-on-dark.png')} />
               </div>
               <div class="group">
                 <div class="footer--global-list">
@@ -461,16 +395,35 @@ export class RhFooter extends LitElement {
                     <li><a href="#">${this.translate('All policies and guidelines')}</a></li>
                     <li><a href="#">${this.translate('Cookie preferences and Do not sell my info')}</a></li>
                   </ul>
+                </div>
+              </div>
+              <div class="footer--promo">
+                <slot name="footer--promo"></slot>
+              </div>
             </div>
-          </div>
-          <div class="footer--promo">
-            <img src="${new URL('../assets/summit-logo.png', import.meta.url)}" />
           </div>
         </section>
       </div>
       <slot hidden></slot>
     </footer>
     `;
+  }
+
+  /**
+   * Isomorphic import.meta.url function
+   * Requires a node.js dom shim that sets window.location
+   *
+   * @param {string} relativeLocation
+   * @returns {string} url
+   */
+  getImportURL(relativeLocation) {
+    const url = new URL(relativeLocation, import.meta.url);
+    if (url.protocol === 'file:') {
+      return new URL(relativeLocation, window.location.href);
+    }
+    else {
+      return url;
+    }
   }
 
   _langChangeHandler() {

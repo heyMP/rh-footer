@@ -8,7 +8,7 @@ export class RhFooterSocialLink extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: inline-block;
+        display: block;
         --pfe-icon--size: var(--rh-footer--social-icon--size, 32px);
       }
     `;
@@ -22,6 +22,7 @@ export class RhFooterSocialLink extends LitElement {
   constructor() {
     super();
     this.icon = null;
+    this.setAttribute('role', 'listitem');
   }
 
   updated() {

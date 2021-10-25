@@ -12,6 +12,18 @@ export class RhFooterSocialLinks extends LitElement {
 				width: 100%;
 				gap: 16px;
       }
+      /* Hide title */
+      slot::slotted(:is(h1,h2,h3,h4,h5,h6)) {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap; /* added line */
+        border: 0;
+      }
     `;
   }
 

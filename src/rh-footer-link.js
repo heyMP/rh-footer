@@ -8,7 +8,7 @@ export class RhFooterLink extends LitElement {
 	static get styles() {
 		return css`
 			:host {
-				display: inline-block;
+				display: block;
 			}
 			::slotted(*) {
 				color: #fff !important;
@@ -16,6 +16,11 @@ export class RhFooterLink extends LitElement {
 				text-decoration: none;
 			}
 		`;
+	}
+
+	constructor() {
+		super();
+		this.setAttribute('role', 'listitem');
 	}
 
 	render() {

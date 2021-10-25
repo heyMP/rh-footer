@@ -15,7 +15,7 @@
     "format": "eslint --ext .js,.html . --fix --ignore-path .gitignore && prettier \"**/*.js\" --write --ignore-path .gitignore",
     "test": "web-test-runner --coverage",
     "test:watch": "web-test-runner --watch",
-    "test:a11y": "axe http://localhost:8000/demo --timeout=120"
+    "test:a11y": "axe http://localhost:3000/demo --timeout=120 --load-delay=2000"
   },
   "dependencies": {
     "lit": "^2.0.0",
@@ -34,7 +34,6 @@
     "eslint-config-prettier": "^8.3.0",
     "express": "^4.7.1",
     "express-http-proxy": "^1.6.2",
-    "jsdom": "^18.0.0",
     "nodesi": "*",
     "nodemon": "^2.0.13",
     "husky": "^4.3.8",

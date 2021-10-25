@@ -10,6 +10,11 @@ import './src/rh-footer-social-link.js';
 
 const app = express();
 
+app.use(function (req, res, next) {
+	window.location = new URL(req.protocol + '://' + req.get('host') + req.originalUrl);
+  next();
+});
+
 app.use('/', proxy('http://localhost:8000', {
 	userResDecorator: function (proxyRes, proxyResData) {
 		return new Promise((resolve, reject) => {
