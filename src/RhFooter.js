@@ -314,8 +314,6 @@ export class RhFooter extends LitElement {
                       <rh-footer-link><a href="#">${this.translate('Red Hat OpenStack Platform')}</a></rh-footer-link>
                       <rh-footer-link><a href="#">${this.translate('See all products')}</a></rh-footer-link>
                     </rh-footer-links>
-                  </slot>
-                  <slot name="links--column3">
                     <rh-footer-links>
                       <h3>${this.translate('Try, buy, sell')}</h3>
                       <rh-footer-link><a href="#">${this.translate('Red Hat Store')}</a></rh-footer-link>
@@ -326,7 +324,7 @@ export class RhFooter extends LitElement {
                       <rh-footer-link><a href="#">${this.translate('See all products')}</a></rh-footer-link>
                     </rh-footer-links>
                   </slot>
-                  <slot name="links--column-4">
+                  <slot name="links--column4">
                     <rh-footer-links>
                       <h3>${this.translate('Communicate')}</h3>
                       <rh-footer-link><a href="#">${this.translate('Contact us')}</a></rh-footer-link>
@@ -357,9 +355,9 @@ export class RhFooter extends LitElement {
                     ${
                       !this.disableLanguageSwitcher
                         ? html`
-                            <p class="footer--description-title">
+                            <h3>
                               ${this.translate('Select a language')}
-                            </p>
+                            </h3>
                             <img src=${this.getImportURL('../assets/language-switcher.png')}>
                           `
                         : ''

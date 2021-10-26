@@ -5,20 +5,15 @@ export class RhFooterLinks extends LitElement {
 	static get styles() {
 		return css`
 			:host {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
 			}
 			::slotted(:is(h1,h2,h3,h4,h5)) {
 				font-weight: 500;
 				font-size: 14px;
 				margin-top: 0;
-			}
-			::slotted(ul) {
-				list-style: none;
-				margin: 0;
-				padding: 0;
-				font-size: 14px;
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
+				margin-bottom: 0;
 			}
 		`;
 	}
