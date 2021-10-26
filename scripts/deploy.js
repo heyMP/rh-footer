@@ -1,11 +1,10 @@
-import path from 'path';
 import esbuild from 'esbuild';
 import copy from 'recursive-copy';
 import replace from 'replace-in-file';
 
 esbuild
   .build({
-    entryPoints: ['demo/index.js'],
+    entryPoints: ['rh-footer.js'],
     entryNames: '[name]',
     outdir: 'deploy',
     format: 'esm',

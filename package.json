@@ -15,7 +15,9 @@
     "format": "eslint --ext .js,.html . --fix --ignore-path .gitignore && prettier \"**/*.js\" --write --ignore-path .gitignore",
     "test": "web-test-runner --coverage",
     "test:watch": "web-test-runner --watch",
-    "test:a11y": "axe http://localhost:3000/demo --timeout=120 --load-delay=2000"
+    "test:a11y": "axe http://localhost:3000/demo --timeout=120 --load-delay=2000",
+    "build": "npm run build:deploy",
+    "build:deploy": "node ./scripts/deploy.js"
   },
   "dependencies": {
     "lit": "^2.0.0",
@@ -30,10 +32,12 @@
     "@web/dev-server": "^0.1.24",
     "@web/test-runner": "^0.13.18",
     "cheerio": "^1.0.0-rc.10",
+    "esbuild": "^0.13.9",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "express": "^4.7.1",
     "express-http-proxy": "^1.6.2",
+    "glob": "^7.2.0",
     "nodesi": "*",
     "nodemon": "^2.0.13",
     "husky": "^4.3.8",
@@ -45,7 +49,9 @@
     "hast-util-from-parse5": "^7.1.0",
     "hast-util-find-and-replace": "^4.0.0",
     "hast-util-from-dom": "^4.0.1",
-    "hastscript": "^7.0.2"
+    "hastscript": "^7.0.2",
+    "recursive-copy": "^2.0.13",
+    "replace-in-file": "^6.3.2"
   },
   "customElements": "custom-elements.json",
   "eslintConfig": {
