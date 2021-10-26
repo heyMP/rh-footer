@@ -5,9 +5,9 @@ import { Readable } from 'stream';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 import './rh-footer.js';
-import './src/rh-footer-social-links.js';
-import './src/rh-footer-social-link.js';
 
+const PROXY_FQDN = process.env.PROXY_FQDN ?? 'http://localhost:8000';
+const PORT = process.env.PORT ?? '3000';
 const app = express();
 
 app.use(function (req, res, next) {
@@ -15,7 +15,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/', proxy('http://localhost:8000', {
+app.use('/', proxy(PROXY_FQDN, {
 	userResDecorator: function (proxyRes, proxyResData) {
 		return new Promise((resolve, reject) => {
 			if (proxyRes.headers['content-type'] === 'text/html; charset=utf-8') {
@@ -46,4 +46,4 @@ function readStream(stream, encoding = "utf8") {
 	});
 }
 
-app.listen(3000, () => console.log(`Listening on port 3000`));
+app.listen(PORT, () => console.log(`Listening on port 3000`));
