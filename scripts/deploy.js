@@ -23,11 +23,11 @@ esbuild
     // copy the assets directory into the build directory
     await copy('demo/index.html', 'deploy/index.html', { overwrite: true });
     // rewrite the entrypoint in the demo file
-    await replace({
-      files: 'deploy/index.html',
-      from: /src\=\"\/demo\/index\.js\"/g,
-      to: 'src="index.js"'
-    })
+    // await replace({
+    //   files: 'deploy/index.html',
+    //   from: /src\=\"\/demo\/index\.js\"/g,
+    //   to: 'src="index.js"'
+    // })
     result.stop;
   })
   .catch(error => console.error(error));

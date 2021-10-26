@@ -10,6 +10,8 @@ const PROXY_FQDN = process.env.PROXY_FQDN ?? 'http://localhost:8000';
 const PORT = process.env.PORT ?? '3000';
 const app = express();
 
+console.log(PROXY_FQDN);
+
 app.use(function (req, res, next) {
 	window.location = new URL(req.protocol + '://' + req.get('host') + req.originalUrl);
   next();
