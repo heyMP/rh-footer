@@ -9,7 +9,7 @@ import '../rh-footer.js';
 export default async function handler(req, res) {
 	// window.location = new URL(req.protocol + '://' + req.get('host') + req.originalUrl);
 	window.location = new URL(`${req.headers['x-forwarded-proto']}://${req.headers['x-vercel-deployment-url']}`);
-	const response = await fetch(PROXY_FQDN);
+	const response = await fetch(window.location);
 	const body = await response.text();
 
 	const ssrContent = await readStream(Readable.from(render(html`
