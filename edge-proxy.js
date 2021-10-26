@@ -33,7 +33,10 @@ app.use('/', proxy(PROXY_FQDN, {
 
 // lit-ssr version
 const rhEdgeProcess = async (content) => {
-	return await readStream(Readable.from(render(html`${unsafeHTML(content)}`)));
+	return await readStream(Readable.from(render(html`
+<script type="module" src="https://unpkg.com/lit/experimental-hydrate-support.js?module"></script>
+${unsafeHTML(content)}
+	`)));
 }
 
 function readStream(stream, encoding = "utf8") {
