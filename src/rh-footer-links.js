@@ -25,6 +25,7 @@ export class RhFooterLinks extends LitElement {
 
 	render() {
 		return html`
+			<slot name="header"></slot>
 			<slot></slot>
 		`;
 	}
