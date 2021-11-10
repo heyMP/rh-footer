@@ -18,7 +18,7 @@ export class MatchMediaController {
     this.observer.disconnect();
   }
   evaluate() {
-    // Start a timer when the host is connected
+    // use matchMedia to evaluate if the current media query is a match.
     this.value = window.matchMedia(this.mediaQuery).matches;
     // request a render update
     this.host.requestUpdate();
