@@ -1,11 +1,13 @@
 import { adoptStyles, css, LitElement, unsafeCSS } from 'lit';
 import { html, literal } from 'lit/static-html.js';
-import { MatchMediaController } from './MatchMediaController.js';
+import { MatchMediaController } from './lib/MatchMediaController.js';
 import './rh-footer-social-links.js';
 import './rh-footer-social-link.js';
 import './rh-footer-links.js';
 import './rh-footer-link.js';
 import './rh-footer-links-mobile.js';
+
+const mobileBreakpoint = unsafeCSS`700px`;
 
 export class RhFooter extends LitElement {
   static get translations() {
@@ -64,7 +66,6 @@ export class RhFooter extends LitElement {
         :host {
           display: flex;
           flex-direction: column;
-          --mobile-breakpoint: 700px;
         }
 
         /* Dan stuff  */
@@ -135,7 +136,7 @@ export class RhFooter extends LitElement {
           display: grid;
           grid-gap: 32px;
         }
-        @media screen and (min-width: 700px) {
+        @media screen and (min-width: ${mobileBreakpoint}) {
           .footer--list-container {
             grid-template-columns: repeat(4, 1fr);
           }
@@ -237,7 +238,7 @@ export class RhFooter extends LitElement {
     this.disableLanguageSwitcher = false;
     this._lang = 'en';
     this._langChangeHandler();
-    this.isMobile = new MatchMediaController(this, '(max-width: 700px)');
+    this.isMobile = new MatchMediaController(this, `(max-width: ${mobileBreakpoint})`);
   }
 
   connectedCallback() {
