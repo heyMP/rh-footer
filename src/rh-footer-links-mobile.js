@@ -1,4 +1,4 @@
-import { html, css, LitElement, render } from 'lit';
+import { css, html, LitElement, render } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 
 
