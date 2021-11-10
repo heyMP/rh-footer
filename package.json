@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "lit": "^2.0.0",
+    "@patternfly/pfe-accordion": "^1.11.2",
     "@patternfly/pfe-cta": "^1.11.2",
     "@patternfly/pfe-icon": "^1.11.2"
   },
