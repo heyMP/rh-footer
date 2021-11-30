@@ -24,7 +24,7 @@ While the web-dev-server is running on port 8000, start the proxy server.
 npm run start:proxy
 ```
 
-Visit http://localhost:3000/demo/
+Visit http://localhost:8001/demo/
 
 
 ## Notes
