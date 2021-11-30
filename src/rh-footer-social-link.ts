@@ -1,4 +1,5 @@
 import { css, html, LitElement, render } from 'lit';
+import { property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 export class RhFooterSocialLink extends LitElement {
@@ -13,15 +14,11 @@ export class RhFooterSocialLink extends LitElement {
       }
     `;
   }
-  static get properties() {
-    return {
-      icon: { type: String },
-    };
-  }
+
+	@property() icon: string | null = null
 
   constructor() {
     super();
-    this.icon = null;
     this.setAttribute('role', 'listitem');
   }
 
@@ -32,13 +29,15 @@ export class RhFooterSocialLink extends LitElement {
   updateLightdom() {
     const oldDiv = this.querySelector('a');
     if (oldDiv) {
-      const newDiv = oldDiv.cloneNode(true);
+      const newDiv = <Element>oldDiv.cloneNode(true);
       // remove the _rendered content
       newDiv.querySelectorAll('[_rendered]').forEach(i => {
         i.remove();
       });
       newDiv.innerHTML = `<pfe-icon icon="${this.icon}">${newDiv.innerHTML}</pfe-icon>`;
-      oldDiv.parentNode.replaceChild(newDiv, oldDiv);
+			if (oldDiv.parentNode) {
+				oldDiv.parentNode.replaceChild(newDiv, oldDiv);
+			}
     }
   }
 
