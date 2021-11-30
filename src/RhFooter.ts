@@ -361,9 +361,9 @@ export class RhFooter extends LitElement {
     if (url.protocol === 'file:') {
       return new URL(relativeLocation, window.location.href);
     }
-    else {
+    
       return url;
-    }
+    
   }
 
   _langChangeHandler(): void {

@@ -6,6 +6,7 @@ export class RhFooterSocialLink extends LitElement {
 	static get tag() {
 		return 'rh-footer-social-link';
 	}
+
   static get styles() {
     return css`
       :host {
