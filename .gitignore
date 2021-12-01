@@ -19,10 +19,12 @@
 /_site/
 /dist/
 /out-tsc/
+/deploy/
 
 storybook-static
 custom-elements.json
 
-# deploy
-/deploy/
+
+## TS
+tsconfig.tsbuildinfo
 .vercel

@@ -1,9 +1,5 @@
 # \<rh-footer>
 
-This is an experiment with mixing traditional slot based approach with a 'lightdom as data'
-approach where we derrive values for reactive properties from semantic lightdom that are 
-decorated with data attributes.
-
 ## Start Development Server
 
 Start the web-dev-server.
@@ -28,4 +24,34 @@ While the web-dev-server is running on port 8000, start the proxy server.
 npm run start:proxy
 ```
 
-Visit http://localhost:3000/demo/
+Visit http://localhost:8001/demo/
+
+## Notes
+
+### Modifications to Open-WC starter kit
+
+Modified tsconfig.json
+```json
+{
+  "compilerOptions": {
+		...
+    "target": "esnext",
+    "rootDir": "./src",
+    "useDefineForClassFields": false
+  },
+  "include": ["src/*.ts"]
+}
+```
+
+Added `scripts/build.js`
+
+Added build step to package.json
+```json
+{
+	...
+	"scripts": {
+		"build": "tsc && npm run analyze -- --exclude dist && npm run build:deploy",
+		"build:deploy": "node ./scripts/deploy.js",
+	}
+}
+```

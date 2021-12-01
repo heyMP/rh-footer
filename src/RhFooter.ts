@@ -1,4 +1,5 @@
-import { adoptStyles, css, LitElement, unsafeCSS } from 'lit';
+import { css, LitElement, unsafeCSS } from 'lit';
+import { property, state  } from 'lit/decorators.js';
 import { html, literal } from 'lit/static-html.js';
 import { MatchMediaController } from './lib/MatchMediaController.js';
 import './rh-footer-social-links.js';
@@ -10,55 +11,6 @@ import './rh-footer-links-mobile.js';
 const mobileBreakpoint = unsafeCSS`700px`;
 
 export class RhFooter extends LitElement {
-  static get translations() {
-    return {
-      "es": {
-        "Select a language": "Selecciona un idioma",
-        "Products":	"Productos",
-        "Red Hat Ansible Automation Platform": "Plataforma Red Hat Ansible Automation",
-        "Red Hat Enterprise Linux": "Red Hat Enterprise Linux",
-        "Red Hat OpenShift": "Red Hat OpenShift",
-        "Red Hat OpenShift Container Storage": "Almacenamiento de contenedores Red Hat OpenShift",
-        "Red Hat OpenStack Platform": "Plataforma Red Hat OpenStack",
-        "Tools": "Instrumentos",
-        "My account": "Mi cuenta",
-        "Customer support": "Atención al cliente",
-        "Contact training": "Entrenamiento de contacto",
-        "See all products": "Ver todos los productos",
-        "Try, buy, sell": "Prueba, compra, vende",
-        "Red Hat Store": "Tienda Red Hat",
-        "Communicate": "Comunicar",
-        "Contact us": "Contáctenos",
-        "Feedback": "Realimentación",
-        "Social": "Social",
-        "Red Hat newsletter": "Boletín de Red Hat",
-        "Email preferences": "Preferencias de correo electrónico",
-        "About Red Hat": "Acerca de Red Hat",
-        "Jobs": "Trabajos",
-        "Events": "Eventos",
-        "Locations": "Ubicaciones",
-        "Red Hat Blog": "Blog de Red Hat",
-        "Cool Stuff Store": "Tienda Cool Stuff",
-        "Privacy statement": "Declaracion de privacidad",
-        "Terms of use": "Condiciones de uso",
-        "All policies and guidelines": "Todas las políticas y pautas",
-        "Cookie preferences and Do not sell my info": "Preferencias de cookies y No vender mi información",
-        "We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.": "Somos el proveedor líder mundial de soluciones empresariales de código abierto, incluidos Linux, nube, contenedor y Kubernetes. Ofrecemos soluciones reforzadas que facilitan a las empresas el trabajo en plataformas y entornos, desde el centro de datos central hasta el borde de la red."
-      }
-    }
-  }
-
-  translate(string) {
-    if (
-      typeof this.constructor.translations[this._lang] !== "undefined" &&
-      typeof this.constructor.translations[this._lang][string] !== "undefined"
-    ) {
-      return this.constructor.translations[this._lang][string];
-    }
-    else {
-      return string;
-    }
-  }
 
   static get styles() {
     return [
@@ -220,41 +172,29 @@ export class RhFooter extends LitElement {
     ];
   }
 
-  static get properties() {
-    return {
-      disableLanguageSwitcher: {
-        type: Boolean,
-        attribute: 'disable-language-switcher',
-        reflect: true
-      },
-      _lang: {
-        type: String
-      }
-    };
-  }
+  @property({ attribute: 'disable-language-switcher', reflect: true }) disableLanguageSwitcher = false;
+
+  @state() private _lang = 'en';
+
+  private isMobile;
 
   constructor() {
     super();
-    this.disableLanguageSwitcher = false;
-    this._lang = 'en';
-    this._langChangeHandler();
     this.isMobile = new MatchMediaController(this, `(max-width: ${mobileBreakpoint})`);
   }
 
   connectedCallback() {
     super.connectedCallback();
-    window.addEventListener('languagechange', this._langChangeHandler.bind(this));
     // load these lazily, outside of the constructor. Must do this for SSR to work
     import("@patternfly/pfe-icon/dist/pfe-icon.js");
     import("@patternfly/pfe-accordion/dist/pfe-accordion.js");
   }
 
   disconnectedCallback() {
-    window.removeEventListener('languagechange', this._langChangeHandler.bind(this));
     super.disconnectedCallback();
   }
 
-  linksWrapperTag() {
+  linksWrapperTag(): unknown {
     return this.isMobile.value ? literal`rh-footer-links-mobile` : literal`div`;
   }
 
@@ -300,43 +240,43 @@ export class RhFooter extends LitElement {
                     <slot name="links--start"></slot>
                     <slot name="links--column1">
                       <rh-footer-links>
-                        <h3 slot="header">${this.translate('Products')}</h3>
-                        <rh-footer-link><a href="#">${this.translate('Red Hat Ansible Automation Platform')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Red Hat Enterprise Linux')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Red Hat OpenShift')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Red Hat OpenShift Container Storage')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Red Hat OpenStack Platform')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('See all products')}</a></rh-footer-link>
+                        <h3 slot="header">Products</h3>
+                        <rh-footer-link><a href="#">Red Hat Ansible Automation Platform</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Red Hat OpenShift Container Storage</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
+                        <rh-footer-link><a href="#">See all products</a></rh-footer-link>
                       </rh-footer-links>
                     </slot>
                     <slot name="links--column2">
                       <rh-footer-links>
-                        <h3 slot="header">${this.translate('Tools')}</h3>
-                        <rh-footer-link><a href="#">${this.translate('My account')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Customer support')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Red Hat OpenShift')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Contact training')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Red Hat OpenStack Platform')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('See all products')}</a></rh-footer-link>
+                        <h3 slot="header">Tools</h3>
+                        <rh-footer-link><a href="#">My account</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Customer support</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Contact training</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
+                        <rh-footer-link><a href="#">See all products</a></rh-footer-link>
                       </rh-footer-links>
                       <rh-footer-links>
-                        <h3 slot="header">${this.translate('Try, buy, sell')}</h3>
-                        <rh-footer-link><a href="#">${this.translate('Red Hat Store')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Red Hat Enterprise Linux')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Red Hat OpenShift')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Contact training')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Red Hat OpenStack Platform')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('See all products')}</a></rh-footer-link>
+                        <h3 slot="header">Try, buy, sell</h3>
+                        <rh-footer-link><a href="#">Red Hat Store</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Contact training</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
+                        <rh-footer-link><a href="#">See all products</a></rh-footer-link>
                       </rh-footer-links>
                     </slot>
                     <slot name="links--column4">
                       <rh-footer-links>
-                        <h3 slot="header">${this.translate('Communicate')}</h3>
-                        <rh-footer-link><a href="#">${this.translate('Contact us')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Feedback')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Social')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Red Hat newsletter')}</a></rh-footer-link>
-                        <rh-footer-link><a href="#">${this.translate('Email preferences')}</a></rh-footer-link>
+                        <h3 slot="header">Communicate</h3>
+                        <rh-footer-link><a href="#">Contact us</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Feedback</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Social</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Red Hat newsletter</a></rh-footer-link>
+                        <rh-footer-link><a href="#">Email preferences</a></rh-footer-link>
                       </rh-footer-links>
                     </slot>
                     <slot name="links--end"></slot>
@@ -346,12 +286,12 @@ export class RhFooter extends LitElement {
                 <div class="footer--description">
                   <slot name="description">
                     <slot name="description--title">
-                      <h3>${this.translate('About Red Hat')}</h3>
+                      <h3>About Red Hat</h3>
                     </slot>
                     <slot name="description--header"></slot>
                     <slot name="description--about-redhat">
                       <p>
-                        ${this.translate("We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.")}
+                        We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.
                       </p>
                     </slot>
                     <slot name="description--main"></slot>
@@ -361,7 +301,7 @@ export class RhFooter extends LitElement {
                       !this.disableLanguageSwitcher
                         ? html`
                             <h3>
-                              ${this.translate('Select a language')}
+                              Select a language
                             </h3>
                             <img src=${this.getImportURL('../assets/language-switcher.png')}>
                           `
@@ -381,22 +321,22 @@ export class RhFooter extends LitElement {
               <div class="group">
                 <div class="footer--global-list">
                   <ul>
-                    <li><a href="#">${this.translate('About Red Hat')}</a></li>
-                    <li><a href="#">${this.translate('Jobs')}</a></li>
-                    <li><a href="#">${this.translate('Events')}</a></li>
-                    <li><a href="#">${this.translate('Locations')}</a></li>
-                    <li><a href="#">${this.translate('Contact Red Hat')}</a></li>
-                    <li><a href="#">${this.translate('Red Hat Blog')}</a></li>
-                    <li><a href="#">${this.translate('Cool Stuff Store')}</a></li>
+                    <li><a href="#">About Red Hat</a></li>
+                    <li><a href="#">Jobs</a></li>
+                    <li><a href="#">Events</a></li>
+                    <li><a href="#">Locations</a></li>
+                    <li><a href="#">Contact Red Hat</a></li>
+                    <li><a href="#">Red Hat Blog</a></li>
+                    <li><a href="#">Cool Stuff Store</a></li>
                   </ul>
                 </div>
                 <div class="footer--legal">
                   <p>Copyright ®2021 Red Hat, Inc.</p>
                   <ul>
-                    <li><a href="#">${this.translate('Privacy statement')}</a></li>
-                    <li><a href="#">${this.translate('Terms of use')}</a></li>
-                    <li><a href="#">${this.translate('All policies and guidelines')}</a></li>
-                    <li><a href="#">${this.translate('Cookie preferences and Do not sell my info')}</a></li>
+                    <li><a href="#">Privacy statement</a></li>
+                    <li><a href="#">Terms of use</a></li>
+                    <li><a href="#">All policies and guidelines</a></li>
+                    <li><a href="#">Cookie preferences and Do not sell my info</a></li>
                   </ul>
                 </div>
               </div>
@@ -415,21 +355,18 @@ export class RhFooter extends LitElement {
   /**
    * Isomorphic import.meta.url function
    * Requires a node.js dom shim that sets window.location
-   *
-   * @param {string} relativeLocation
-   * @returns {string} url
    */
-  getImportURL(relativeLocation) {
+  getImportURL(relativeLocation: string | URL): string | URL {
     const url = new URL(relativeLocation, import.meta.url);
     if (url.protocol === 'file:') {
       return new URL(relativeLocation, window.location.href);
     }
-    else {
+    
       return url;
-    }
+    
   }
 
-  _langChangeHandler() {
+  _langChangeHandler(): void {
     if (document.querySelector) {
       const lang = document?.querySelector('[lang]')?.getAttribute('lang');
       if (lang) {
