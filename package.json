@@ -27,8 +27,7 @@
     "lit": "^2.0.2",
     "@patternfly/pfe-accordion": "^1.12.2",
     "@patternfly/pfe-cta": "^1.12.2",
-    "@patternfly/pfe-icon": "^1.12.2",
-    "resize-observer-polyfill": "^1.5.1"
+    "@patternfly/pfe-icon": "^1.12.2"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.4.17",

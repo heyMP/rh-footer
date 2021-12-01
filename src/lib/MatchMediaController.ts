@@ -1,5 +1,4 @@
 import type { ReactiveControllerHost, ReactiveController } from 'lit';
-import ResizeObserver from 'resize-observer-polyfill';
 
 export class MatchMediaController implements ReactiveController {
   // reference to the host element using this controller
@@ -10,8 +9,7 @@ export class MatchMediaController implements ReactiveController {
 
   private mediaQuery: string;
 
-  // using the resize-observer-polyfill so it will work in SSR
-  private resizeObserver = new ResizeObserver(this.evaluate.bind(this));
+  private resizeObserver?: ResizeObserver;
 
   constructor(host: ReactiveControllerHost & Element, mediaQuery: string = '') {
     (this.host = host).addController(this);
@@ -19,13 +17,15 @@ export class MatchMediaController implements ReactiveController {
   }
 
   hostConnected() {
+    this.resizeObserver = new ResizeObserver(this.evaluate.bind(this));
+
     if (this.host) {
       this.resizeObserver.observe(this.host);
     }
   }
 
   hostDisconnected() {
-    this.resizeObserver.disconnect();
+    if (this.resizeObserver) this.resizeObserver.disconnect();
   }
 
   evaluate() {

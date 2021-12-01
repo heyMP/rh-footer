@@ -55,10 +55,3 @@ Added build step to package.json
 	}
 }
 ```
-
-### Polyfills
-
-#### resize-observer-polyfill
-
-Because SSR doesn't have the ResizeObserver API, we are using a polyfill that will
-mock the functionality server-side. This is being used in the MatchMediaController.
