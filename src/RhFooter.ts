@@ -24,12 +24,14 @@ export class RhFooter extends LitElement {
           /* /remove */
         }
 
-        :host([debug]) * {
+        :host([debug]) *:not(.spacer) {
           position: relative;
           outline: 2px dotted red;
+          /* make sure we have some */
+          min-height: 25px;
         }
 
-        :host([debug]) :after {
+        :host([debug]) *:not(.spacer)::after {
           content: attr(part);
           display: block;
           position: absolute;
@@ -45,46 +47,78 @@ export class RhFooter extends LitElement {
           padding: var(--pf-global--spacer--xl, 32px) var(--pf-global--spacer--lg, 24px);
         }
 
-        .section--primary {
+        .header {
           background-color: #212427;
-          min-height: 300px;
-          /* Padding bottom on the primary section is smaller than usual */
-          padding-bottom: var(--pf-global--spacer--lg, 24px);
+          display: grid;
+          gap: var(--pf-global--spacer--xl, 32px);
+          border-bottom: 1px solid #6A6E73;
+        }
+
+        .main {
+          background-color: #212427;
           display: grid;
           gap: var(--pf-global--spacer--xl, 32px);
         }
 
-        .primary__header {
-          min-height: 80px;
-        }
-
-        .primary__header-aside {
-          min-height: 80px;
-        }
-
-        .primary__main {
-          min-height: 280px;
-          /* Increase the gap for this item on mobile */
-          margin: calc(var(--pf-global--spacer--2xl, 48px) - var(--pf-global--spacer--xl, 32px)) 0;
-        }
-
-        .primary__aside {
-          min-height: 200px;
-        }
-
-        .section--secondary {
+        .footer {
           background-color: #151515;
-          min-height: 100px;
           display: grid;
+          grid-template-columns: 1fr;
+          grid-template-areas:
+            "primary"
+            "secondary"
+            "tertiary";
           gap: var(--pf-global--spacer--xl, 32px);
+        }
+
+        .footer__primary {
+          grid-area: primary;
+        }
+
+        .footer__secondary {
+          grid-area: secondary;
+        }
+
+        .footer__tertiary {
+          grid-area: tertiary;
         }
 
         .secondary__main {
           min-height: 150px;
         }
 
-        .secondary__aside {
-          min-height: 100px;
+        @media screen and (min-width: 550px) {
+          .footer {
+            grid-template-columns: 4fr 4fr 4fr;
+            grid-template-areas:
+              "primary primary primary"
+              "secondary secondary tertiary";
+          }
+        }
+
+        @media screen and (max-width: ${mobileBreakpoint}) {
+          /* Add a bit more margin to the primary content on mobile */
+          .main__primary {
+            margin: calc(var(--pf-global--spacer--2xl, 48px) - var(--pf-global--spacer--xl, 32px)) 0;
+          }
+        }
+
+        @media screen and (min-width: ${mobileBreakpoint}) {
+          /* Equalize padding on mobile */
+          .section {
+            padding: var(--pf-global--spacer--xl, 32px);
+          }
+
+          .header, .main {
+            grid-template-columns: 8fr 4fr;
+          }
+
+          .footer {
+            grid-template-columns: 10fr 2fr;
+            grid-template-areas:
+              "primary tertiary"
+              "secondary tertiary";
+          }
         }
       `,
     ];
@@ -119,16 +153,19 @@ export class RhFooter extends LitElement {
   render() {
     return html`
       <footer class="base" part="base">
-        <section class="section section--primary" part="section section--primary">
-          <div class="primary__header" part="primary__header"></div>
-          <div class="primary__header-aside" part="primary__header-aside"></div>
-          <div class="primary__main" part="primary__main"></div>
-          <div class="primary__aside" part="primary__aside"></div>
-        </section>
-        <section class="section section--secondary" part="section section--secondary">
-          <div class="secondary__main" part="secondary__main"></div>
-          <div class="secondary__aside" part="secondary__aside"></div>
-        </section>
+        <div class="section header" part="section header">
+          <div class="header__primary" part="header__primary"></div>
+          <div class="header__secondary" part="header__secondary"></div>
+        </div>
+        <div class="section main" part="section main">
+          <div class="main__primary" part="main__primary"></div>
+          <div class="main__secondary" part="main__secondary"></div>
+        </div>
+        <div class="section footer" part="section footer">
+          <div class="footer__primary" part="footer__primary"></div>
+          <div class="footer__secondary" part="footer__secondary"></div>
+          <div class="footer__tertiary" part="footer__tertiary"></div>
+        </div>
       </footer>
     `;
   }
@@ -142,9 +179,7 @@ export class RhFooter extends LitElement {
     if (url.protocol === 'file:') {
       return new URL(relativeLocation, window.location.href);
     }
-    
       return url;
-    
   }
 
   _langChangeHandler(): void {
