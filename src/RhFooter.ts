@@ -18,6 +18,8 @@ export class RhFooter extends LitElement {
         :host {
           display: flex;
           flex-direction: column;
+          /* --pf-global--spacer--xl: 0px; */
+          /* --pf-global--spacer--2xl: 0px; */
         }
 
         /**
@@ -30,7 +32,7 @@ export class RhFooter extends LitElement {
           min-height: 25px;
         }
 
-        :host([debug]) *:not(.spacer)::after {
+        :host([debug]) *:not(.spacer, .base)::after {
           content: attr(part);
           display: block;
           position: absolute;
@@ -51,9 +53,22 @@ export class RhFooter extends LitElement {
 
         .header {
           background-color: #212427;
-          display: grid;
+          /* children should flex wrap on mobile */
+          display: flex;
+          flex-wrap: wrap;
           gap: var(--pf-global--spacer--xl, 32px);
           border-bottom: 1px solid #6A6E73;
+          align-items: center;
+        }
+
+        .header__primary {
+          flex: 1 1 auto;
+        }
+
+        .header__secondary {
+          /* secondary should be push to the end */
+          /* of the line on mobile */
+          flex: 0 1 auto;
         }
 
         .main {
@@ -112,6 +127,8 @@ export class RhFooter extends LitElement {
           }
 
           .header, .main {
+            /* switch header to use grid instead */
+            display: grid;
             grid-template-columns: 8fr 4fr;
           }
 
@@ -126,6 +143,11 @@ export class RhFooter extends LitElement {
         /**
          * Content
          */
+        .logo {
+          /* fix wierd problem where there is extra space below logo */
+          line-height: 0px;
+        }
+
         .logo slot::slotted(a),
         .logo a {
           display: inline-flex;
@@ -211,8 +233,12 @@ export class RhFooter extends LitElement {
           </div>
           <div class="section main" part="section main">
             <slot name="main">
-              <div class="main__primary" part="main__primary"></div>
-              <div class="main__secondary" part="main__secondary"></div>
+              <div class="main__primary" part="main__primary">
+                <slot name="main__primary"></slot>
+              </div>
+              <div class="main__secondary" part="main__secondary">
+                <slot name="main__secondary"></slot>
+              </div>
             </slot>
           </div>
           <div class="section footer" part="section footer">
