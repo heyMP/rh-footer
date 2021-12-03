@@ -153,19 +153,33 @@ export class RhFooter extends LitElement {
   render() {
     return html`
       <footer class="base" part="base">
-        <div class="section header" part="section header">
-          <div class="header__primary" part="header__primary"></div>
-          <div class="header__secondary" part="header__secondary"></div>
-        </div>
-        <div class="section main" part="section main">
-          <div class="main__primary" part="main__primary"></div>
-          <div class="main__secondary" part="main__secondary"></div>
-        </div>
-        <div class="section footer" part="section footer">
-          <div class="footer__primary" part="footer__primary"></div>
-          <div class="footer__secondary" part="footer__secondary"></div>
-          <div class="footer__tertiary" part="footer__tertiary"></div>
-        </div>
+        <slot name="base">
+          <div class="section header" part="section header">
+            <slot name="header">
+              <div class="header__primary" part="header__primary"></div>
+              <div class="header__secondary" part="header__secondary"></div>
+            </slot>
+          </div>
+          <div class="section main" part="section main">
+            <slot name="main">
+              <div class="main__primary" part="main__primary"></div>
+              <div class="main__secondary" part="main__secondary"></div>
+            </slot>
+          </div>
+          <div class="section footer" part="section footer">
+            <slot name="footer">
+              <div class="footer__primary" part="footer__primary">
+                <slot name="footer__primary"> </slot>
+              </div>
+              <div class="footer__secondary" part="footer__secondary">
+                <slot name="footer__secondary"></slot>
+              </div>
+              <div class="footer__tertiary" part="footer__tertiary">
+                <slot name="footer__tertiary"></slot>
+              </div>
+            </slot>
+          </div>
+        </slot>
       </footer>
     `;
   }
