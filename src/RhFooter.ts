@@ -18,12 +18,11 @@ export class RhFooter extends LitElement {
         :host {
           display: flex;
           flex-direction: column;
-          /* remove */
-          width: 100%;
-          background-color: #151515;
-          /* /remove */
         }
 
+        /**
+         * Debugging
+         */
         :host([debug]) *:not(.spacer) {
           position: relative;
           outline: 2px dotted red;
@@ -43,6 +42,9 @@ export class RhFooter extends LitElement {
           font-size: .7rem;
         }
 
+        /**
+         * Regions
+         */
         .section {
           padding: var(--pf-global--spacer--xl, 32px) var(--pf-global--spacer--lg, 24px);
         }
@@ -120,6 +122,21 @@ export class RhFooter extends LitElement {
               "secondary tertiary";
           }
         }
+
+        /**
+         * Content
+         */
+        .logo slot::slotted(a),
+        .logo a {
+          display: inline-flex;
+        }
+
+        .social-links {
+          --pfe-icon--color: #8a8d90;
+          display: flex;
+          margin-left: 0;
+          padding-left: 0;
+        }
       `,
     ];
   }
@@ -156,8 +173,40 @@ export class RhFooter extends LitElement {
         <slot name="base">
           <div class="section header" part="section header">
             <slot name="header">
-              <div class="header__primary" part="header__primary"></div>
-              <div class="header__secondary" part="header__secondary"></div>
+              <div class="header__primary" part="header__primary">
+                <slot name="header__primary">
+                  <div class="logo" part="logo">
+                    <slot name="logo">
+                      <a href="/en" title="Red Hat">
+                        <img
+                          id="logo__image"
+                          class="redhat-logo"
+                          src="https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--on-dark.svg"
+                          aria-hidden="true"
+                          style="width:156px;"
+                        />
+                      </a>
+                    </slot>
+                  </div>
+                </slot>
+              </div>
+              <div class="header__secondary" part="header__secondary">
+                <slot name="header__secondary">
+                  <div class="social-links">
+                    <slot name="social-links">
+                      <rh-footer-social-links slot="social-links">
+                        <h3>Social Media Links</h3>
+                        <slot name="social-links--start"></slot>
+                        <rh-footer-social-link icon="web-icon-linkedin"><a href="#LinkedIn">LinkedIn</a></rh-footer-social-link>
+                        <rh-footer-social-link icon="web-icon-youtube"><a href="#Youtube">Youtube</a></rh-footer-social-link>
+                        <rh-footer-social-link icon="web-icon-facebook"><a href="#Facebook">Facebook</a></rh-footer-social-link>
+                        <rh-footer-social-link icon="web-icon-twitter"><a href="#Twitter">Twitter</a></rh-footer-social-link>
+                        <slot name="social-links--end"></slot>
+                      </rh-footer-social-links>
+                    </slot>
+                  </div>
+                </slot>
+              </div>
             </slot>
           </div>
           <div class="section main" part="section main">
