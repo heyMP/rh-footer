@@ -67,32 +67,7 @@ export class RhFooter extends LitElement {
         .footer--social-link:last-child {
           margin-right: 0;
         }
-        .footer--list-header {
-          font-weight: 500;
-          font-size: 14px;
-        }
-        .footer--list ul {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-        }
-        .footer--list ul li {
-          margin-bottom: 16px;
-        }
-        .footer--list ul li a {
-          color: #fff;
-          font-size: 14px;
-          text-decoration: none;
-        }
-        .footer--list-container {
-          display: grid;
-          grid-gap: 32px;
-        }
-        @media screen and (min-width: ${mobileBreakpoint}) {
-          .footer--list-container {
-            grid-template-columns: repeat(4, 1fr);
-          }
-        }
+        
 
         slot[name="header--logo"]::slotted(*),
         slot[name="header--logo"] > * {

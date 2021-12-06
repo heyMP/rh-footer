@@ -22,6 +22,10 @@ export class RhFooterLinksMobile extends LitElement {
 				--pfe-accordion--BackgroundColor: rgba(247, 247, 249, 0.1);
 				--pfe-accordion--BackgroundColor--expanded: rgba(247, 247, 249, 0.1);
       }
+
+			.base {
+				width: 100%;
+			}
     `;
   }
 
@@ -66,7 +70,7 @@ export class RhFooterLinksMobile extends LitElement {
 
   render() {
     return html`
-			<div id="dynamic-links"></div>
+			<div id="dynamic-links" class="base" part="base"></div>
 			<slot id="default-slot" hidden></slot>
 		`;
   }

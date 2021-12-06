@@ -9,6 +9,7 @@ import './rh-footer-link.js';
 import './rh-footer-links-mobile.js';
 
 const mobileBreakpoint = unsafeCSS`700px`;
+const mobileXlBreakpoint = unsafeCSS`1008px`;
 
 export class RhFooter extends LitElement {
 
@@ -18,8 +19,11 @@ export class RhFooter extends LitElement {
         :host {
           display: flex;
           flex-direction: column;
-          /* --pf-global--spacer--xl: 0px; */
-          /* --pf-global--spacer--2xl: 0px; */
+          color: #fff;
+        }
+
+        * {
+          box-sizing: border-box;
         }
 
         /**
@@ -113,14 +117,14 @@ export class RhFooter extends LitElement {
           }
         }
 
-        @media screen and (max-width: ${mobileBreakpoint}) {
+        @media screen and (max-width: ${mobileXlBreakpoint}) {
           /* Add a bit more margin to the primary content on mobile */
           .main__primary {
             margin: calc(var(--pf-global--spacer--2xl, 48px) - var(--pf-global--spacer--xl, 32px)) 0;
           }
         }
 
-        @media screen and (min-width: ${mobileBreakpoint}) {
+        @media screen and (min-width: ${mobileXlBreakpoint}) {
           /* Equalize padding on mobile */
           .section {
             padding: var(--pf-global--spacer--xl, 32px);
@@ -159,6 +163,38 @@ export class RhFooter extends LitElement {
           margin-left: 0;
           padding-left: 0;
         }
+
+        .footer--list-header {
+          font-weight: 500;
+          font-size: 14px;
+        }
+
+        .footer--list ul {
+          list-style: none;
+          margin: 0;
+          padding: 0;
+        }
+
+        .footer--list ul li {
+          margin-bottom: 16px;
+        }
+
+        .footer--list ul li a {
+          color: #fff;
+          font-size: 14px;
+          text-decoration: none;
+        }
+
+        .footer--list-container {
+          display: flex;
+          gap: var(--pf-global--spacer--xl, 32px);
+          flex-wrap: wrap;
+        }
+
+        .footer--list-container rh-footer-links,
+        .footer--list-container slot::slotted(rh-footer-social-links) {
+          width: calc((100% / var(--rh-footer--links-columns, 4)) - var(--pf-global--spacer--xl, 32px));
+        }
       `,
     ];
   }
@@ -171,7 +207,7 @@ export class RhFooter extends LitElement {
 
   constructor() {
     super();
-    this.isMobile = new MatchMediaController(this, `(max-width: ${mobileBreakpoint})`);
+    this.isMobile = new MatchMediaController(this, `(max-width: ${mobileXlBreakpoint})`);
   }
 
   connectedCallback() {
@@ -234,7 +270,55 @@ export class RhFooter extends LitElement {
           <div class="section main" part="section main">
             <slot name="main">
               <div class="main__primary" part="main__primary">
-                <slot name="main__primary"></slot>
+                <slot name="main__primary">
+                  <${this.linksWrapperTag()} class="footer--list-container">
+                    <slot name="links">
+                      <slot name="links--start"></slot>
+                      <slot name="links--column1">
+                        <rh-footer-links>
+                          <h3 slot="header">Products</h3>
+                          <rh-footer-link><a href="#">Red Hat Ansible Automation Platform</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Red Hat OpenShift Container Storage</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
+                          <rh-footer-link><a href="#">See all products</a></rh-footer-link>
+                        </rh-footer-links>
+                      </slot>
+                      <slot name="links--column2">
+                        <rh-footer-links>
+                          <h3 slot="header">Tools</h3>
+                          <rh-footer-link><a href="#">My account</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Customer support</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Contact training</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
+                          <rh-footer-link><a href="#">See all products</a></rh-footer-link>
+                        </rh-footer-links>
+                        <rh-footer-links>
+                          <h3 slot="header">Try, buy, sell</h3>
+                          <rh-footer-link><a href="#">Red Hat Store</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Contact training</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
+                          <rh-footer-link><a href="#">See all products</a></rh-footer-link>
+                        </rh-footer-links>
+                      </slot>
+                      <slot name="links--column4">
+                        <rh-footer-links>
+                          <h3 slot="header">Communicate</h3>
+                          <rh-footer-link><a href="#">Contact us</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Feedback</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Social</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Red Hat newsletter</a></rh-footer-link>
+                          <rh-footer-link><a href="#">Email preferences</a></rh-footer-link>
+                        </rh-footer-links>
+                      </slot>
+                      <slot name="links--end"></slot>
+                    </slot>
+                  </${this.linksWrapperTag()}>
+                </slot>
               </div>
               <div class="main__secondary" part="main__secondary">
                 <slot name="main__secondary"></slot>
