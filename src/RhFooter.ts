@@ -1,15 +1,13 @@
 import { css, LitElement, unsafeCSS } from 'lit';
 import { property, state  } from 'lit/decorators.js';
 import { html, literal } from 'lit/static-html.js';
-import { MatchMediaController } from './lib/MatchMediaController.js';
-import './rh-footer-social-links.js';
-import './rh-footer-social-link.js';
-import './rh-footer-links.js';
-import './rh-footer-link.js';
-import './rh-footer-links-mobile.js';
-
-const mobileBreakpoint = unsafeCSS`700px`;
-const mobileXlBreakpoint = unsafeCSS`1008px`;
+import { MatchMediaController } from './lib/MatchMediaController';
+import { mobileBreakpoint, mobileXlBreakpoint } from './lib/tokens';
+import './rh-footer-social-links';
+import './rh-footer-social-link';
+import './rh-footer-links';
+import './rh-footer-link';
+import './rh-footer-links-mobile';
 
 export class RhFooter extends LitElement {
 
@@ -164,35 +162,14 @@ export class RhFooter extends LitElement {
           padding-left: 0;
         }
 
-        .footer--list-header {
-          font-weight: 500;
-          font-size: 14px;
-        }
-
-        .footer--list ul {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-        }
-
-        .footer--list ul li {
-          margin-bottom: 16px;
-        }
-
-        .footer--list ul li a {
-          color: #fff;
-          font-size: 14px;
-          text-decoration: none;
-        }
-
-        .footer--list-container {
+        .links {
           display: flex;
           gap: var(--pf-global--spacer--xl, 32px);
           flex-wrap: wrap;
         }
 
-        .footer--list-container rh-footer-links,
-        .footer--list-container slot::slotted(rh-footer-social-links) {
+        .links rh-footer-links,
+        .links slot::slotted(rh-footer-links) {
           width: calc((100% / var(--rh-footer--links-columns, 4)) - var(--pf-global--spacer--xl, 32px));
         }
       `,
@@ -252,13 +229,13 @@ export class RhFooter extends LitElement {
                 <slot name="header__secondary">
                   <div class="social-links">
                     <slot name="social-links">
-                      <rh-footer-social-links slot="social-links">
+                      <rh-footer-social-links class="social-links-item" part="social-links-item">
                         <h3>Social Media Links</h3>
                         <slot name="social-links--start"></slot>
-                        <rh-footer-social-link icon="web-icon-linkedin"><a href="#LinkedIn">LinkedIn</a></rh-footer-social-link>
-                        <rh-footer-social-link icon="web-icon-youtube"><a href="#Youtube">Youtube</a></rh-footer-social-link>
-                        <rh-footer-social-link icon="web-icon-facebook"><a href="#Facebook">Facebook</a></rh-footer-social-link>
-                        <rh-footer-social-link icon="web-icon-twitter"><a href="#Twitter">Twitter</a></rh-footer-social-link>
+                        <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-linkedin"><a href="#LinkedIn">LinkedIn</a></rh-footer-social-link>
+                        <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-youtube"><a href="#Youtube">Youtube</a></rh-footer-social-link>
+                        <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-facebook"><a href="#Facebook">Facebook</a></rh-footer-social-link>
+                        <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-twitter"><a href="#Twitter">Twitter</a></rh-footer-social-link>
                         <slot name="social-links--end"></slot>
                       </rh-footer-social-links>
                     </slot>
@@ -271,48 +248,48 @@ export class RhFooter extends LitElement {
             <slot name="main">
               <div class="main__primary" part="main__primary">
                 <slot name="main__primary">
-                  <${this.linksWrapperTag()} class="footer--list-container">
+                  <${this.linksWrapperTag()} class="links" part="links" exportparts="link">
                     <slot name="links">
                       <slot name="links--start"></slot>
                       <slot name="links--column1">
-                        <rh-footer-links>
+                        <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Products</h3>
-                          <rh-footer-link><a href="#">Red Hat Ansible Automation Platform</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Red Hat OpenShift Container Storage</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
-                          <rh-footer-link><a href="#">See all products</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat Ansible Automation Platform</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenShift</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenShift Container Storage</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
                         </rh-footer-links>
                       </slot>
                       <slot name="links--column2">
-                        <rh-footer-links>
+                        <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Tools</h3>
-                          <rh-footer-link><a href="#">My account</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Customer support</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Contact training</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
-                          <rh-footer-link><a href="#">See all products</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">My account</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Customer support</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenShift</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Contact training</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
                         </rh-footer-links>
-                        <rh-footer-links>
+                        <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Try, buy, sell</h3>
-                          <rh-footer-link><a href="#">Red Hat Store</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Contact training</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
-                          <rh-footer-link><a href="#">See all products</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat Store</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenShift</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Contact training</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
                         </rh-footer-links>
                       </slot>
                       <slot name="links--column4">
-                        <rh-footer-links>
+                        <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Communicate</h3>
-                          <rh-footer-link><a href="#">Contact us</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Feedback</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Social</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Red Hat newsletter</a></rh-footer-link>
-                          <rh-footer-link><a href="#">Email preferences</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Contact us</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Feedback</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Social</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat newsletter</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Email preferences</a></rh-footer-link>
                         </rh-footer-links>
                       </slot>
                       <slot name="links--end"></slot>

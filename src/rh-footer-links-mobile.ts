@@ -1,5 +1,7 @@
 import { css, html, LitElement, render } from 'lit';
+import { state } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { mobileBreakpoint } from './lib/tokens';
 
 interface LinkSet {
 	header: HTMLElement | null,
@@ -10,6 +12,8 @@ export class RhFooterLinksMobile extends LitElement {
   static get tag() {
     return `rh-footer-links-mobile`;
   }
+
+	@state() private linkSets?: LinkSet[];
 
   static get styles() {
     return css`
@@ -26,18 +30,27 @@ export class RhFooterLinksMobile extends LitElement {
 			.base {
 				width: 100%;
 			}
-    `;
-  }
 
-  constructor() {
-    super();
+			.link a {
+				font-size: var(--rh-footer-mobile-link--FontSize, 16px);
+			}
+
+			@media screen and (min-width: ${mobileBreakpoint}) {
+				.link {
+					display: inline-flex;
+					gap:var(--pf-global--spacer--lg, 24px);
+					width: calc(50%);
+					margin-bottom: var(--pf-global--spacer--md, 16px);
+				}
+			}
+    `;
   }
 
 	firstUpdated() {
 		this.build();
 	}
 
-	build(): void {
+	async build(): Promise<void> {
 		// get a list of rh-footer-links items
 		if (this.shadowRoot) {
 			const children = this.shadowRoot.querySelector('slot')?.assignedElements({ flatten: true });
@@ -50,27 +63,25 @@ export class RhFooterLinksMobile extends LitElement {
 						panel: [...item.children].filter(child => child.getAttribute('slot') !== 'header'),
 					}));
 
-				// Render the mobile links template using lit-html
-				const outlet = this.shadowRoot.querySelector('#dynamic-links');
-				if (outlet && linkSets) render(this.renderMobileLinks(linkSets), <HTMLElement>outlet);
+				if (linkSets) {
+					this.linkSets = linkSets;
+				}
 			};
 		}
 	}
 
-	renderMobileLinks(data: LinkSet[]): any {
-		return html`
-			<pfe-accordion>
-				${data.map(item => html`
-					<pfe-accordion-header>${unsafeHTML(item.header?.outerHTML)}</pfe-accordion-header>
-					<pfe-accordion-panel>${item.panel.map(_item => html`${unsafeHTML(_item.outerHTML)}`)}</pfe-accordion-panel>
-				`)}
-			</pfe-accordion>
-		`
-	}
-
   render() {
     return html`
-			<div id="dynamic-links" class="base" part="base"></div>
+			<div id="dynamic-links" class="base" part="base">
+				${this.linkSets ? html`
+					<pfe-accordion part="accordion">
+						${this.linkSets?.map(item => html`
+							<pfe-accordion-header part="accordion-header">${unsafeHTML(item.header?.outerHTML)}</pfe-accordion-header>
+							<pfe-accordion-panel part="accordion-panel">${item.panel.map(_item => html`${unsafeHTML(_item.outerHTML)}`)}</pfe-accordion-panel>
+						`)}
+					</pfe-accordion>
+				` : ''}
+			</div>
 			<slot id="default-slot" hidden></slot>
 		`;
   }
