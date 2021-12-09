@@ -31,17 +31,21 @@ export class RhFooterLinksMobile extends LitElement {
 				width: 100%;
 			}
 
-			.link a {
-				font-size: var(--rh-footer-mobile-link--FontSize, 16px);
+			.link {
+				display: inline-flex;
+				width: 100%;
+				gap: var(--pf-global--spacer--lg, 24px);
+				margin-bottom: var(--pf-global--spacer--md, 16px);
 			}
 
 			@media screen and (min-width: ${mobileBreakpoint}) {
 				.link {
-					display: inline-flex;
-					gap:var(--pf-global--spacer--lg, 24px);
 					width: calc(50%);
-					margin-bottom: var(--pf-global--spacer--md, 16px);
 				}
+			}
+
+			.link a {
+				font-size: var(--rh-footer-mobile-link--FontSize, 16px);
 			}
     `;
   }
