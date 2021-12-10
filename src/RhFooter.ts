@@ -15,6 +15,7 @@ export class RhFooter extends LitElement {
     return [
       css`
         :host {
+          --_border-color: var(--rh-footer-border-color, #6A6E73);
           display: flex;
           flex-direction: column;
           color: #fff;
@@ -59,7 +60,7 @@ export class RhFooter extends LitElement {
           display: flex;
           flex-wrap: wrap;
           gap: var(--pf-global--spacer--xl, 32px);
-          border-bottom: 1px solid #6A6E73;
+          border-bottom: 1px solid var(--_border-color);
           align-items: center;
         }
 

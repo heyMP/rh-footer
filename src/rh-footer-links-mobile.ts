@@ -23,8 +23,10 @@ export class RhFooterLinksMobile extends LitElement {
 				--pfe-accordion--Color: #fff;
 				--pfe-accordion--Color--expanded: #fff;
 				--pfe-accordion--Color--active: #fff;
-				--pfe-accordion--BackgroundColor: rgba(247, 247, 249, 0.1);
-				--pfe-accordion--BackgroundColor--expanded: rgba(247, 247, 249, 0.1);
+				--pfe-accordion--BackgroundColor: transparent;
+				--pfe-accordion--BackgroundColor--expanded: #151515;
+				--pfe-accordion--BorderColor: var(--_border-color);
+				--pfe-accordion--FontWeight--header: 300;
       }
 
 			.base {
