@@ -1,13 +1,13 @@
 import { css, LitElement, unsafeCSS } from 'lit';
 import { property, state  } from 'lit/decorators.js';
 import { html, literal } from 'lit/static-html.js';
-import { MatchMediaController } from './lib/MatchMediaController';
-import { mobileBreakpoint, mobileXlBreakpoint } from './lib/tokens';
-import './rh-footer-social-links';
-import './rh-footer-social-link';
-import './rh-footer-links';
-import './rh-footer-link';
-import './rh-footer-links-mobile';
+import { MatchMediaController } from './lib/MatchMediaController.js';
+import { mobileBreakpoint, mobileXlBreakpoint } from './lib/tokens.js';
+import './rh-footer-social-links.js';
+import './rh-footer-social-link.js';
+import './rh-footer-links.js';
+import './rh-footer-link.js';
+import './rh-footer-links-mobile.js';
 
 export class RhFooter extends LitElement {
 
@@ -249,6 +249,7 @@ export class RhFooter extends LitElement {
             <slot name="main">
               <div class="main__primary" part="main__primary">
                 <slot name="main__primary">
+                  <!-- This breaks Lit SSR -->
                   <${this.linksWrapperTag()} class="links" part="links" exportparts="link">
                     <slot name="links">
                       <slot name="links--start"></slot>

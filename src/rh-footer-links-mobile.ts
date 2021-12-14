@@ -1,7 +1,7 @@
 import { css, html, LitElement, render } from 'lit';
 import { state } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { mobileBreakpoint } from './lib/tokens';
+import { mobileBreakpoint } from './lib/tokens.js';
 
 interface LinkSet {
 	header: HTMLElement | null,
