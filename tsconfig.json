@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "esnext",
+    "target": "es2018",
     "module": "esnext",
     "moduleResolution": "node",
     "noEmitOnError": true,
@@ -10,13 +10,12 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "outDir": "dist",
+    "outDir": "out-tsc",
     "sourceMap": true,
     "inlineSources": true,
-    "rootDir": "./src",
-    "declaration": true,
+    "rootDir": "./",
     "incremental": true,
     "useDefineForClassFields": false
   },
-  "include": ["src/*.ts"]
+  "include": ["**/*.ts"]
 }
