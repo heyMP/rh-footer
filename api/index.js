@@ -3,7 +3,7 @@ import { render } from '@lit-labs/ssr/lib/render-with-global-dom-shim.js';
 import { Readable } from 'stream';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import '../dist/rh-footer.js';
+import '../out-tsc/src/rh-footer.js';
 
 export default async function handler(req, res) {
 	window.location = new URL(`${req.headers['x-forwarded-proto']}://${req.headers['x-vercel-deployment-url']}`);
