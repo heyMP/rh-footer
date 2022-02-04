@@ -1,5 +1,7 @@
 import { css, html, LitElement, render } from 'lit';
+import { state } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
+import { mobileBreakpoint } from './lib/tokens.js';
 
 interface LinkSet {
 	header: HTMLElement | null,
@@ -11,6 +13,8 @@ export class RhFooterLinksMobile extends LitElement {
     return `rh-footer-links-mobile`;
   }
 
+	@state() private linkSets?: LinkSet[];
+
   static get styles() {
     return css`
       :host {
@@ -19,21 +23,40 @@ export class RhFooterLinksMobile extends LitElement {
 				--pfe-accordion--Color: #fff;
 				--pfe-accordion--Color--expanded: #fff;
 				--pfe-accordion--Color--active: #fff;
-				--pfe-accordion--BackgroundColor: rgba(247, 247, 249, 0.1);
-				--pfe-accordion--BackgroundColor--expanded: rgba(247, 247, 249, 0.1);
+				--pfe-accordion--BackgroundColor: transparent;
+				--pfe-accordion--BackgroundColor--expanded: #151515;
+				--pfe-accordion--BorderColor: var(--_border-color);
+				--pfe-accordion--FontWeight--header: 300;
       }
-    `;
-  }
 
-  constructor() {
-    super();
+			.base {
+				width: 100%;
+			}
+
+			.link {
+				display: inline-flex;
+				width: 100%;
+				gap: var(--pf-global--spacer--lg, 24px);
+				margin-bottom: var(--pf-global--spacer--md, 16px);
+			}
+
+			@media screen and (min-width: ${mobileBreakpoint}) {
+				.link {
+					width: calc(50%);
+				}
+			}
+
+			.link a {
+				font-size: var(--rh-footer-mobile-link--FontSize, 16px);
+			}
+    `;
   }
 
 	firstUpdated() {
 		this.build();
 	}
 
-	build(): void {
+	async build(): Promise<void> {
 		// get a list of rh-footer-links items
 		if (this.shadowRoot) {
 			const children = this.shadowRoot.querySelector('slot')?.assignedElements({ flatten: true });
@@ -46,27 +69,25 @@ export class RhFooterLinksMobile extends LitElement {
 						panel: [...item.children].filter(child => child.getAttribute('slot') !== 'header'),
 					}));
 
-				// Render the mobile links template using lit-html
-				const outlet = this.shadowRoot.querySelector('#dynamic-links');
-				if (outlet && linkSets) render(this.renderMobileLinks(linkSets), <HTMLElement>outlet);
+				if (linkSets) {
+					this.linkSets = linkSets;
+				}
 			};
 		}
 	}
 
-	renderMobileLinks(data: LinkSet[]): any {
-		return html`
-			<pfe-accordion>
-				${data.map(item => html`
-					<pfe-accordion-header>${unsafeHTML(item.header?.outerHTML)}</pfe-accordion-header>
-					<pfe-accordion-panel>${item.panel.map(_item => html`${unsafeHTML(_item.outerHTML)}`)}</pfe-accordion-panel>
-				`)}
-			</pfe-accordion>
-		`
-	}
-
   render() {
     return html`
-			<div id="dynamic-links"></div>
+			<div id="dynamic-links" class="base" part="base">
+				${this.linkSets ? html`
+					<pfe-accordion part="accordion">
+						${this.linkSets?.map(item => html`
+							<pfe-accordion-header part="accordion-header">${unsafeHTML(item.header?.outerHTML)}</pfe-accordion-header>
+							<pfe-accordion-panel part="accordion-panel">${item.panel.map(_item => html`${unsafeHTML(_item.outerHTML)}`)}</pfe-accordion-panel>
+						`)}
+					</pfe-accordion>
+				` : ''}
+			</div>
 			<slot id="default-slot" hidden></slot>
 		`;
   }

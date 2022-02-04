@@ -2,13 +2,12 @@ import { css, LitElement, unsafeCSS } from 'lit';
 import { property, state  } from 'lit/decorators.js';
 import { html, literal } from 'lit/static-html.js';
 import { MatchMediaController } from './lib/MatchMediaController.js';
+import { mobileBreakpoint, mobileXlBreakpoint } from './lib/tokens.js';
 import './rh-footer-social-links.js';
 import './rh-footer-social-link.js';
 import './rh-footer-links.js';
 import './rh-footer-link.js';
 import './rh-footer-links-mobile.js';
-
-const mobileBreakpoint = unsafeCSS`700px`;
 
 export class RhFooter extends LitElement {
 
@@ -16,157 +15,163 @@ export class RhFooter extends LitElement {
     return [
       css`
         :host {
+          --_border-color: var(--rh-footer-border-color, #6A6E73);
           display: flex;
           flex-direction: column;
-        }
-
-        /* Dan stuff  */
-        footer {
-          background-color: #212427;
           color: #fff;
-          font-family: 'Red Hat Text';
         }
 
-        .footer--body-container {
-          display: grid;
-          grid-template-columns: 2fr 1fr;
-          grid-gap: 64px;
-          margin: 32px 0;
+        * {
+          box-sizing: border-box;
         }
 
-        .footer--container {
-          max-width: 1320px;
-          margin: 0 auto;
+        /**
+         * Debugging
+         */
+        :host([debug]) *:not(.spacer) {
+          position: relative;
+          outline: 2px dotted red;
+          /* make sure we have some */
+          min-height: 25px;
         }
 
-        .footer--header {
-          --pfe-icon--color: #8a8d90;
-          display: grid;
-          grid-template-columns: 2fr 1fr;
-          padding: 32px 0;
-          grid-gap: 64px;
-          border-bottom: 1px solid #6a6e73;
+        :host([debug]) *:not(.spacer, .base)::after {
+          content: attr(part);
+          display: block;
+          position: absolute;
+          color: white;
+          background-color: darkslategray;
+          padding: .3em;
+          top: 0;
+          right: 0;
+          font-size: .7rem;
+        }
+
+        /**
+         * Regions
+         */
+        .section {
+          padding: var(--pf-global--spacer--xl, 32px) var(--pf-global--spacer--lg, 24px);
+        }
+
+        .header {
+          background-color: #212427;
+          /* children should flex wrap on mobile */
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--pf-global--spacer--xl, 32px);
+          border-bottom: 1px solid var(--_border-color);
           align-items: center;
         }
 
-        .footer--header-section img {
-          display: block;
-          max-width: 160px;
+        .header__primary {
+          flex: 1 1 auto;
         }
 
-        .footer--social-links {
+        .header__secondary {
+          /* secondary should be push to the end */
+          /* of the line on mobile */
+          flex: 0 1 auto;
+        }
+
+        .main {
+          background-color: #212427;
+          display: grid;
+          gap: var(--pf-global--spacer--xl, 32px);
+        }
+
+        .footer {
+          background-color: #151515;
+          display: grid;
+          grid-template-columns: 1fr;
+          grid-template-areas:
+            "primary"
+            "secondary"
+            "tertiary";
+          gap: var(--pf-global--spacer--xl, 32px);
+        }
+
+        .footer__primary {
+          grid-area: primary;
+        }
+
+        .footer__secondary {
+          grid-area: secondary;
+        }
+
+        .footer__tertiary {
+          grid-area: tertiary;
+        }
+
+        .secondary__main {
+          min-height: 150px;
+        }
+
+        @media screen and (min-width: 550px) {
+          .footer {
+            grid-template-columns: 4fr 4fr 4fr;
+            grid-template-areas:
+              "primary primary primary"
+              "secondary secondary tertiary";
+          }
+        }
+
+        @media screen and (max-width: ${mobileXlBreakpoint}) {
+          /* Add a bit more margin to the primary content on mobile */
+          .main__primary {
+            margin: calc(var(--pf-global--spacer--2xl, 48px) - var(--pf-global--spacer--xl, 32px)) 0;
+          }
+        }
+
+        @media screen and (min-width: ${mobileXlBreakpoint}) {
+          /* Equalize padding on mobile */
+          .section {
+            padding: var(--pf-global--spacer--xl, 32px);
+          }
+
+          .header, .main {
+            /* switch header to use grid instead */
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+          }
+
+          .footer {
+            grid-template-columns: 10fr 2fr;
+            grid-template-areas:
+              "primary tertiary"
+              "secondary tertiary";
+          }
+        }
+
+        /**
+         * Content
+         */
+        .logo {
+          /* fix wierd problem where there is extra space below logo */
+          line-height: 0px;
+        }
+
+        .logo slot::slotted(a),
+        .logo a {
+          display: inline-flex;
+        }
+
+        .social-links {
+          --pfe-icon--color: #8a8d90;
           display: flex;
           margin-left: 0;
           padding-left: 0;
         }
-        .footer--social-link {
-          display: inline-block;
-          margin-right: 18px;
-          --pfe-icon--size: var(--rh-social-icon--size, 32px);
-        }
-        .footer--social-link:last-child {
-          margin-right: 0;
-        }
-        .footer--list-header {
-          font-weight: 500;
-          font-size: 14px;
-        }
-        .footer--list ul {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-        }
-        .footer--list ul li {
-          margin-bottom: 16px;
-        }
-        .footer--list ul li a {
-          color: #fff;
-          font-size: 14px;
-          text-decoration: none;
-        }
-        .footer--list-container {
-          display: grid;
-          grid-gap: 32px;
-        }
-        @media screen and (min-width: ${mobileBreakpoint}) {
-          .footer--list-container {
-            grid-template-columns: repeat(4, 1fr);
-          }
+
+        .links {
+          display: flex;
+          gap: var(--pf-global--spacer--xl, 32px);
+          flex-wrap: wrap;
         }
 
-        slot[name="header--logo"]::slotted(*),
-        slot[name="header--logo"] > * {
-          display: inline-flex;
-        }
-
-        .footer--description *:is(h1,h2,h3,h4,h5,h6),
-        .footer--description slot::slotted(*:is(h1,h2,h3,h4,h5,h6)) {
-          font-weight: 500;
-          font-size: 14px;
-          color: #fff;
-          margin-top: 0;
-        }
-        .footer--description *:not(h1,h2,h3,h4,h5,h6),
-        .footer--description slot::slotted(*:not(h1,h2,h3,h4,h5,h6)) {
-          color: #d2d2d2;
-          font-size: 14px;
-          line-height: 21px;
-        }
-
-        .footer--splitter {
-          margin: 32px 0;
-          background-color: #6a6e73;
-          height: 1px;
-          width: auto;
-        }
-
-        .footer--global {
-          background-color: #151515;
-          padding: 32px 0;
-        }
-        .footer--global-list {
-          align-items: center;
-        }
-        .footer--global-list ul {
-          padding-left: 0;
-          margin-top: 8px;
-          margin-bottom: 24px;
-        }
-        .footer--global-list ul li {
-          display: inline-block;
-          padding-right: 32px;
-        }
-        .footer--global-list ul li a {
-          color: #fff;
-          font-size: 14px;
-        }
-        .footer--legal p {
-          font-size: 12px;
-          color: #d2d2d2;
-          margin-bottom: 5px;
-        }
-        .footer--legal ul {
-          padding-left: 0;
-          margin-top: 0;
-        }
-        .footer--legal ul li {
-          display: inline-block;
-          text-decoration: underline;
-          margin-right: 24px;
-        }
-        .footer--legal ul li a {
-          color: #d2d2d2;
-          font-size: 12px;
-        }
-        .footer--promo {
-          text-align: right;
-        }
-
-        .footer--layout-special {
-          display: grid;
-          grid-template-columns: 42px 4fr 1fr;
-          gap: 32px;
-          align-items: top;
+        .links rh-footer-links,
+        .links slot::slotted(rh-footer-links) {
+          width: calc((100% / var(--rh-footer--links-columns, 4)) - var(--pf-global--spacer--xl, 32px));
         }
       `,
     ];
@@ -180,7 +185,7 @@ export class RhFooter extends LitElement {
 
   constructor() {
     super();
-    this.isMobile = new MatchMediaController(this, `(max-width: ${mobileBreakpoint})`);
+    this.isMobile = new MatchMediaController(this, `(max-width: ${mobileXlBreakpoint})`);
   }
 
   connectedCallback() {
@@ -200,155 +205,120 @@ export class RhFooter extends LitElement {
 
   render() {
     return html`
-      <slot name="styles" hidden></slot>
-      <footer>
-        <div class="footer--container">
-          <section class="footer--header">
-            <div class="footer--header-section">
-              <slot name="header--logo">
-                <a href="/en" title="Red Hat">
-                  <img
-                    id="logo__image"
-                    class="redhat-logo"
-                    src="https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--on-dark.svg"
-                    aria-hidden="true"
-                    style="width:156px;"
-                  />
-                </a>
-              </slot>
-            </div>
-            <div class="footer--header-section">
-              <div class="footer--social-links">
-                <slot name="social-links">
-                  <rh-footer-social-links slot="social-links">
-                    <h3>Social Media Links</h3>
-                    <slot name="social-links--start"></slot>
-                    <rh-footer-social-link icon="web-icon-linkedin"><a href="#LinkedIn">LinkedIn</a></rh-footer-social-link>
-                    <rh-footer-social-link icon="web-icon-youtube"><a href="#Youtube">Youtube</a></rh-footer-social-link>
-                    <rh-footer-social-link icon="web-icon-facebook"><a href="#Facebook">Facebook</a></rh-footer-social-link>
-                    <rh-footer-social-link icon="web-icon-twitter"><a href="#Twitter">Twitter</a></rh-footer-social-link>
-                    <slot name="social-links--end"></slot>
-                  </rh-footer-social-links>
+      <footer class="base" part="base">
+        <slot name="base">
+          <div class="section header" part="section header">
+            <slot name="header">
+              <div class="header__primary" part="header__primary">
+                <slot name="header__primary">
+                  <div class="logo" part="logo">
+                    <slot name="logo">
+                      <a href="/en" title="Red Hat">
+                        <img
+                          id="logo__image"
+                          class="redhat-logo"
+                          src="https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--on-dark.svg"
+                          aria-hidden="true"
+                          style="width:156px;"
+                        />
+                      </a>
+                    </slot>
+                  </div>
                 </slot>
               </div>
-            </div>
-          </section>
-          <section class="footer--body">
-            <div class="footer--body-container">
-              <${this.linksWrapperTag()} class="footer--list-container">
-                  <slot name="links">
-                    <slot name="links--start"></slot>
-                    <slot name="links--column1">
-                      <rh-footer-links>
-                        <h3 slot="header">Products</h3>
-                        <rh-footer-link><a href="#">Red Hat Ansible Automation Platform</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Red Hat OpenShift Container Storage</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
-                        <rh-footer-link><a href="#">See all products</a></rh-footer-link>
-                      </rh-footer-links>
+              <div class="header__secondary" part="header__secondary">
+                <slot name="header__secondary">
+                  <div class="social-links">
+                    <slot name="social-links">
+                      <rh-footer-social-links class="social-links-item" part="social-links-item">
+                        <h3>Social Media Links</h3>
+                        <slot name="social-links--start"></slot>
+                        <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-linkedin"><a href="#LinkedIn">LinkedIn</a></rh-footer-social-link>
+                        <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-youtube"><a href="#Youtube">Youtube</a></rh-footer-social-link>
+                        <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-facebook"><a href="#Facebook">Facebook</a></rh-footer-social-link>
+                        <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-twitter"><a href="#Twitter">Twitter</a></rh-footer-social-link>
+                        <slot name="social-links--end"></slot>
+                      </rh-footer-social-links>
                     </slot>
-                    <slot name="links--column2">
-                      <rh-footer-links>
-                        <h3 slot="header">Tools</h3>
-                        <rh-footer-link><a href="#">My account</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Customer support</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Contact training</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
-                        <rh-footer-link><a href="#">See all products</a></rh-footer-link>
-                      </rh-footer-links>
-                      <rh-footer-links>
-                        <h3 slot="header">Try, buy, sell</h3>
-                        <rh-footer-link><a href="#">Red Hat Store</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Contact training</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
-                        <rh-footer-link><a href="#">See all products</a></rh-footer-link>
-                      </rh-footer-links>
-                    </slot>
-                    <slot name="links--column4">
-                      <rh-footer-links>
-                        <h3 slot="header">Communicate</h3>
-                        <rh-footer-link><a href="#">Contact us</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Feedback</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Social</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Red Hat newsletter</a></rh-footer-link>
-                        <rh-footer-link><a href="#">Email preferences</a></rh-footer-link>
-                      </rh-footer-links>
-                    </slot>
-                    <slot name="links--end"></slot>
-                  </slot>
-              </${this.linksWrapperTag()}>
-              <div class="footer--container-item">
-                <div class="footer--description">
-                  <slot name="description">
-                    <slot name="description--title">
-                      <h3>About Red Hat</h3>
-                    </slot>
-                    <slot name="description--header"></slot>
-                    <slot name="description--about-redhat">
-                      <p>
-                        We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.
-                      </p>
-                    </slot>
-                    <slot name="description--main"></slot>
-                    <div class="footer--splitter"></div>
-                    <slot name="description--footer"></slot>
-                    ${
-                      !this.disableLanguageSwitcher
-                        ? html`
-                            <h3>
-                              Select a language
-                            </h3>
-                            <img src=${this.getImportURL('../assets/language-switcher.png')}>
-                          `
-                        : ''
-                    }
-                  </slot>
-                </div>
+                  </div>
+                </slot>
               </div>
-            </div>
-        </div>
-        <section class="footer--global">
-          <div class="footer--container">
-            <div class="footer--layout-special">
-              <div class="footer--logo">
-                <img src=${this.getImportURL('../assets/small-logo-on-dark.png')} />
-              </div>
-              <div class="group">
-                <div class="footer--global-list">
-                  <ul>
-                    <li><a href="#">About Red Hat</a></li>
-                    <li><a href="#">Jobs</a></li>
-                    <li><a href="#">Events</a></li>
-                    <li><a href="#">Locations</a></li>
-                    <li><a href="#">Contact Red Hat</a></li>
-                    <li><a href="#">Red Hat Blog</a></li>
-                    <li><a href="#">Cool Stuff Store</a></li>
-                  </ul>
-                </div>
-                <div class="footer--legal">
-                  <p>Copyright ®2021 Red Hat, Inc.</p>
-                  <ul>
-                    <li><a href="#">Privacy statement</a></li>
-                    <li><a href="#">Terms of use</a></li>
-                    <li><a href="#">All policies and guidelines</a></li>
-                    <li><a href="#">Cookie preferences and Do not sell my info</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="footer--promo">
-                <slot name="footer--promo"></slot>
-              </div>
-            </div>
+            </slot>
           </div>
-        </section>
-      </div>
-      <slot hidden></slot>
-    </footer>
+          <div class="section main" part="section main">
+            <slot name="main">
+              <div class="main__primary" part="main__primary">
+                <slot name="main__primary">
+                  <!-- This breaks Lit SSR -->
+                  <${this.linksWrapperTag()} class="links" part="links" exportparts="link">
+                    <slot name="links">
+                      <slot name="links--start"></slot>
+                      <slot name="links--column1">
+                        <rh-footer-links class="links-item" part="links-item">
+                          <h3 slot="header">Products</h3>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat Ansible Automation Platform</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenShift</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenShift Container Storage</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
+                        </rh-footer-links>
+                      </slot>
+                      <slot name="links--column2">
+                        <rh-footer-links class="links-item" part="links-item">
+                          <h3 slot="header">Tools</h3>
+                          <rh-footer-link class="link" part="link"><a href="#">My account</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Customer support</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenShift</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Contact training</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
+                        </rh-footer-links>
+                        <rh-footer-links class="links-item" part="links-item">
+                          <h3 slot="header">Try, buy, sell</h3>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat Store</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenShift</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Contact training</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
+                        </rh-footer-links>
+                      </slot>
+                      <slot name="links--column4">
+                        <rh-footer-links class="links-item" part="links-item">
+                          <h3 slot="header">Communicate</h3>
+                          <rh-footer-link class="link" part="link"><a href="#">Contact us</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Feedback</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Social</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Red Hat newsletter</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"><a href="#">Email preferences</a></rh-footer-link>
+                        </rh-footer-links>
+                      </slot>
+                      <slot name="links--end"></slot>
+                    </slot>
+                  </${this.linksWrapperTag()}>
+                </slot>
+              </div>
+              <div class="main__secondary" part="main__secondary">
+                <slot name="main__secondary"></slot>
+              </div>
+            </slot>
+          </div>
+          <div class="section footer" part="section footer">
+            <slot name="footer">
+              <div class="footer__primary" part="footer__primary">
+                <slot name="footer__primary"> </slot>
+              </div>
+              <div class="footer__secondary" part="footer__secondary">
+                <slot name="footer__secondary"></slot>
+              </div>
+              <div class="footer__tertiary" part="footer__tertiary">
+                <slot name="footer__tertiary"></slot>
+              </div>
+            </slot>
+          </div>
+        </slot>
+      </footer>
     `;
   }
 
@@ -361,9 +331,7 @@ export class RhFooter extends LitElement {
     if (url.protocol === 'file:') {
       return new URL(relativeLocation, window.location.href);
     }
-    
       return url;
-    
   }
 
   _langChangeHandler(): void {
