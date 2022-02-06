@@ -28,3 +28,8 @@ custom-elements.json
 ## TS
 tsconfig.tsbuildinfo
 .vercel
+
+## Ignore  built files
+src/**/*.js
+src/**/*.js.map
+src/**/*.d.ts
