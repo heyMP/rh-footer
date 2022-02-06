@@ -3,7 +3,7 @@
   "description": "Webcomponent rh-footer following open-wc recommendations",
   "license": "MIT",
   "author": "rh-footer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "main": "dist/src/index.js",
   "module": "dist/src/index.js",
@@ -104,5 +104,9 @@
       "prettier --write"
     ]
   },
-  "customElements": "custom-elements.json"
+  "customElements": "custom-elements.json",
+  "files": [
+    "dist",
+    "assets"
+  ]
 }
