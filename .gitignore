@@ -16,9 +16,9 @@
 /.tmp/
 
 # build
-/_site/
 /dist/
-/out-tsc/
+/_site/
+/public/
 /deploy/
 
 storybook-static

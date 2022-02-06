@@ -10,12 +10,13 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "outDir": "out-tsc",
+    "outDir": "dist",
     "sourceMap": true,
     "inlineSources": true,
     "rootDir": "./",
     "incremental": true,
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "declaration": true
   },
   "include": ["**/*.ts"]
 }

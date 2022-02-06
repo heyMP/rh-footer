@@ -50,7 +50,7 @@ Added build step to package.json
 {
 	...
 	"scripts": {
-		"build": "tsc && npm run analyze -- --exclude dist && npm run build:deploy",
+		"build": "tsc && npm run analyze -- --exclude public && npm run build:deploy",
 		"build:deploy": "node ./scripts/deploy.js",
 	}
 }

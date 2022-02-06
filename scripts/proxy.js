@@ -4,7 +4,7 @@ import { render } from '@lit-labs/ssr/lib/render-with-global-dom-shim.js';
 import { Readable } from 'stream';
 import { html } from 'lit';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
-import '../out-tsc/src/rh-footer.js';
+import '../dist/src/rh-footer.js';
 
 const PROXY_FQDN = process.env.PROXY_FQDN ?? 'http://localhost:8000';
 const PORT = process.env.PORT ?? '8001';

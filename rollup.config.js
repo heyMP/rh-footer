@@ -13,7 +13,7 @@ export default {
     chunkFileNames: '[hash].js',
     assetFileNames: '[hash][extname]',
     format: 'es',
-    dir: 'dist',
+    dir: 'public',
   },
   preserveEntrySignatures: false,
 
@@ -22,7 +22,7 @@ export default {
     html({
       minify: true,
       injectServiceWorker: true,
-      serviceWorkerPath: 'dist/sw.js',
+      serviceWorkerPath: 'public/sw.js',
     }),
     /** Resolve bare module imports */
     nodeResolve(),
@@ -71,9 +71,9 @@ export default {
       globIgnores: ['polyfills/*.js', 'nomodule-*.js'],
       navigateFallback: '/index.html',
       // where to output the generated sw
-      swDest: path.join('dist', 'sw.js'),
+      swDest: path.join('public', 'sw.js'),
       // directory to match patterns against to be precached
-      globDirectory: path.join('dist'),
+      globDirectory: path.join('public'),
       // cache any html js and css by default
       globPatterns: ['**/*.{html,js,css,webmanifest}'],
       skipWaiting: true,
