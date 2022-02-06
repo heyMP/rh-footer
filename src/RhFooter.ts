@@ -16,9 +16,16 @@ export class RhFooter extends LitElement {
       css`
         :host {
           --_border-color: var(--rh-footer-border-color, #6A6E73);
+          --_accent-color: var(--rh-footer-accent-color,  #ee0000);
+          /* apply sensible defaults based on redhat standards. */
+          color: #fff;
+          font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
+          line-height: 1.5;
+          font-weight: 300;
+          font-size: 18px;
+
           display: flex;
           flex-direction: column;
-          color: #fff;
         }
 
         * {
