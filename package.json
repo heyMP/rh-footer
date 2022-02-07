@@ -3,7 +3,7 @@
   "description": "Webcomponent rh-footer following open-wc recommendations",
   "license": "MIT",
   "author": "rh-footer",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "type": "module",
   "main": "./src/rh-footer.js",
   "module": "./src/rh-footer.js",
