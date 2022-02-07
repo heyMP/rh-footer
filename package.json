@@ -3,17 +3,10 @@
   "description": "Webcomponent rh-footer following open-wc recommendations",
   "license": "MIT",
   "author": "rh-footer",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "type": "module",
   "main": "./src/rh-footer.js",
   "module": "./src/rh-footer.js",
-  "exports": {
-    ".": "./src/index.js",
-    "./rh-footer.js": "./src/rh-footer.js"
-  },
-  "sideEffects": [
-    "rh-footer.js"
-  ],
   "scripts": {
     "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
     "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
