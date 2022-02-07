@@ -68,7 +68,15 @@ export class RhFooterLinksMobile extends LitElement {
 						// for each header we need to create an array of panel items that it's associated with.
 						header: item.querySelector('[slot="header"]'),
 						// collect all of the headers siblings
-						panel: [...item.children].filter(child => child.getAttribute('slot') !== 'header'),
+						panel: [...item.children]
+							.filter(child => child.getAttribute('slot') !== 'header')
+							.map(child => {
+								// ensure it has a class of .link
+								child.classList.add('link');
+								// ensure it has a part name of link
+								child.setAttribute('part', 'link');
+								return child;
+							}),
 					}));
 
 				if (linkSets) {
