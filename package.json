@@ -3,7 +3,7 @@
   "description": "Webcomponent rh-footer following open-wc recommendations",
   "license": "MIT",
   "author": "rh-footer",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
   "main": "./src/index.js",
   "module": "src/index.js",
@@ -20,7 +20,8 @@
     "start:build": "web-dev-server --root-dir public --app-index index.html --open",
     "analyze": "cem analyze --litelement",
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
-    "start:proxy": "nodemon ./scripts/proxy.js"
+    "start:proxy": "nodemon ./scripts/proxy.js",
+    "precompress": "npm run build"
   },
   "dependencies": {
     "lit": "^2.0.2",
@@ -107,6 +108,7 @@
   "customElements": "custom-elements.json",
   "files": [
     "src",
-    "assets"
+    "assets",
+    "custom-elements.json"
   ]
 }
