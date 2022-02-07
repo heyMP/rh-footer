@@ -6,7 +6,7 @@ esbuild
   .build({
     entryPoints: ['dist/rh-footer.js'],
     entryNames: '[name]',
-    outdir: 'deploy',
+    outdir: 'public',
     format: 'esm',
     allowOverwrite: true,
     bundle: true,
@@ -19,12 +19,12 @@ esbuild
   })
   .then(async result => {
     // copy the assets directory into the build directory
-    await copy('assets', 'deploy/assets', { overwrite: true });
+    await copy('assets', 'public/assets', { overwrite: true });
     // copy the assets directory into the build directory
-    await copy('demo/index.html', 'deploy/index.html', { overwrite: true });
+    await copy('demo/index.html', 'public/index.html', { overwrite: true });
     // rewrite the entrypoint in the demo file
     await replace({
-      files: 'deploy/index.html',
+      files: 'public/index.html',
       from: /\.\.\/dist\//g,
       to: ''
     })

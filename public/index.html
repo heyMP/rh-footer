@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="dns-prefetch" href="//static.redhat.com" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://static.redhat.com" />
+    <link
+      rel="preload"
+      href="/assets/rh-web-iconfont.woff"
+      as="font"
+      type="font/woff"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/RedHatTextVFModified.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets//RedHatDisplayVFModified.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <script
+      nomodule
+      src="https://unpkg.com/@webcomponents/webcomponentsjs@2.5.0/custom-elements-es5-adapter.js"
+    ></script>
+    <!-- Add support for Web Components to older browsers. -->
+    <script
+      nomodule
+      src="https://unpkg.com/@webcomponents/webcomponentsjs@2.5.0/webcomponents-loader.js"
+    ></script>
+    <!-- Load your application code anytime after loader.js -->
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://static.redhat.com/libs/redhat/redhat-theme/6/advanced-theme.css"
+      media="all"
+    />
+    <!-- Required css files -->
+    <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/4/webfonts/red-hat-font.min.css" media="all" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles/dist/pfe-base.css" media="all" />
+    <script type="module" src="https://unpkg.com/@patternfly/pfe-cta?module"></script>
+    <script type="module" src="rh-footer.js"></script>
+    <style>
+      body {
+        padding: 0;
+        margin: 0;
+      }
+
+      section {
+        margin: 10rem 0;
+      }
+      section:first-of-type {
+        margin-top: 5rem;
+      }
+      section:last-of-type {
+        margin-bottom: 5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <h2>Default:</h2>
+      <rh-footer></rh-footer>
+    </section>
+
+    <section>
+      <h2>Custom Description Area:</h2>
+      <rh-footer>
+        <h3 slot="description--title">About Customer Portal</h3>
+        <p slot="description--header">This is a special statement about Customer Portal.</p>
+        <h3 slot="description--main">Subscribe to our free newsletter, Red Hat Shares</h3>
+        <pfe-cta slot="description--main" on="dark" context="dark" pfelement class="PFElement">
+          <a href="#">Sign up now</a>
+        </pfe-cta>
+        <img slot="description--footer" alt="Cool image" src="https://via.placeholder.com/200x100?text=Cool_Promo">
+        <img slot="footer--promo" alt="Summit" src="https://via.placeholder.com/200x100">
+      </rh-footer>
+    </section>
+
+    <section>
+      <h2>Custom extra links:</h2>
+      <rh-footer>
+        <rh-footer-links slot="links--end">
+          <h3 slot="header">My extra Links</h3>
+          <rh-footer-link><a href="#">Link 1</a></rh-footer-link>
+          <rh-footer-link><a href="#">Link 2</a></rh-footer-link>
+          <rh-footer-link><a href="#">Link 3</a></rh-footer-link>
+          <rh-footer-link><a href="#">Link 4</a></rh-footer-link>
+        </rh-footer-links>
+        <rh-footer-links slot="links--end">
+          <h3 slot="header">My extra Links</h3>
+          <rh-footer-link><a href="#">Link 1</a></rh-footer-link>
+          <rh-footer-link><a href="#">Link 2</a></rh-footer-link>
+          <rh-footer-link><a href="#">Link 3</a></rh-footer-link>
+          <rh-footer-link><a href="#">Link 4</a></rh-footer-link>
+        </rh-footer-links>
+      </rh-footer>
+    </section>
+
+    <section>
+      <h2>Custom social links: Github</h2>
+      <rh-footer>
+        <rh-footer-social-link slot="social-links--end" icon="web-icon-github"><a href="#github">Github</a></rh-footer-social-link>
+      </rh-footer>
+    </section>
+
+    <section>
+      <h2>Disable Language Switcher:</h2>
+      <rh-footer disable-language-switcher></rh-footer>
+    </section>
+
+    <section>
+      <h2>Change Language</h2>
+      <rh-footer _lang="es"></rh-footer>
+    </section>
+  </body>
+</html>
