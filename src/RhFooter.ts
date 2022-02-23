@@ -22,6 +22,7 @@ export class RhFooter extends LitElement {
           font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
           line-height: 1.5;
           font-weight: 300;
+          /* set at 18px for margin and padding standardization */
           font-size: 18px;
 
           display: flex;
