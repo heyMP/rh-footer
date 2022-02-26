@@ -116,12 +116,20 @@
       </rh-footer>
     </section>
 
-    <section>
-      <h2>Custom links</h2>
+    <section id="blocks">
+      <h2>Blocks</h2>
       <rh-footer>
-        <rh-footer-block slot="main__secondary">
+        <rh-footer-block slot="main__secondary" class="first">
           <h3 slot="header">About Red Hat</h3>
           <p>We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.</p>
+        </rh-footer-block>
+        <rh-footer-block slot="main__secondary">
+          <h3 slot="header">Subscribe to our free newsletter, Red Hat Shares</h3>
+          <pfe-cta><a href="#blocks">Sign up now</a></pfe-cta>
+        </rh-footer-block>
+        <rh-footer-block slot="main__secondary" class="last">
+          <h3 slot="header">Select a language</h3>
+          <p>insert language switcher here...</p>
         </rh-footer-block>
       </rh-footer>
     </section>
