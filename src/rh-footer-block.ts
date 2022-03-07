@@ -12,16 +12,15 @@ export class RhFooterBlock extends LitElement {
 				position: relative;
 			}
 
-			/** Add margin to blocks that aren't first in the sidebar. */
-			:host(:not(.first)) {
-				margin-top: 1.5em;
-			}
-
-			/** Add the separator to blocks in the middle */
-			:host(:not(.last, .first)) {
+      /** Add margin to blocks that aren't first in the sidebar. */
+      :host(:not(:first-of-type)) {
+        margin-top: 1.5em;
+      }
+      /** Add the separator to blocks in the middle */
+      :host(:not(:last-of-type, :first-of-type)){
 				border-bottom: 1px solid var(--_border-color);
 				padding-bottom: 1.5em;
-			}
+      }
 
 			::slotted(*) {
 				color: #fff;
