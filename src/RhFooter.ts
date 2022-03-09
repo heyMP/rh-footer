@@ -8,6 +8,7 @@ import './rh-footer-social-link.js';
 import './rh-footer-links.js';
 import './rh-footer-link.js';
 import './rh-footer-links-mobile.js';
+import './rh-footer-block.js';
 
 export class RhFooter extends LitElement {
 
@@ -17,11 +18,13 @@ export class RhFooter extends LitElement {
         :host {
           --_border-color: var(--rh-footer-border-color, #6A6E73);
           --_accent-color: var(--rh-footer-accent-color,  #ee0000);
+          --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--lg, 24px));
           /* apply sensible defaults based on redhat standards. */
           color: #fff;
           font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
           line-height: 1.5;
           font-weight: 300;
+          /* set at 18px for margin and padding standardization */
           font-size: 18px;
 
           display: flex;
@@ -58,7 +61,7 @@ export class RhFooter extends LitElement {
          * Regions
          */
         .section {
-          padding: var(--pf-global--spacer--xl, 32px) var(--pf-global--spacer--lg, 24px);
+          padding: var(--pf-global--spacer--xl, 32px) var(--_section-side-gap);
         }
 
         .header {
@@ -67,8 +70,19 @@ export class RhFooter extends LitElement {
           display: flex;
           flex-wrap: wrap;
           gap: var(--pf-global--spacer--xl, 32px);
-          border-bottom: 1px solid var(--_border-color);
           align-items: center;
+          position: relative;
+        }
+
+        .header::after {
+          display: block;
+          content: "";
+          background-color: var(--_border-color);
+          height: 1px;
+          position: absolute;
+          bottom: 0px;
+          width: calc(100% - var(--_section-side-gap) * 2);
+          left: var(--_section-side-gap);
         }
 
         .header__primary {
@@ -133,7 +147,7 @@ export class RhFooter extends LitElement {
         @media screen and (min-width: ${mobileXlBreakpoint}) {
           /* Equalize padding on mobile */
           .section {
-            padding: var(--pf-global--spacer--xl, 32px);
+            --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--xl, 32px));
           }
 
           .header, .main {
