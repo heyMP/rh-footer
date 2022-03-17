@@ -2,7 +2,7 @@ import { css, LitElement, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { html, literal } from 'lit/static-html.js';
 import { MatchMediaController } from './lib/MatchMediaController.js';
-import { desktopLargeBreakpoint, mobileXlBreakpoint, tabletLandscapeBreakpoint } from './lib/tokens.js';
+import { desktopLargeBreakpoint, mobileLandscapeBreakpoint, mobileXlBreakpoint, tabletLandscapeBreakpoint } from './lib/tokens.js';
 import './rh-footer-social-links.js';
 import './rh-footer-social-link.js';
 import './rh-footer-links.js';
@@ -190,8 +190,7 @@ export class RhFooter extends LitElement {
             grid-template-areas:
               "logo logo logo"
               "primary primary primary"
-              "secondary secondary secondary"
-              "tertiary tertiary tertiary";
+              "secondary secondary tertiary";
           }
 
           .traditional-links,
@@ -202,6 +201,11 @@ export class RhFooter extends LitElement {
             justify-content: left;
             grid-template-columns: 1fr 1fr 1fr;
             gap: 8px 24px;
+          }
+
+          .traditional-item,
+          ::slotted(rh-traditional-links[slot="footer__secondary"]){
+            grid-template-columns: 1fr 1fr;
           }
 
           .footer__logo {
@@ -225,10 +229,6 @@ export class RhFooter extends LitElement {
           /* Equalize padding on mobile */
           .section {
             --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--3xl, 24px));
-          }
-
-          .footer__tertiary{
-            padding-top: 24px;
           }
         }
 
@@ -305,7 +305,7 @@ export class RhFooter extends LitElement {
           }
         }
 
-        @media screen and (max-width: 550px){
+        @media screen and (max-width: ${mobileLandscapeBreakpoint}){
           .traditional-links,
           slot::slotted(rh-traditional-links),
           rh-traditional-links {
@@ -320,7 +320,28 @@ export class RhFooter extends LitElement {
           ::slotted(rh-traditional-links[slot="footer__secondary"]){
             grid-template-columns: 1fr;
           }
+
+          .footer__tertiary{
+            padding-top: 24px;
+          }
+
+          .footer {
+            grid-template-areas:
+              "logo logo logo"
+              "primary primary primary"
+              "secondary secondary secondary"
+              "tertiary tertiary tertiary";
+          }
         }
+
+        @media screen and (min-width: ${mobileLandscapeBreakpoint} and (max-width: ${tabletLandscapeBreakpoint})){
+          .traditional-item,
+          ::slotted(rh-traditional-links[slot="footer__secondary"]){
+            grid-template-columns: 1fr 1fr;
+          }
+        }
+
+        
 
         /**
          * Content
@@ -525,7 +546,7 @@ export class RhFooter extends LitElement {
               <div class="footer__secondary" part="footer__secondary">
               
                 <slot name="footer__secondary">
-                <rh-traditional-links slot="footer__tertiary" class="traditional-item" part="traditional-item-tertiary">
+                <rh-traditional-links slot="footer__secondary" class="traditional-item" part="traditional-item-tertiary">
                     <rh-footer-tertiary-link class="footer__copyright__mobile">${RhFooter.renderCopyrightTemplate()}</rh-footer-tertiary-link>
                     <rh-footer-tertiary-link class="traditional-link" part="traditional-link"><a href="#">Privacy statement</a>             </rh-footer-tertiary-link>
                     <rh-footer-tertiary-link class="traditional-link" part="traditional-link"><a href="#">Terms of use</a>                  </rh-footer-tertiary-link>
@@ -538,7 +559,7 @@ export class RhFooter extends LitElement {
               </div>
               <div class="footer__tertiary" part="footer__tertiary">
                 <slot name="footer__tertiary">
-        <img src="./assets/summit-logo.png" alt="Red Hat Summit" />
+                  <img src="./assets/summit-logo.png" alt="Red Hat Summit" />
                
                 </slot>
               </div>
