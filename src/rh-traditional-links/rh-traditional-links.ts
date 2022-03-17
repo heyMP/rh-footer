@@ -4,12 +4,6 @@ import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 export class RhFooterLinks extends LitElement {
 	static get styles() {
 		return css`
-			:host {
-				display: flex;
-				flex-direction: row;
-				flex-wrap: wrap;
-				gap: 10px;
-			}
 			::slotted(:is(h1,h2,h3,h4,h5)) {
 				font-weight: 500;
 				font-size: 14px;

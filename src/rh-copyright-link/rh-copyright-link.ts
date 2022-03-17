@@ -17,6 +17,7 @@ export class RhCopyrightLink extends LitElement {
 				color: #fff !important;
 				white-space: nowrap;
 				font-size: 14px;
+				padding-top: 16px;
 				text-decoration: none;
 			}
 		`;

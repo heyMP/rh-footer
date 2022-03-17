@@ -8,14 +8,10 @@ export class RhTraditionalLink extends LitElement {
 
 	static get styles() {
 		return css`
-			:host {
-				display: flex;
-				/* flex: 0 1 28%; */
-			}
 			::slotted(*) {
 				color: #fff !important;
 				white-space: nowrap;
-				font-size: 14px;
+				font-size: 12px;
 				text-decoration: none;
 			}
 			@media screen and (max-width: ${mobileXlBreakpoint}) {

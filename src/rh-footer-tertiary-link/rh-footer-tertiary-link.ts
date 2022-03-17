@@ -9,12 +9,13 @@ export class RhFooterTertiaryLink extends LitElement {
 		return css`
 			:host {
 				display: block;
+				white-space: nowrap;
+				white-space: nowrap;
+				font-size: 12px;
+				color: #d2d2d2 !important;		
 			}
 			::slotted(*) {
-				color: #d2d2d2 !important;
-				text-decoration: underline;
-				white-space: nowrap;
-				font-size: 14px;
+				color: #d2d2d2 !important;		
 			}
 		`;
 	}

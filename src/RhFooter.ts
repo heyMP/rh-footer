@@ -1,8 +1,8 @@
-import { css, LitElement } from 'lit';
-import { property, state  } from 'lit/decorators.js';
+import { css, LitElement, TemplateResult } from 'lit';
+import { property, state } from 'lit/decorators.js';
 import { html, literal } from 'lit/static-html.js';
 import { MatchMediaController } from './lib/MatchMediaController.js';
-import { mobileXlBreakpoint } from './lib/tokens.js';
+import { desktopLargeBreakpoint, mobileXlBreakpoint, tabletLandscapeBreakpoint } from './lib/tokens.js';
 import './rh-footer-social-links.js';
 import './rh-footer-social-link.js';
 import './rh-footer-links.js';
@@ -11,7 +11,6 @@ import './rh-footer-links-mobile.js';
 import './rh-footer-block.js';
 import './rh-traditional-links/rh-traditional-links.js'
 import './rh-traditional-link/rh-traditional-link.js'
-import './rh-copyright-link/rh-copyright-link.js'
 import './rh-footer-tertiary-link/rh-footer-tertiary-link.js'
 
 export class RhFooter extends LitElement {
@@ -22,7 +21,7 @@ export class RhFooter extends LitElement {
         :host {
           --_border-color: var(--rh-footer-border-color, #6A6E73);
           --_accent-color: var(--rh-footer-accent-color,  #ee0000);
-          --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--lg, 24px));
+          --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--xl, 32px));
           /* apply sensible defaults based on redhat standards. */
           color: #fff;
           font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
@@ -114,15 +113,7 @@ export class RhFooter extends LitElement {
             "primary"
             "secondary"
             "tertiary";
-          gap: var(--pf-global--spacer--xl, 32px);
-        }
-
-        .footer-traditional {
-          background-color: #151515;
-          /* display: flex; */
-          flex-direction: column;
-          grid-template-rows: 48px 24px;
-          grid-template-columns: 1fr;
+          gap: var(--pf-global--spacer--xl, 8px);
         }
 
         .footer__logo {
@@ -145,14 +136,26 @@ export class RhFooter extends LitElement {
           min-height: 150px;
         }
 
-        slot::slotted(rh-traditional-links) {
-          flex: 2;
-        }
+        .traditional-links,
+          slot::slotted(rh-traditional-links),
+          rh-traditional-links {
+            display: grid;
+            grid-auto-flow: column;
+            justify-content: left;
+            gap: 24px;
+          }
 
-        .traditional-link,
-        rh-traditional-link {
-          flex: 0 1 48%;
-        }
+          .footer__copyright__desktop {
+            display: initial;
+          }
+
+          .footer__copyright__mobile {
+            display: none;
+          }
+
+          .footer__copyright {
+            padding-top: 16px;
+          }
 
         @media screen and (min-width: 550px) {
           .footer {
@@ -163,34 +166,17 @@ export class RhFooter extends LitElement {
               "secondary secondary tertiary";
           }
 
-          .footer-traditional {
-            grid-template-columns: 77px 4fr;
-            gap: 12px;
-            /* display: flex; */
-            grid-template-areas:
-              "logo logo logo"
-              "primary primary primary"
-              "secondary secondary secondary"
-              "tertiary tertiary tertiary"
-              "logo secondary secondary";
-          }
-
           .traditional-links,
-          slot::slotted(rh-traditional-links) {
-            flex: 3;
-          }
-  
-          rh-traditional-link,
-          .footer__primary rh-traditional-link,
-          .footer__primary slot::slotted(footer__primary)
-          {
-            flex: 0 1 29%;
-            background-color: blue;
-          }
-
+          slot::slotted(rh-traditional-links),
+          rh-traditional-links {
+              display: grid;
+              grid-auto-flow: column;
+              justify-content: left;
+              gap: 24px;
+            }
         }
 
-        @media screen and (max-width: ${mobileXlBreakpoint}) {
+        @media screen and (max-width: ${tabletLandscapeBreakpoint}) {
           /* Add a bit more margin to the primary content on mobile */
           .main__primary {
             margin: calc(var(--pf-global--spacer--2xl, 48px) - var(--pf-global--spacer--xl, 32px)) 0;
@@ -198,13 +184,58 @@ export class RhFooter extends LitElement {
           .footer__primary {
             border-bottom: 1px solid var(--_border-color);
             padding-bottom: 1.5em;
+            padding-top: 16px;
+          }
+          .footer {
+            grid-template-areas:
+              "logo logo logo"
+              "primary primary primary"
+              "secondary secondary secondary"
+              "tertiary tertiary tertiary";
+          }
+
+          .traditional-links,
+          slot::slotted(rh-traditional-links),
+          rh-traditional-links {
+            display: grid;
+            grid-auto-flow: initial;
+            justify-content: left;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 8px 24px;
+          }
+
+          .footer__logo {
+            grid-area: logo;
+          }
+
+          .footer__primary {
+            grid-area: primary;
+          }
+
+          .footer__copyright__desktop{
+            display: none;
+          }
+
+          .footer__copyright__mobile{
+            display: initial;
           }
         }
 
-        @media screen and (min-width: ${mobileXlBreakpoint}) {
+        @media screen and (max-width: ${tabletLandscapeBreakpoint}) {
           /* Equalize padding on mobile */
           .section {
-            --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--xl, 32px));
+            --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--3xl, 24px));
+          }
+
+          .footer__tertiary{
+            padding-top: 24px;
+          }
+        }
+
+        @media screen and (min-width: ${tabletLandscapeBreakpoint}) and (max-width: ${desktopLargeBreakpoint}) {
+          /* Equalize padding on mobile */
+          .section {
+            --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--3xl, 32px));
           }
 
           .header, .main {
@@ -214,30 +245,81 @@ export class RhFooter extends LitElement {
           }
 
           .footer {
-            grid-template-columns: 42px 10fr 2fr;
-            grid-template-areas:
-              "logo primary tertiary"
-              "logo secondary tertiary";
+            grid-template-columns: 66px 10fr 1fr;
+            grid-template-areas: 
+            "logo primary tertiary"
+            "logo copyright tertiary"
+            "logo secondary tertiary";
           }
 
-          .footer-traditional {
-            grid-template-columns: 42px 4fr 1fr;
+          .footer__tertiary {
             display: grid;
-            grid-template-areas:
-            "logo primary tertiary"
-            "logo secondary tertiary"
+            justify-content: flex-end;
+            align-items: center;
           }
 
           .traditional-links,
-          slot::slotted(rh-traditional-links) {
-            flex: 100%;
+          slot::slotted(rh-traditional-links)
+          rh-traditional-links {
+            display: grid;
+            grid-auto-flow: column;
+            justify-content: left;
+            grid-template-columns: initial;
+            gap: 24px;
           }
-  
-          .traditional-link,
-          rh-traditional-link{
-            flex: none;
+        }
+
+        @media screen and (min-width: ${desktopLargeBreakpoint}){
+          .section {
+            --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--3xl, 64px));
           }
 
+          .header, .main {
+            /* switch header to use grid instead */
+            display: grid;
+            grid-template-columns: 8fr 4fr;
+          }
+
+          .footer {
+            grid-template-columns: 66px 10fr 1fr;
+            grid-template-areas: 
+            "logo primary tertiary"
+            "logo copyright tertiary"
+            "logo secondary tertiary";
+          }
+
+          .footer__tertiary {
+            display: grid;
+            justify-content: flex-end;
+            align-items: center;
+          }
+
+          .traditional-links,
+          slot::slotted(rh-traditional-links)
+          rh-traditional-links {
+            display: grid;
+            grid-auto-flow: column;
+            justify-content: left;
+            grid-template-columns: initial;
+            gap: 24px;
+          }
+        }
+
+        @media screen and (max-width: 550px){
+          .traditional-links,
+          slot::slotted(rh-traditional-links),
+          rh-traditional-links {
+            display: grid;
+            grid-auto-flow: initial;
+            justify-content: left;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 24px;
+          }
+
+          .traditional-item,
+          ::slotted(rh-traditional-links[slot="footer__secondary"]){
+            grid-template-columns: 1fr;
+          }
         }
 
         /**
@@ -271,13 +353,6 @@ export class RhFooter extends LitElement {
           width: calc((100% / var(--rh-footer--links-columns, 4)) - var(--pf-global--spacer--xl, 32px));
         }
 
-        .traditional-links,
-        slot::slotted(rh-traditional-links){
-          flex: 2
-        }
-
-
-
         #footer-logo {
           width: 42px;
         }
@@ -293,7 +368,7 @@ export class RhFooter extends LitElement {
 
   constructor() {
     super();
-    this.isMobile = new MatchMediaController(this, `(max-width: ${mobileXlBreakpoint})`);
+    this.isMobile = new MatchMediaController(this, `(max-width: ${tabletLandscapeBreakpoint})`);
   }
 
   connectedCallback() {
@@ -309,6 +384,13 @@ export class RhFooter extends LitElement {
 
   linksWrapperTag(): unknown {
     return this.isMobile.value ? literal`rh-footer-links-mobile` : literal`div`;
+  }
+
+  static renderCopyrightTemplate(): TemplateResult {
+    const currentYear = new Date().getFullYear()
+    return html`
+      &copy; ${currentYear} Red Hat, Inc. 
+    `
   }
 
   render() {
@@ -435,22 +517,28 @@ export class RhFooter extends LitElement {
                   </rh-traditional-links> 
                 </slot>
               </div>
+              <div class="footer__copyright footer__copyright__desktop" part="footer__copyright">
+                <slot name="footer__copyright">
+                  <rh-footer-tertiary-link>${RhFooter.renderCopyrightTemplate()}</rh-footer-tertiary-link>
+                </slot>
+              </div>
               <div class="footer__secondary" part="footer__secondary">
+              
                 <slot name="footer__secondary">
-                  <rh-traditional-links slot="footer__tertiary" class="traditional-item" part="traditional-item-tertiary">
-                    <rh-footer-tertiary-link class="traditional-link" part="traditional-link">
-                     &copy; 2022 Red Hat, Inc.
-                    </rh-footer-tertiary-link>  
+                <rh-traditional-links slot="footer__tertiary" class="traditional-item" part="traditional-item-tertiary">
+                    <rh-footer-tertiary-link class="footer__copyright__mobile">${RhFooter.renderCopyrightTemplate()}</rh-footer-tertiary-link>
                     <rh-footer-tertiary-link class="traditional-link" part="traditional-link"><a href="#">Privacy statement</a>             </rh-footer-tertiary-link>
                     <rh-footer-tertiary-link class="traditional-link" part="traditional-link"><a href="#">Terms of use</a>                  </rh-footer-tertiary-link>
                     <rh-footer-tertiary-link class="traditional-link" part="traditional-link"><a href="#">All policies and guidelines</a>   </rh-footer-tertiary-link>
                     <rh-footer-tertiary-link class="traditional-link" part="traditional-link"><a href="#">Digital accessibility</a>         </rh-footer-tertiary-link>
                     <rh-footer-tertiary-link class="traditional-link" part="traditional-link"><a href="#">Cookie preferences</a>            </rh-footer-tertiary-link>
-                  </rh-traditional-links>
+                    </rh-traditional-links>
                 </slot>
+                
               </div>
               <div class="footer__tertiary" part="footer__tertiary">
                 <slot name="footer__tertiary">
+        <img src="./assets/summit-logo.png" alt="Red Hat Summit" />
                
                 </slot>
               </div>
@@ -470,7 +558,7 @@ export class RhFooter extends LitElement {
     if (url.protocol === 'file:') {
       return new URL(relativeLocation, window.location.href);
     }
-      return url;
+    return url;
   }
 
   _langChangeHandler(): void {
