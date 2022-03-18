@@ -511,7 +511,12 @@ export class RhFooter extends LitElement {
                 </slot>
               </div>
               <div class="main__secondary" part="main__secondary">
-                <slot name="main__secondary"></slot>
+                <slot name="main__secondary">
+                  <rh-footer-block>
+                    <h3 slot="header">About Red Hat</h3>
+                    <p>We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.</p>
+                  </rh-footer-block>
+                </slot>
               </div>
             </slot>
           </div>
