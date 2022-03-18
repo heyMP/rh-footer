@@ -1,4 +1,4 @@
-import {html, css, LitElement} from 'lit';
+import { html, css, LitElement } from 'lit';
 
 export class RhFooterLink extends LitElement {
 	static get tag() {
@@ -8,12 +8,20 @@ export class RhFooterLink extends LitElement {
 	static get styles() {
 		return css`
 			:host {
+				--_color: var(--link-color, #fff);
+				--_font-size: var(--link-font-size, 14px);
+				--_text-decoration: var(--link-text-decoration, none);
+				--_text-decoration-active: var(--link-text-decoration-active, underline);
 				display: block;
 			}
 			::slotted(*) {
-				color: #fff !important;
-				font-size: 14px;
-				text-decoration: none;
+				color: var(--_color) !important;
+				font-size: var(--_font-size);
+				text-decoration: var(--_text-decoration);
+			}
+			::slotted(a:hover),
+			::slotted(a:focus-visible) {
+				text-decoration: var(--_text-decoration-active);
 			}
 		`;
 	}
