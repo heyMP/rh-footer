@@ -1,4 +1,4 @@
-import {html, css, LitElement} from 'lit';
+import { html, css, LitElement } from 'lit';
 
 export class RhFooterTertiaryLink extends LitElement {
 	static get tag() {
@@ -10,12 +10,11 @@ export class RhFooterTertiaryLink extends LitElement {
 			:host {
 				display: block;
 				white-space: nowrap;
-				white-space: nowrap;
 				font-size: 12px;
-				color: #d2d2d2 !important;		
+				color: #d2d2d2 !important;
 			}
 			::slotted(*) {
-				color: #d2d2d2 !important;		
+				color: #d2d2d2 !important;
 			}
 		`;
 	}
