@@ -30,7 +30,6 @@ export class RhFooterLinksMobile extends LitElement {
 				--pfe-accordion--accent--expanded: var(--_accent-color);
 				--pfe-accordion--accent--active: var(--_accent-color);
 				--link-font-size: 16px;
-				--link-line-height: 1.5;
       }
 
 			.base {

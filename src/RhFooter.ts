@@ -9,9 +9,6 @@ import './rh-footer-links.js';
 import './rh-footer-link.js';
 import './rh-footer-links-mobile.js';
 import './rh-footer-block.js';
-import './rh-traditional-links/rh-traditional-links.js';
-import './rh-traditional-link/rh-traditional-link.js';
-import './rh-footer-tertiary-link/rh-footer-tertiary-link.js';
 import './rh-footer-copyright.js';
 
 export class RhFooter extends LitElement {
@@ -26,7 +23,7 @@ export class RhFooter extends LitElement {
           /* apply sensible defaults based on redhat standards. */
           color: #fff;
           font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
-          line-height: 1.5;
+          line-height: 125%;
           font-weight: 300;
           /* set at 18px for margin and padding standardization */
           font-size: 18px;
@@ -107,6 +104,8 @@ export class RhFooter extends LitElement {
 
         .footer {
           --link-font-size: 12px;
+          /* reduce the line-height for footer links */
+          line-height: 100%;
           background-color: #151515;
           display: grid;
           grid-template-columns: 1fr;

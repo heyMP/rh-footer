@@ -11,7 +11,6 @@ export class RhFooterCopyright extends LitElement {
 				flex: 1 1 auto;
 				display: block;
 				width: 100%;
-				line-height: 1;
 			}
 		`;
 	}

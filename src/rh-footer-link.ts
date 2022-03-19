@@ -12,9 +12,7 @@ export class RhFooterLink extends LitElement {
 				--_font-size: var(--link-font-size, 14px);
 				--_text-decoration: var(--link-text-decoration, none);
 				--_text-decoration-active: var(--link-text-decoration-active, underline);
-				--_text-line-height: var(--link-line-height, 1);
 				display: block;
-				line-height: var(--_text-line-height);
 			}
 			::slotted(*) {
 				color: var(--_color) !important;
