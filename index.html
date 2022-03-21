@@ -1,161 +1,171 @@
 <!DOCTYPE html>
 <html lang="en-GB">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="dns-prefetch" href="//static.redhat.com" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://static.redhat.com" />
-    <!-- Load your application code anytime after loader.js -->
-    <!-- <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-theme/6/advanced-theme.css" media="all" /> -->
-    <!-- ired css files -->
-    <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-font/4/webfonts/red-hat-font.min.css" media="all" />
-    <!-- <link type="text/css" rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles/dist/pfe-base.css" media="all" /> -->
-    <script type="module" src="https://unpkg.com/@patternfly/pfe-cta?module"></script>
-    <script type="module" src="./src/rh-footer.js"></script>
-    <style>
-      body {
-        padding: 0;
-        margin: 0;
-      }
 
-      section {
-        margin: 10rem 0;
-      }
-      section:first-of-type {
-        margin-top: 5rem;
-      }
-      section:last-of-type {
-        margin-bottom: 5rem;
-      }
-    </style>
-  </head>
-  <body>
+<head>
+  <meta charset="utf-8" />
+  <link rel="dns-prefetch" href="//static.redhat.com" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://static.redhat.com" />
+  <!-- Load your application code anytime after loader.js -->
+  <!-- <link type="text/css" rel="stylesheet" href="https://static.redhat.com/libs/redhat/redhat-theme/6/advanced-theme.css" media="all" /> -->
+  <!-- ired css files -->
+  <link type="text/css" rel="stylesheet"
+    href="https://static.redhat.com/libs/redhat/redhat-font/4/webfonts/red-hat-font.min.css" media="all" />
+  <!-- <link type="text/css" rel="stylesheet" href="https://unpkg.com/@patternfly/pfe-styles/dist/pfe-base.css" media="all" /> -->
+  <script type="module" src="https://unpkg.com/@patternfly/pfe-cta?module"></script>
+  <script type="module" src="./src/rh-footer.js"></script>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+    }
 
+    section {
+      margin: 10rem 0;
+    }
 
-    <section>
-      <h2>Default:</h2>
-      <rh-footer></rh-footer>
-    </section>
+    section:first-of-type {
+      margin-top: 5rem;
+    }
 
+    section:last-of-type {
+      margin-bottom: 5rem;
+    }
+  </style>
+</head>
 
-    <section>
-      <h2>Regions: Level 1</h2>
-      <rh-footer debug>
-        <div slot="header"></div>
-        <div slot="main"> </div>
-        <div slot="footer"> </div>
-      </rh-footer>
-    </section>
+<body>
 
 
-    <section>
-      <h2>Regions: Level 2</h2>
-      <rh-footer debug>
-        <div slot="header__primary"></div>
-        <div slot="header__secondary"></div>
-        <div slot="main__primary"></div>
-        <div slot="main__secondary"></div>
-        <div slot="footer__primary"></div>
-        <div slot="footer__secondary"></div>
-        <div slot="footer__tertiary"></div>
-      </rh-footer>
-    </section>
+  <section>
+    <h2>Default:</h2>
+    <rh-footer></rh-footer>
+  </section>
 
 
-    <section>
-      <h2>Customize Logo:</h2>
-      <rh-footer>
-        <a slot="logo" href="#" title="Cool Website">
-          <img src="https://via.placeholder.com/156x50" style="width:156px;" />
-        </a>
-      </rh-footer>
-    </section>
-    <section>
-      <h2>Custom social links: Github</h2>
-      <rh-footer>
-        <rh-footer-social-link slot="social-links--end" icon="web-icon-github"><a href="#github">Github</a></rh-footer-social-link>
-      </rh-footer>
-    </section>
+  <section>
+    <h2>Regions: Level 1</h2>
+    <rh-footer debug>
+      <div slot="header"></div>
+      <div slot="main"> </div>
+      <div slot="footer"> </div>
+    </rh-footer>
+  </section>
 
 
-    <section>
-      <h2>Custom links</h2>
-      <rh-footer>
-        <rh-footer-links slot="links">
-          <h3 slot="header">Custom </h3>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-        </rh-footer-links>
-        <rh-footer-links slot="links">
-          <h3 slot="header">Custom </h3>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-        </rh-footer-links>
-        <rh-footer-links slot="links">
-          <h3 slot="header">Custom </h3>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
-        </rh-footer-links>
-        <rh-footer-links slot="links">
-          <h3 slot="header">Custom </h3>
-          <rh-footer-link class="link" part="link"><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link class="link" part="link"><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link class="link" part="link"><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link class="link" part="link"><a href="#">Custom Link</a></rh-footer-link>
-          <rh-footer-link class="link" part="link"><a href="#">Custom Link</a></rh-footer-link>
-        </rh-footer-links>
-      </rh-footer>
-    </section>
+  <section>
+    <h2>Regions: Level 2</h2>
+    <rh-footer debug>
+      <div slot="header__primary"></div>
+      <div slot="header__secondary"></div>
+      <div slot="main__primary"></div>
+      <div slot="main__secondary"></div>
+      <div slot="footer__primary"></div>
+      <div slot="footer__secondary"></div>
+      <div slot="footer__tertiary"></div>
+    </rh-footer>
+  </section>
 
-    <section id="blocks">
-      <h2>Blocks</h2>
-      <rh-footer>
-        <rh-footer-block slot="main__secondary">
-          <h3 slot="header">About Red Hat</h3>
-          <p>We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.</p>
-        </rh-footer-block>
-        <rh-footer-block slot="main__secondary">
-          <h3 slot="header">Subscribe to our free newsletter, Red Hat Shares</h3>
-          <pfe-cta><a href="#blocks">Sign up now</a></pfe-cta>
-        </rh-footer-block>
-        <rh-footer-block slot="main__secondary">
-          <h3 slot="header">Select a language</h3>
-          <p>insert language switcher here...</p>
-        </rh-footer-block>
-      </rh-footer>
-    </section>
 
-    <section id="footer">
-      <h2>Footer</h2>
-      <rh-footer>
-        <rh-traditional-links slot="footer__primary">
-          <rh-traditional-link><a href="#">About Red Hat</a></rh-traditional-link>
-          <rh-traditional-link><a href="#">Jobs</a></rh-traditional-link>
-          <rh-traditional-link><a href="#">Events</a></rh-traditional-link>
-          <rh-traditional-link><a href="#">Locations</a></rh-traditional-link>
-          <rh-traditional-link><a href="#">Contact Red Hat</a></rh-traditional-link>
-          <rh-traditional-link><a href="#">Red Hat Blog</a></rh-traditional-link>
-          <rh-traditional-link><a href="#">Diversity, equity, and inclusion</a></rh-traditional-link>
-          <rh-traditional-link><a href="#">Cool Stuff Store</a></rh-traditional-link>
-        </rh-traditional-links> 
-        <rh-traditional-links  slot="footer__secondary">
-          <rh-footer-tertiary-link><a href="#">Privacy statement</a></rh-footer-tertiary-link>
-          <rh-footer-tertiary-link><a href="#">Terms of use</a></rh-footer-tertiary-link>
-          <rh-footer-tertiary-link><a href="#">All policies and guidelines</a></rh-footer-tertiary-link>
-          <rh-footer-tertiary-link><a href="#">Digital accessibility</a></rh-footer-tertiary-link>
-          <rh-footer-tertiary-link><a href="#">Cookie preferences</a></rh-footer-tertiary-link>
-        </rh-traditional-links>
-        <img src="./assets/summit-logo.png" alt="Red Hat Summit" slot="footer__tertiary" />
-      </rh-footer>
-    </section>
-  </body>
+  <section>
+    <h2>Customize Logo:</h2>
+    <rh-footer>
+      <a slot="logo" href="#" title="Cool Website">
+        <img src="https://via.placeholder.com/156x50" style="width:156px;" />
+      </a>
+    </rh-footer>
+  </section>
+  <section>
+    <h2>Custom social links: Github</h2>
+    <rh-footer>
+      <rh-footer-social-link slot="social-links--end" icon="web-icon-github"><a href="#github">Github</a>
+      </rh-footer-social-link>
+    </rh-footer>
+  </section>
+
+
+  <section>
+    <h2>Custom links</h2>
+    <rh-footer>
+      <rh-footer-links slot="links">
+        <h3 slot="header">Custom </h3>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+      </rh-footer-links>
+      <rh-footer-links slot="links">
+        <h3 slot="header">Custom </h3>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+      </rh-footer-links>
+      <rh-footer-links slot="links">
+        <h3 slot="header">Custom </h3>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link><a href="#">Custom Link</a></rh-footer-link>
+      </rh-footer-links>
+      <rh-footer-links slot="links">
+        <h3 slot="header">Custom </h3>
+        <rh-footer-link class="link" part="link"><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link class="link" part="link"><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link class="link" part="link"><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link class="link" part="link"><a href="#">Custom Link</a></rh-footer-link>
+        <rh-footer-link class="link" part="link"><a href="#">Custom Link</a></rh-footer-link>
+      </rh-footer-links>
+    </rh-footer>
+  </section>
+
+  <section id="blocks">
+    <h2>Blocks</h2>
+    <rh-footer>
+      <rh-footer-block slot="main__secondary">
+        <h3 slot="header">About Red Hat</h3>
+        <p>We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and
+          Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and
+          environments, from the core datacenter to the network edge.</p>
+      </rh-footer-block>
+      <rh-footer-block slot="main__secondary">
+        <h3 slot="header">Subscribe to our free newsletter, Red Hat Shares</h3>
+        <pfe-cta><a href="#blocks">Sign up now</a></pfe-cta>
+      </rh-footer-block>
+      <rh-footer-block slot="main__secondary">
+        <h3 slot="header">Select a language</h3>
+        <p>insert language switcher here...</p>
+      </rh-footer-block>
+    </rh-footer>
+  </section>
+
+  <section id="footer">
+    <h2>Footer</h2>
+    <rh-footer>
+      <rh-footer-links slot="footer__primary">
+        <rh-footer-link><a href="#">About Red Hat</a></rh-footer-link>
+        <rh-footer-link><a href="#">Jobs</a></rh-footer-link>
+        <rh-footer-link><a href="#">Events</a></rh-footer-link>
+        <rh-footer-link><a href="#">Locations</a></rh-footer-link>
+        <rh-footer-link><a href="#">Contact Red Hat</a></rh-footer-link>
+        <rh-footer-link><a href="#">Red Hat Blog</a></rh-footer-link>
+        <rh-footer-link><a href="#">Cool Stuff Store</a></rh-footer-link>
+        <rh-footer-link><a href="#">Diversity, equity, and inclusion</a></rh-footer-link>
+      </rh-footer-links>
+      <rh-footer-links slot="footer__secondary">
+        <rh-footer-copyright></rh-footer-copyright>
+        <rh-footer-link><a href="#">Privacy statement</a></rh-footer-link>
+        <rh-footer-link><a href="#">Terms of use</a></rh-footer-link>
+        <rh-footer-link><a href="#">All policies and guidelines</a></rh-footer-link>
+        <rh-footer-link><a href="#">Digital accessibility</a></rh-footer-link>
+        <rh-footer-link><a href="#">Cookie preferences</a></rh-footer-link>
+      </rh-footer-links>
+      <img src="/assets/summit-logo.png" alt="Red Hat Summit" slot="footer__tertiary" />
+    </rh-footer>
+  </section>
+</body>
+
 </html>

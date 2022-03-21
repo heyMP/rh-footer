@@ -9,14 +9,14 @@ interface LinkSet {
 }
 
 export class RhFooterLinksMobile extends LitElement {
-  static get tag() {
-    return `rh-footer-links-mobile`;
-  }
+	static get tag() {
+		return `rh-footer-links-mobile`;
+	}
 
 	@state() private linkSets?: LinkSet[];
 
-  static get styles() {
-    return css`
+	static get styles() {
+		return css`
       :host {
         display: block;
 				width: 100%;
@@ -29,6 +29,7 @@ export class RhFooterLinksMobile extends LitElement {
 				--pfe-accordion--FontWeight--header: 300;
 				--pfe-accordion--accent--expanded: var(--_accent-color);
 				--pfe-accordion--accent--active: var(--_accent-color);
+				--link-font-size: 16px;
       }
 
 			.base {
@@ -47,12 +48,8 @@ export class RhFooterLinksMobile extends LitElement {
 					width: calc(50%);
 				}
 			}
-
-			.link a {
-				font-size: var(--rh-footer-mobile-link--FontSize, 16px);
-			}
     `;
-  }
+	}
 
 	firstUpdated() {
 		this.build();
@@ -86,21 +83,22 @@ export class RhFooterLinksMobile extends LitElement {
 		}
 	}
 
-  render() {
-    return html`
+	render() {
+		return html`
 			<div id="dynamic-links" class="base" part="base">
 				${this.linkSets ? html`
-					<pfe-accordion part="accordion">
-						${this.linkSets?.map(item => html`
-							<pfe-accordion-header part="accordion-header">${unsafeHTML(item.header?.outerHTML)}</pfe-accordion-header>
-							<pfe-accordion-panel part="accordion-panel">${item.panel.map(_item => html`${unsafeHTML(_item.outerHTML)}`)}</pfe-accordion-panel>
-						`)}
-					</pfe-accordion>
+				<pfe-accordion part="accordion">
+					${this.linkSets?.map(item => html`
+					<pfe-accordion-header part="accordion-header">${unsafeHTML(item.header?.outerHTML)}</pfe-accordion-header>
+					<pfe-accordion-panel part="accordion-panel">${item.panel.map(_item => html`${unsafeHTML(_item.outerHTML)}`)}
+					</pfe-accordion-panel>
+					`)}
+				</pfe-accordion>
 				` : ''}
 			</div>
 			<slot id="default-slot" hidden></slot>
 		`;
-  }
+	}
 }
 
 customElements.define(RhFooterLinksMobile.tag, RhFooterLinksMobile);
