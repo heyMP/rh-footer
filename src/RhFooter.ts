@@ -159,8 +159,6 @@ export class RhFooter extends LitElement {
         }
 
         .footer__secondary {
-          --link-text-decoration: underline;
-          --link-color: #D2D2D2;
           color: #D2D2D2;
           font-size: 12px;
           grid-area: secondary;
