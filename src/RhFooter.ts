@@ -27,9 +27,12 @@ export class RhFooter extends LitElement {
           font-weight: 300;
           /* set at 18px for margin and padding standardization */
           font-size: 18px;
-
           display: flex;
           flex-direction: column;
+        }
+
+        ::slotted(*) {
+          font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
         }
 
         * {
@@ -159,8 +162,8 @@ export class RhFooter extends LitElement {
         }
 
         .footer__secondary {
-          --link-text-decoration: underline;
-          --link-color: #D2D2D2;
+          /* --link-text-decoration: underline;
+          --link-color: #D2D2D2; */
           color: #D2D2D2;
           font-size: 12px;
           grid-area: secondary;
