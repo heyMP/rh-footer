@@ -18,5 +18,4 @@ export const pfGlobalSpacer = {
     twoXL: '--pf-global--spacer--2xl', // 48px
     threeXL: '--pf-global--spacer--3xl', // 64px
     fourXL: '--pf-global--spacer--4xl' // 80px
-
 }

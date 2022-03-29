@@ -1,6 +1,8 @@
 import { css, LitElement, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { html, literal } from 'lit/static-html.js';
+import { pfelement } from '@patternfly/pfe-core/decorators';
+import type { ColorTheme } from '@patternfly/pfe-core';
 import { MatchMediaController } from './lib/MatchMediaController.js';
 import { desktopSmallBreakpoint, desktopLargeBreakpoint, mobileLandscapeBreakpoint, mobileBreakpoint, mobileXlBreakpoint, tabletLandscapeBreakpoint } from './lib/tokens.js';
 import './rh-footer-social-links.js';
@@ -11,12 +13,15 @@ import './rh-footer-links-mobile.js';
 import './rh-footer-block.js';
 import './rh-footer-copyright.js';
 
+@pfelement()
 export class RhFooter extends LitElement {
 
   static get styles() {
     return [
       css`
         :host {
+          /* register this element as a dark context for child PFE elements */
+          --context: dark;
           --_border-color: var(--rh-footer-border-color, #6A6E73);
           --_accent-color: var(--rh-footer-accent-color,  #ee0000);
           --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--xl, 32px));

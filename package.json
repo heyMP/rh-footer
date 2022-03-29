@@ -21,10 +21,11 @@
   },
   "dependencies": {
     "lit": "^2.0.2",
-    "@patternfly/pfe-accordion": "^1.12.3",
-    "@patternfly/pfe-cta": "^1.12.3",
-    "@patternfly/pfe-icon": "^1.12.3",
-    "@patternfly/pfe-styles": "^1.12.3"
+    "@patternfly/pfe-core": "next",
+    "@patternfly/pfe-accordion": "next",
+    "@patternfly/pfe-cta": "next",
+    "@patternfly/pfe-icon": "next",
+    "@patternfly/pfe-styles": "next"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
