@@ -3,20 +3,24 @@ import { property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 export class RhFooterSocialLink extends LitElement {
-	static get tag() {
-		return 'rh-footer-social-link';
-	}
+  static get tag() {
+    return 'rh-footer-social-link';
+  }
 
   static get styles() {
     return css`
       :host {
         display: block;
+        --pfe-icon--color: #8a8d90;
         --pfe-icon--size: var(--rh-footer--social-icon--size, 32px);
+      }
+      :host(:is(:hover, :focus-within)) {
+        --pfe-icon--color: #B8BBBE;
       }
     `;
   }
 
-	@property() icon: string | null = null
+  @property() icon: string | null = null
 
   constructor() {
     super();
@@ -36,9 +40,9 @@ export class RhFooterSocialLink extends LitElement {
         i.remove();
       });
       newDiv.innerHTML = `<pfe-icon icon="${this.icon}">${newDiv.innerHTML}</pfe-icon>`;
-			if (oldDiv.parentNode) {
-				oldDiv.parentNode.replaceChild(newDiv, oldDiv);
-			}
+      if (oldDiv.parentNode) {
+        oldDiv.parentNode.replaceChild(newDiv, oldDiv);
+      }
     }
   }
 

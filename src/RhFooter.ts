@@ -318,7 +318,6 @@ export class RhFooter extends LitElement {
         }
 
         .social-links {
-          --pfe-icon--color: #8a8d90;
           display: flex;
           margin-left: 0;
           padding-left: 0;
