@@ -10,18 +10,15 @@ export class RhFooterLink extends LitElement {
 			:host {
 				--_color: var(--link-color, #fff);
 				--_font-size: var(--link-font-size, 14px);
-				--_text-decoration: var(--link-text-decoration, none);
-				--_text-decoration-active: var(--link-text-decoration-active, underline);
 				display: block;
 			}
 			::slotted(*) {
 				color: var(--_color) !important;
 				font-size: var(--_font-size);
-				text-decoration: var(--_text-decoration);
+				text-decoration: none;
 			}
-			::slotted(a:hover),
-			::slotted(a:focus-visible) {
-				text-decoration: var(--_text-decoration-active);
+			::slotted(a:is(:hover, :focus)) {
+				text-decoration: underline
 			}
 		`;
 	}

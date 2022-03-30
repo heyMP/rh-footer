@@ -511,7 +511,7 @@ export class RhFooter extends LitElement {
               </div>
               <div class="footer__tertiary" part="footer__tertiary">
                 <slot name="footer__tertiary">
-                  <img src="${new URL('../assets/summit-logo.png', import.meta.url)}" alt="Red Hat Summit" />
+                  <a href="https://www.redhat.com/en/summit" alt="Visit Red Hat Summit" slot="footer__tertiary"><img src="${new URL('../assets/summit-logo.png', import.meta.url)}" alt="Red Hat Summit" /></a>
                 </slot>
               </div>
             </slot>
