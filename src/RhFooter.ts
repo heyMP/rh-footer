@@ -162,9 +162,12 @@ export class RhFooter extends LitElement {
         }
 
         .footer__secondary {
+          grid-area: secondary;
           color: #D2D2D2;
           font-size: 12px;
-          grid-area: secondary;
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
         }
 
         .footer__tertiary {
