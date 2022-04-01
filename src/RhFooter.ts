@@ -321,6 +321,7 @@ export class RhFooter extends LitElement {
         .logo slot::slotted(a),
         .logo a {
           display: inline-flex;
+          width: 156px;
         }
 
         .social-links {
@@ -389,7 +390,6 @@ export class RhFooter extends LitElement {
                           class="redhat-logo"
                           src="https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--on-dark.svg"
                           aria-hidden="true"
-                          style="width:156px;"
                         />
                       </a>
                     </slot>
@@ -444,6 +444,8 @@ export class RhFooter extends LitElement {
                           <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
                           <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
                         </rh-footer-links>
+                      </slot>
+                      <slot name="links--column3">
                         <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Try, buy, sell</h3>
                           <rh-footer-link class="link" part="link"><a href="#">Red Hat Store</a></rh-footer-link>
