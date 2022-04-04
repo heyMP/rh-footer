@@ -41,6 +41,28 @@ export class RhFooter extends LitElement {
 
 
         /**
+         * Debugging
+         */
+         :host([debug]) *:not(.spacer, .base, a, svg) {
+          position: relative;
+          outline: 2px dotted red;
+          /* make sure we have some */
+          min-height: 25px;
+        }
+
+        :host([debug]) *:not(.spacer, .base, a, svg)::after {
+          content: attr(part);
+          display: block;
+          position: absolute;
+          color: white;
+          background-color: darkslategray;
+          padding: .3em;
+          top: 0;
+          right: 0;
+          font-size: .7rem;
+        }
+
+        /**
          * Regions
          */
         .section {
