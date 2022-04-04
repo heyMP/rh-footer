@@ -89,11 +89,11 @@ export class RhFooter extends LitElement {
           left: var(--_section-side-gap);
         }
 
-        .header__primary {
+        .header-primary {
           flex: 1 1 auto;
         }
 
-        .header__secondary {
+        .header-secondary {
           /* secondary should be push to the end */
           /* of the line on mobile */
           flex: 0 1 auto;
@@ -153,15 +153,15 @@ export class RhFooter extends LitElement {
           }
         }
 
-        .footer__logo {
+        .footer-logo {
           grid-area: logo;
         }
 
-        .footer__primary {
+        .footer-primary {
           grid-area: primary;
         }
 
-        .footer__secondary {
+        .footer-secondary {
           grid-area: secondary;
           color: #D2D2D2;
           font-size: 12px;
@@ -170,7 +170,7 @@ export class RhFooter extends LitElement {
           gap: 16px;
         }
 
-        .footer__tertiary {
+        .footer-tertiary {
           grid-area: tertiary;
           display: grid;
           justify-content: flex-start;
@@ -178,7 +178,7 @@ export class RhFooter extends LitElement {
         }
 
         @media screen and (min-width: ${mobileXlBreakpoint}) {
-          .footer__tertiary {
+          .footer-tertiary {
             display: grid;
             justify-content: flex-end;
             align-items: center;
@@ -189,8 +189,8 @@ export class RhFooter extends LitElement {
           min-height: 150px;
         }
 
-        .footer__primary rh-footer-links,
-        .footer__primary slot::slotted(rh-footer-links) {
+        .footer-primary rh-footer-links,
+        .footer-primary slot::slotted(rh-footer-links) {
           display: grid;
           justify-content: left;
           grid-template-columns: 1fr 1fr;
@@ -198,37 +198,37 @@ export class RhFooter extends LitElement {
         }
 
         @media screen and (min-width: ${mobileBreakpoint}) {
-          .footer__primary rh-footer-links,
-          .footer__primary slot::slotted(rh-footer-links) {
+          .footer-primary rh-footer-links,
+          .footer-primary slot::slotted(rh-footer-links) {
             grid-template-columns: 1fr 1fr 1fr;
           }
         }
 
         @media screen and (min-width: ${mobileXlBreakpoint}) {
-          .footer__primary rh-footer-links,
-          .footer__primary slot::slotted(rh-footer-links) {
+          .footer-primary rh-footer-links,
+          .footer-primary slot::slotted(rh-footer-links) {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
           }
         }
 
-        .footer__secondary rh-footer-links,
-        .footer__secondary slot::slotted(rh-footer-links) {
+        .footer-secondary rh-footer-links,
+        .footer-secondary slot::slotted(rh-footer-links) {
           display: flex;
           gap: 8px 24px;
         }
 
         @media screen and (min-width: 500px) {
-          .footer__secondary rh-footer-links,
-          .footer__secondary slot::slotted(rh-footer-links) {
+          .footer-secondary rh-footer-links,
+          .footer-secondary slot::slotted(rh-footer-links) {
             display: grid;
             grid-template-columns: 1fr 1fr;
           }
         }
         @media screen and (min-width: ${mobileXlBreakpoint}) {
-          .footer__secondary rh-footer-links,
-          .footer__secondary slot::slotted(rh-footer-links) {
+          .footer-secondary rh-footer-links,
+          .footer-secondary slot::slotted(rh-footer-links) {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
@@ -238,20 +238,20 @@ export class RhFooter extends LitElement {
 
         @media screen and (max-width: ${tabletLandscapeBreakpoint}) {
           /* Add a bit more margin to the primary content on mobile */
-          .main__primary {
+          .main-primary {
             margin: calc(var(--pf-global--spacer--2xl, 48px) - var(--pf-global--spacer--xl, 32px)) 0;
           }
 
           .traditional-item,
-          ::slotted(rh-traditional-links[slot="footer__secondary"]){
+          ::slotted(rh-traditional-links[slot="footer-secondary"]){
             grid-template-columns: 1fr 1fr;
           }
 
-          .footer__logo {
+          .footer-logo {
             grid-area: logo;
           }
 
-          .footer__primary {
+          .footer-primary {
             grid-area: primary;
           }
 
@@ -298,14 +298,14 @@ export class RhFooter extends LitElement {
 
         @media screen and (max-width: ${mobileLandscapeBreakpoint}){
           .traditional-item,
-          ::slotted(rh-traditional-links[slot="footer__secondary"]){
+          ::slotted(rh-traditional-links[slot="footer-secondary"]){
             grid-template-columns: 1fr;
           }
         }
 
         @media screen and (min-width: ${mobileLandscapeBreakpoint} and (max-width: ${tabletLandscapeBreakpoint})){
           .traditional-item,
-          ::slotted(rh-traditional-links[slot="footer__secondary"]){
+          ::slotted(rh-traditional-links[slot="footer-secondary"]){
             grid-template-columns: 1fr 1fr;
           }
         }
@@ -380,13 +380,13 @@ export class RhFooter extends LitElement {
         <slot name="base">
           <div class="section header" part="section header">
             <slot name="header">
-              <div class="header__primary" part="header__primary">
-                <slot name="header__primary">
+              <div class="header-primary" part="header-primary">
+                <slot name="header-primary">
                   <div class="logo" part="logo">
                     <slot name="logo">
                       <a href="/en" title="Red Hat">
                         <img
-                          id="logo__image"
+                          id="logo-image"
                           class="redhat-logo"
                           src="https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--on-dark.svg"
                           aria-hidden="true"
@@ -396,18 +396,18 @@ export class RhFooter extends LitElement {
                   </div>
                 </slot>
               </div>
-              <div class="header__secondary" part="header__secondary">
-                <slot name="header__secondary">
+              <div class="header-secondary" part="header-secondary">
+                <slot name="header-secondary">
                   <div class="social-links">
                     <slot name="social-links">
                       <rh-footer-social-links class="social-links-item" part="social-links-item">
                         <h3>Social Media Links</h3>
-                        <slot name="social-links--start"></slot>
+                        <slot name="social-links-start"></slot>
                         <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-linkedin"><a href="#LinkedIn">LinkedIn</a></rh-footer-social-link>
                         <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-youtube"><a href="#Youtube">Youtube</a></rh-footer-social-link>
                         <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-facebook"><a href="#Facebook">Facebook</a></rh-footer-social-link>
                         <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-twitter"><a href="#Twitter">Twitter</a></rh-footer-social-link>
-                        <slot name="social-links--end"></slot>
+                        <slot name="social-links-end"></slot>
                       </rh-footer-social-links>
                     </slot>
                   </div>
@@ -417,13 +417,13 @@ export class RhFooter extends LitElement {
           </div>
           <div class="section main" part="section main">
             <slot name="main">
-              <div class="main__primary" part="main__primary">
-                <slot name="main__primary">
+              <div class="main-primary" part="main-primary">
+                <slot name="main-primary">
                   <!-- This breaks Lit SSR -->
                   <${this.linksWrapperTag()} class="links" part="links" exportparts="link">
                     <slot name="links">
-                      <slot name="links--start"></slot>
-                      <slot name="links--column1">
+                      <slot name="links-start"></slot>
+                      <slot name="links-column1">
                         <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Products</h3>
                           <rh-footer-link class="link" part="link"><a href="#">Red Hat Ansible Automation Platform</a></rh-footer-link>
@@ -434,7 +434,7 @@ export class RhFooter extends LitElement {
                           <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
                         </rh-footer-links>
                       </slot>
-                      <slot name="links--column2">
+                      <slot name="links-column2">
                         <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Tools</h3>
                           <rh-footer-link class="link" part="link"><a href="#">My account</a></rh-footer-link>
@@ -445,7 +445,7 @@ export class RhFooter extends LitElement {
                           <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
                         </rh-footer-links>
                       </slot>
-                      <slot name="links--column3">
+                      <slot name="links-column3">
                         <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Try, buy, sell</h3>
                           <rh-footer-link class="link" part="link"><a href="#">Red Hat Store</a></rh-footer-link>
@@ -456,7 +456,7 @@ export class RhFooter extends LitElement {
                           <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
                         </rh-footer-links>
                       </slot>
-                      <slot name="links--column4">
+                      <slot name="links-column4">
                         <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Communicate</h3>
                           <rh-footer-link class="link" part="link"><a href="#">Contact us</a></rh-footer-link>
@@ -466,13 +466,13 @@ export class RhFooter extends LitElement {
                           <rh-footer-link class="link" part="link"><a href="#">Email preferences</a></rh-footer-link>
                         </rh-footer-links>
                       </slot>
-                      <slot name="links--end"></slot>
+                      <slot name="links-end"></slot>
                     </slot>
                   </${this.linksWrapperTag()}>
                 </slot>
               </div>
-              <div class="main__secondary" part="main__secondary">
-                <slot name="main__secondary">
+              <div class="main-secondary" part="main-secondary">
+                <slot name="main-secondary">
                   <rh-footer-block>
                     <h3 slot="header">About Red Hat</h3>
                     <p>We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.</p>
@@ -483,15 +483,15 @@ export class RhFooter extends LitElement {
           </div>
           <div class="section footer" part="section footer">
             <slot name="footer">
-              <div class="footer__logo" part="footer__logo">
-                <slot name="footer__logo">
+              <div class="footer-logo" part="footer-logo">
+                <slot name="footer-logo">
                   <a href="/en" title="Red Hat">
                     <svg id="footer-logo" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 145"><defs><style>.cls-1{fill:#6A6E73;} .band{fill:transparent;}</style></defs><title>RedHat-Logo-Hat-Color</title><path class="band" d="M157.77,62.61a14,14,0,0,1,.31,3.42c0,14.88-18.1,17.46-30.61,17.46C78.83,83.49,42.53,53.26,42.53,44a6.43,6.43,0,0,1,.22-1.94l-3.66,9.06a18.45,18.45,0,0,0-1.51,7.33c0,18.11,41,45.48,87.74,45.48,20.69,0,36.43-7.76,36.43-21.77,0-1.08,0-1.94-1.73-10.13Z"/><path class="cls-1" d="M127.47,83.49c12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89,8.69,103.76.5,97.51.5,91.69.5,90,8,83.06,8c-6.68,0-11.64-5.6-17.89-5.6-6,0-9.91,4.09-12.93,12.5,0,0-8.41,23.72-9.49,27.16A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33C22.27,52,.5,55,.5,74.22c0,31.48,74.59,70.28,133.65,70.28,45.28,0,56.7-20.48,56.7-36.65,0-12.72-11-27.16-30.83-35.78"/></svg>
                   </a>
                 </slot>
               </div>
-              <div class="footer__primary" part="footer__primary">
-                <slot name="footer__primary">
+              <div class="footer-primary" part="footer-primary">
+                <slot name="footer-primary">
                   <rh-footer-links class="traditional-links" part="traditional-links">
                     <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">About Red Hat</a></rh-footer-link>
                     <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Jobs</a></rh-footer-link>
@@ -505,8 +505,8 @@ export class RhFooter extends LitElement {
                 </slot>
               </div>
               <div class="spacer" part="spacer"></div>
-              <div class="footer__secondary" part="footer__secondary">
-                <slot name="footer__secondary">
+              <div class="footer-secondary" part="footer-secondary">
+                <slot name="footer-secondary">
                   <rh-footer-links class="traditional-item" part="traditional-item-tertiary">
                     <rh-footer-copyright></rh-footer-copyright>
                     <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Privacy statement</a>             </rh-footer-link>
@@ -517,9 +517,9 @@ export class RhFooter extends LitElement {
                   </rh-footer-links>
                 </slot>
               </div>
-              <div class="footer__tertiary" part="footer__tertiary">
-                <slot name="footer__tertiary">
-                  <a href="https://www.redhat.com/en/summit" alt="Visit Red Hat Summit" slot="footer__tertiary"><img src="${new URL('../assets/summit-logo.png', import.meta.url)}" alt="Red Hat Summit" /></a>
+              <div class="footer-tertiary" part="footer-tertiary">
+                <slot name="footer-tertiary">
+                  <a href="https://www.redhat.com/en/summit" alt="Visit Red Hat Summit" slot="footer-tertiary"><img src="${new URL('../assets/summit-logo.png', import.meta.url)}" alt="Red Hat Summit" /></a>
                 </slot>
               </div>
             </slot>
