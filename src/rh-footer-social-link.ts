@@ -11,11 +11,11 @@ export class RhFooterSocialLink extends LitElement {
     return css`
       :host {
         display: block;
-        --pfe-icon--color: #8a8d90;
+        --pfe-icon--color: var(--_icon-color);
         --pfe-icon--size: var(--rh-footer--social-icon--size, 32px);
       }
       :host(:is(:hover, :focus-within)) {
-        --pfe-icon--color: #B8BBBE;
+        --pfe-icon--color: var(--_icon-color-hover);
       }
     `;
   }
