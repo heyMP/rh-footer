@@ -20,7 +20,7 @@ export class RhFooterSocialLink extends LitElement {
     `;
   }
 
-  @property() icon: string | null = null
+  @property() icon: string | null = null;
 
   constructor() {
     super();

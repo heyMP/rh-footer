@@ -1,9 +1,16 @@
 import { css, LitElement, TemplateResult } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { html, literal } from 'lit/static-html.js';
-import { pfelement } from "@patternfly/pfe-core/decorators";
+import { pfelement } from '@patternfly/pfe-core/decorators';
 import { MatchMediaController } from './lib/MatchMediaController.js';
-import { desktopSmallBreakpoint, desktopLargeBreakpoint, mobileLandscapeBreakpoint, mobileBreakpoint, mobileXlBreakpoint, tabletLandscapeBreakpoint } from './lib/tokens.js';
+import {
+  desktopSmallBreakpoint,
+  desktopLargeBreakpoint,
+  mobileLandscapeBreakpoint,
+  mobileBreakpoint,
+  mobileXlBreakpoint,
+  tabletLandscapeBreakpoint,
+} from './lib/tokens.js';
 import './rh-footer-social-link.js';
 import './rh-footer-links.js';
 import './rh-footer-link.js';
@@ -13,21 +20,24 @@ import './rh-footer-copyright.js';
 
 @pfelement()
 export class RhFooter extends LitElement {
-
   static get styles() {
     return [
       css`
         :host {
-          --_icon-color: var(--rh-footer-icon-color, #8A8D90);
-          --_icon-color-hover: var(--rh-footer-icon-color-hover, #B8BBBE);
-          --_border-color: var(--rh-footer-border-color, #6A6E73);
-          --_accent-color: var(--rh-footer-accent-color,  #ee0000);
-          --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--xl, 32px));
+          --_icon-color: var(--rh-footer-icon-color, #8a8d90);
+          --_icon-color-hover: var(--rh-footer-icon-color-hover, #b8bbbe);
+          --_border-color: var(--rh-footer-border-color, #6a6e73);
+          --_accent-color: var(--rh-footer-accent-color, #ee0000);
+          --_section-side-gap: var(
+            --rh-footer-section-side-gap,
+            var(--pf-global--spacer--xl, 32px)
+          );
           /* PFE 2.0 ContextControllerAPI: set context for child components */
           --context: dark;
           /* apply sensible defaults based on redhat standards. */
           color: #fff;
-          font-family: "Red Hat Text", "RedHatText", "Overpass", Overpass, Arial, sans-serif;
+          font-family: 'Red Hat Text', 'RedHatText', 'Overpass', Overpass, Arial,
+            sans-serif;
           line-height: 125%;
           font-weight: 300;
           /* set at 18px for margin and padding standardization */
@@ -43,7 +53,7 @@ export class RhFooter extends LitElement {
         /**
          * Debugging
          */
-         :host([debug]) *:not(.spacer, .base, a, svg) {
+        :host([debug]) *:not(.spacer, .base, a, svg) {
           position: relative;
           outline: 2px dotted red;
           /* make sure we have some */
@@ -56,10 +66,10 @@ export class RhFooter extends LitElement {
           position: absolute;
           color: white;
           background-color: darkslategray;
-          padding: .3em;
+          padding: 0.3em;
           top: 0;
           right: 0;
-          font-size: .7rem;
+          font-size: 0.7rem;
         }
 
         /**
@@ -81,7 +91,7 @@ export class RhFooter extends LitElement {
 
         .header::after {
           display: block;
-          content: "";
+          content: '';
           background-color: var(--_border-color);
           height: 1px;
           position: absolute;
@@ -114,11 +124,11 @@ export class RhFooter extends LitElement {
           display: grid;
           grid-template-columns: 1fr;
           grid-template-areas:
-            "logo"
-            "primary"
-            "spacer"
-            "secondary"
-            "tertiary";
+            'logo'
+            'primary'
+            'spacer'
+            'secondary'
+            'tertiary';
           gap: 32px 24px;
         }
 
@@ -126,10 +136,10 @@ export class RhFooter extends LitElement {
           .footer {
             grid-template-columns: 4fr 4fr 4fr;
             grid-template-areas:
-              "logo logo logo"
-              "primary primary primary"
-              "spacer spacer spacer"
-              "secondary secondary tertiary";
+              'logo logo logo'
+              'primary primary primary'
+              'spacer spacer spacer'
+              'secondary secondary tertiary';
           }
         }
 
@@ -137,8 +147,8 @@ export class RhFooter extends LitElement {
           .footer {
             grid-template-columns: auto 10fr 2fr;
             grid-template-areas:
-              "logo primary tertiary"
-              "logo secondary tertiary";
+              'logo primary tertiary'
+              'logo secondary tertiary';
             gap: 24px 32px;
           }
         }
@@ -173,7 +183,7 @@ export class RhFooter extends LitElement {
 
         .footer-secondary {
           grid-area: secondary;
-          color: #D2D2D2;
+          color: #d2d2d2;
           font-size: 12px;
           display: flex;
           flex-direction: column;
@@ -245,7 +255,11 @@ export class RhFooter extends LitElement {
         @media screen and (max-width: ${tabletLandscapeBreakpoint}) {
           /* Add a bit more margin to the primary content on mobile */
           .main-primary {
-            margin: calc(var(--pf-global--spacer--2xl, 48px) - var(--pf-global--spacer--xl, 32px)) 0;
+            margin: calc(
+                var(--pf-global--spacer--2xl, 48px) -
+                  var(--pf-global--spacer--xl, 32px)
+              )
+              0;
           }
 
           .footer-logo {
@@ -260,29 +274,40 @@ export class RhFooter extends LitElement {
         @media screen and (max-width: ${tabletLandscapeBreakpoint}) {
           /* Equalize padding on mobile */
           .section {
-            --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--3xl, 24px));
+            --_section-side-gap: var(
+              --rh-footer-section-side-gap,
+              var(--pf-global--spacer--3xl, 24px)
+            );
           }
         }
 
         @media screen and (min-width: ${tabletLandscapeBreakpoint}) and (max-width: ${desktopLargeBreakpoint}) {
           /* Equalize padding on mobile */
           .section {
-            --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--3xl, 32px));
+            --_section-side-gap: var(
+              --rh-footer-section-side-gap,
+              var(--pf-global--spacer--3xl, 32px)
+            );
           }
 
-          .header, .main {
+          .header,
+          .main {
             /* switch header to use grid instead */
             display: grid;
             grid-template-columns: 8fr 4fr;
           }
         }
 
-        @media screen and (min-width: ${desktopLargeBreakpoint}){
+        @media screen and (min-width: ${desktopLargeBreakpoint}) {
           .section {
-            --_section-side-gap: var(--rh-footer-section-side-gap,  var(--pf-global--spacer--3xl, 64px));
+            --_section-side-gap: var(
+              --rh-footer-section-side-gap,
+              var(--pf-global--spacer--3xl, 64px)
+            );
           }
 
-          .header, .main {
+          .header,
+          .main {
             /* switch header to use grid instead */
             display: grid;
             grid-template-columns: 8fr 4fr;
@@ -324,7 +349,10 @@ export class RhFooter extends LitElement {
 
         .links rh-footer-links,
         .links slot::slotted(rh-footer-links) {
-          width: calc((100% / var(--rh-footer--links-columns, 4)) - var(--pf-global--spacer--xl, 32px));
+          width: calc(
+            (100% / var(--rh-footer--links-columns, 4)) -
+              var(--pf-global--spacer--xl, 32px)
+          );
         }
 
         #footer-logo {
@@ -334,7 +362,8 @@ export class RhFooter extends LitElement {
     ];
   }
 
-  @property({ attribute: 'disable-language-switcher', reflect: true }) disableLanguageSwitcher = false;
+  @property({ attribute: 'disable-language-switcher', reflect: true })
+  disableLanguageSwitcher = false;
 
   @state() private _lang = 'en';
 
@@ -342,14 +371,17 @@ export class RhFooter extends LitElement {
 
   constructor() {
     super();
-    this.isMobile = new MatchMediaController(this, `(max-width: ${tabletLandscapeBreakpoint})`);
+    this.isMobile = new MatchMediaController(
+      this,
+      `(max-width: ${tabletLandscapeBreakpoint})`
+    );
   }
 
   connectedCallback() {
     super.connectedCallback();
     // load these lazily, outside of the constructor. Must do this for SSR to work
-    import("@patternfly/pfe-icon/dist/pfe-icon.js");
-    import("@patternfly/pfe-accordion/dist/pfe-accordion.js");
+    import('@patternfly/pfe-icon/dist/pfe-icon.js');
+    import('@patternfly/pfe-accordion/dist/pfe-accordion.js');
   }
 
   disconnectedCallback() {

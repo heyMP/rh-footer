@@ -7,19 +7,17 @@ export class RhFooterCopyright extends LitElement {
 
   static get styles() {
     return css`
-			:host {
-				flex: 1 1 auto;
-				display: block;
-				width: 100%;
-			}
-		`;
+      :host {
+        flex: 1 1 auto;
+        display: block;
+        width: 100%;
+      }
+    `;
   }
 
   render() {
     const currentYear = new Date().getFullYear();
-    return html`
-      <slot>&copy; ${currentYear} Red Hat, Inc.</slot>
-    `;
+    return html` <slot>&copy; ${currentYear} Red Hat, Inc.</slot> `;
   }
 }
 
