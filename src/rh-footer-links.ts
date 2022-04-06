@@ -1,11 +1,19 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css, CSSResultGroup } from 'lit';
 import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { property } from 'lit/decorators.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller';
-import { bound, initializer } from '@patternfly/pfe-core/decorators';
+import { bound, initializer, observed } from '@patternfly/pfe-core/decorators';
 import { Logger } from '@patternfly/pfe-core/controllers/logger';
 import { getRandomId } from '@patternfly/pfe-core/functions/random';
 
 export class RhFooterLinks extends LitElement {
+
+	/**
+	 * Visibily hide the header slot. Setting this to true will not affect
+	 * aria-labelledby.
+	 */
+	@property({ type: Boolean, attribute: 'header-hidden', reflect: true })
+	public headerHidden: boolean = false;
 
 	private logger = new Logger(this);
 
@@ -13,12 +21,14 @@ export class RhFooterLinks extends LitElement {
 		slots: ['header'],
 	});
 
-	static get styles() {
-		return css`
+	static styles = css`
 			:host {
 				display: flex;
 				flex-direction: column;
 				gap: 10px;
+			}
+			[part] {
+				display: contents;
 			}
 			::slotted(:is(h1,h2,h3,h4,h5)) {
 				font-weight: 500;
@@ -26,8 +36,18 @@ export class RhFooterLinks extends LitElement {
 				margin-top: 0;
 				margin-bottom: 0;
 			}
+			:host([header-hidden]) .header ::slotted(*) {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+			}
 		`;
-	}
 
 	constructor() {
 		super();
@@ -39,6 +59,7 @@ export class RhFooterLinks extends LitElement {
 	}
 
 	public updateAccessibility() {
+		// set the role for this element to be a list item
 		this.setAttribute('role', 'list');
 		// ensure we've rendered to our shadowroot
 		const header: HTMLElement | null = this.querySelector('[slot="header"]');
@@ -49,16 +70,16 @@ export class RhFooterLinks extends LitElement {
 			header.id = headerId;
 			this.setAttribute('aria-labelledby', headerId);
 		}
-		else {
-			// if there is no header then we need to remove aria-labelledby
-			this.removeAttribute('aria-labelledby');
-		}
 	}
 
 	render() {
 		return html`
-			<slot name="header"></slot>
-			<slot></slot>
+			<div part="header" class="header">
+				<slot name="header"></slot>
+			</div>
+			<div part="default" class="default">
+				<slot></slot>
+			</div>
 	`;
 	}
 }

@@ -40,6 +40,8 @@ export class RhFooterSocialLink extends LitElement {
         i.remove();
       });
       newDiv.innerHTML = `<pfe-icon icon="${this.icon}">${newDiv.innerHTML}</pfe-icon>`;
+      // add a11y settings
+      newDiv.setAttribute('aria-label', newDiv.textContent || '');
       if (oldDiv.parentNode) {
         oldDiv.parentNode.replaceChild(newDiv, oldDiv);
       }

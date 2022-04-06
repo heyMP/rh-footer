@@ -41,7 +41,6 @@ export class RhFooter extends LitElement {
           box-sizing: border-box;
         }
 
-
         /**
          * Debugging
          */
@@ -334,6 +333,13 @@ export class RhFooter extends LitElement {
           padding-left: 0;
         }
 
+        .social-links rh-footer-links,
+        .social-links slot::slotted(rh-footer-links) {
+          display: flex;
+          flex-direction: row;
+          gap: 16px;
+        }
+
         .links {
           display: flex;
           gap: var(--pf-global--spacer--xl, 32px);
@@ -402,15 +408,15 @@ export class RhFooter extends LitElement {
                 <slot name="header-secondary">
                   <div class="social-links">
                     <slot name="social-links">
-                      <rh-footer-social-links class="social-links-item" part="social-links-item">
-                        <h3>Social Media Links</h3>
+                      <rh-footer-links class="social-links-item" part="social-links-item" header-hidden>
+                        <h3 slot="header">Social Media Links</h3>
                         <slot name="social-links-start"></slot>
                         <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-linkedin"><a href="#LinkedIn">LinkedIn</a></rh-footer-social-link>
                         <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-youtube"><a href="#Youtube">Youtube</a></rh-footer-social-link>
                         <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-facebook"><a href="#Facebook">Facebook</a></rh-footer-social-link>
                         <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-twitter"><a href="#Twitter">Twitter</a></rh-footer-social-link>
                         <slot name="social-links-end"></slot>
-                      </rh-footer-social-links>
+                      </rh-footer-links>
                     </slot>
                   </div>
                 </slot>
