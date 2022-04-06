@@ -1,7 +1,7 @@
-import { html } from 'lit';
-import { fixture, expect } from '@open-wc/testing';
-import { RhFooter } from '../src/RhFooter.js';
-import '../src/rh-footer.js';
+// import { html } from 'lit';
+// import { fixture, expect } from '@open-wc/testing';
+// import { RhFooter } from '../src/RhFooter.js';
+// import '../src/rh-footer.js';
 
 describe('RhFooter', () => {
   // it('has a default title "Hey there" and counter 5', async () => {

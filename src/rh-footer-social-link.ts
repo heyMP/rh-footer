@@ -1,6 +1,5 @@
-import { css, html, LitElement, render } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { property } from 'lit/decorators.js';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
 
 export class RhFooterSocialLink extends LitElement {
   static get tag() {

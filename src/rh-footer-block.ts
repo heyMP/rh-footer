@@ -44,15 +44,15 @@ export class RhFooterBlock extends LitElement {
     `;
   }
 
-  constructor() {
-    super();
-  }
-
   render() {
     return html`
       <div class="base" part="base">
-        <div class="header" part="header"><slot name="header"></slot></div>
-        <div class="content" part="content"><slot></slot></div>
+        <div class="header" part="header">
+          <slot name="header"></slot>
+        </div>
+        <div class="content" part="content">
+          <slot></slot>
+        </div>
       </div>
     `;
   }

@@ -1,8 +1,7 @@
-import { LitElement, html, css, CSSResultGroup } from 'lit';
-import { unsafeHTML } from 'lit-html/directives/unsafe-html.js';
+import { LitElement, html, css } from 'lit';
 import { property } from 'lit/decorators.js';
 import { SlotController } from '@patternfly/pfe-core/controllers/slot-controller';
-import { bound, initializer, observed } from '@patternfly/pfe-core/decorators';
+import { initializer } from '@patternfly/pfe-core/decorators';
 import { Logger } from '@patternfly/pfe-core/controllers/logger';
 import { getRandomId } from '@patternfly/pfe-core/functions/random';
 
@@ -48,12 +47,8 @@ export class RhFooterLinks extends LitElement {
     }
   `;
 
-  constructor() {
-    super();
-  }
-
   @initializer()
-  protected _init(records: MutationRecord[]) {
+  protected _init() {
     this.updateAccessibility();
   }
 

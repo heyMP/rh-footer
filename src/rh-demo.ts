@@ -1,5 +1,4 @@
-import { css, LitElement, html } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { LitElement, html } from 'lit';
 
 export class RhDemo extends LitElement {
   constructor() {
