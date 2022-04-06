@@ -1,5 +1,5 @@
-import { css, html, LitElement, render } from 'lit';
-import { state } from 'lit/decorators.js';
+import { css, html, LitElement } from 'lit';
+import { state, property } from 'lit/decorators.js';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { mobileBreakpoint } from './lib/tokens.js';
 
@@ -8,10 +8,13 @@ interface LinkSet {
   panel: Element[];
 }
 
-export class RhFooterLinksMobile extends LitElement {
+export class RhFooterLinkWrapper extends LitElement {
   static get tag() {
-    return `rh-footer-links-mobile`;
+    return `rh-footer-links-wrapper`;
   }
+
+  @property({ type: Boolean, attribute: 'is-mobile' })
+  public isMobile: boolean = false;
 
   @state() private linkSets?: LinkSet[];
 
@@ -89,31 +92,35 @@ export class RhFooterLinksMobile extends LitElement {
 
   render() {
     return html`
-      <div id="dynamic-links" class="base" part="base">
-        ${this.linkSets
-          ? html`
-              <pfe-accordion part="accordion">
-                ${this.linkSets?.map(
-                  item => html`
-                    <pfe-accordion-header part="accordion-header"
-                      >${unsafeHTML(
-                        item.header?.outerHTML
-                      )}</pfe-accordion-header
-                    >
-                    <pfe-accordion-panel part="accordion-panel"
-                      >${item.panel.map(
-                        _item => html`${unsafeHTML(_item.outerHTML)}`
+      ${this.isMobile
+        ? html`
+            <div id="dynamic-links" class="base" part="base">
+              ${this.linkSets
+                ? html`
+                    <pfe-accordion part="accordion">
+                      ${this.linkSets?.map(
+                        item => html`
+                          <pfe-accordion-header part="accordion-header"
+                            >${unsafeHTML(
+                              item.header?.outerHTML
+                            )}</pfe-accordion-header
+                          >
+                          <pfe-accordion-panel part="accordion-panel"
+                            >${item.panel.map(
+                              _item => html`${unsafeHTML(_item.outerHTML)}`
+                            )}
+                          </pfe-accordion-panel>
+                        `
                       )}
-                    </pfe-accordion-panel>
+                    </pfe-accordion>
                   `
-                )}
-              </pfe-accordion>
-            `
-          : ''}
-      </div>
-      <slot id="default-slot" hidden> </slot>
+                : ''}
+            </div>
+            <slot id="default-slot" hidden> </slot>
+          `
+        : html` <slot></slot> `}
     `;
   }
 }
 
-customElements.define(RhFooterLinksMobile.tag, RhFooterLinksMobile);
+customElements.define(RhFooterLinkWrapper.tag, RhFooterLinkWrapper);

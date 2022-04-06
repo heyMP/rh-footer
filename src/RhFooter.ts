@@ -1,12 +1,9 @@
-import { css, LitElement, TemplateResult } from 'lit';
-import { property, state } from 'lit/decorators.js';
+import { css, LitElement } from 'lit';
 import { html, literal } from 'lit/static-html.js';
 import { pfelement } from '@patternfly/pfe-core/decorators';
 import { MatchMediaController } from './lib/MatchMediaController.js';
 import {
-  desktopSmallBreakpoint,
   desktopLargeBreakpoint,
-  mobileLandscapeBreakpoint,
   mobileBreakpoint,
   mobileXlBreakpoint,
   tabletLandscapeBreakpoint,
@@ -14,7 +11,7 @@ import {
 import './rh-footer-social-link.js';
 import './rh-footer-links.js';
 import './rh-footer-link.js';
-import './rh-footer-links-mobile.js';
+import './rh-footer-links-wrapper.js';
 import './rh-footer-block.js';
 import './rh-footer-copyright.js';
 
@@ -362,11 +359,6 @@ export class RhFooter extends LitElement {
     ];
   }
 
-  @property({ attribute: 'disable-language-switcher', reflect: true })
-  disableLanguageSwitcher = false;
-
-  @state() private _lang = 'en';
-
   private isMobile;
 
   constructor() {
@@ -382,10 +374,6 @@ export class RhFooter extends LitElement {
     // load these lazily, outside of the constructor. Must do this for SSR to work
     import('@patternfly/pfe-icon/dist/pfe-icon.js');
     import('@patternfly/pfe-accordion/dist/pfe-accordion.js');
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
   }
 
   linksWrapperTag(): unknown {
@@ -404,7 +392,7 @@ export class RhFooter extends LitElement {
                     <slot name="logo">
                       <a href="/en">
                         <img
-                        	alt="Red Hat"
+                          alt="Red Hat"
                           src="https://static.redhat.com/libs/redhat/brand-assets/2/corp/logo--on-dark.svg"
                         />
                       </a>
@@ -416,12 +404,40 @@ export class RhFooter extends LitElement {
                 <slot name="header-secondary">
                   <div class="social-links">
                     <slot name="social-links">
-                      <rh-footer-links class="social-links-item" part="social-links-item" aria-label="Red Hat social media links">
+                      <rh-footer-links
+                        class="social-links-item"
+                        part="social-links-item"
+                        aria-label="Red Hat social media links"
+                      >
                         <slot name="social-links-start"></slot>
-                        <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-linkedin"><a href="#LinkedIn">LinkedIn</a></rh-footer-social-link>
-                        <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-youtube"><a href="#Youtube">Youtube</a></rh-footer-social-link>
-                        <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-facebook"><a href="#Facebook">Facebook</a></rh-footer-social-link>
-                        <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-twitter"><a href="#Twitter">Twitter</a></rh-footer-social-link>
+                        <rh-footer-social-link
+                          class="social-link"
+                          part="social-link"
+                          icon="web-icon-linkedin"
+                          ><a href="#LinkedIn"
+                            >LinkedIn</a
+                          ></rh-footer-social-link
+                        >
+                        <rh-footer-social-link
+                          class="social-link"
+                          part="social-link"
+                          icon="web-icon-youtube"
+                          ><a href="#Youtube">Youtube</a></rh-footer-social-link
+                        >
+                        <rh-footer-social-link
+                          class="social-link"
+                          part="social-link"
+                          icon="web-icon-facebook"
+                          ><a href="#Facebook"
+                            >Facebook</a
+                          ></rh-footer-social-link
+                        >
+                        <rh-footer-social-link
+                          class="social-link"
+                          part="social-link"
+                          icon="web-icon-twitter"
+                          ><a href="#Twitter">Twitter</a></rh-footer-social-link
+                        >
                         <slot name="social-links-end"></slot>
                       </rh-footer-links>
                     </slot>
@@ -434,63 +450,134 @@ export class RhFooter extends LitElement {
             <slot name="main">
               <div class="main-primary" part="main-primary">
                 <slot name="main-primary">
-                  <!-- This breaks Lit SSR -->
-                  <${this.linksWrapperTag()} class="links" part="links" exportparts="link">
+                  <rh-footer-links-wrapper
+                    ?is-mobile=${this.isMobile.value}
+                    class="links"
+                    part="links"
+                    exportparts="link"
+                  >
                     <slot name="links">
                       <slot name="links-start"></slot>
                       <slot name="links-column1">
                         <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Products</h3>
-                          <rh-footer-link class="link" part="link"><a href="#">Red Hat Ansible Automation Platform</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenShift</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenShift Container Storage</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#"
+                              >Red Hat Ansible Automation Platform</a
+                            ></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#"
+                              >Red Hat Enterprise Linux</a
+                            ></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">Red Hat OpenShift</a></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#"
+                              >Red Hat OpenShift Container Storage</a
+                            ></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#"
+                              >Red Hat OpenStack Platform</a
+                            ></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">See all products</a></rh-footer-link
+                          >
                         </rh-footer-links>
                       </slot>
                       <slot name="links-column2">
                         <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Tools</h3>
-                          <rh-footer-link class="link" part="link"><a href="#">My account</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Customer support</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenShift</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Contact training</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">My account</a></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">Customer support</a></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">Red Hat OpenShift</a></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">Contact training</a></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#"
+                              >Red Hat OpenStack Platform</a
+                            ></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">See all products</a></rh-footer-link
+                          >
                         </rh-footer-links>
                       </slot>
                       <slot name="links-column3">
                         <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Try, buy, sell</h3>
-                          <rh-footer-link class="link" part="link"><a href="#">Red Hat Store</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Red Hat Enterprise Linux</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenShift</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Contact training</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Red Hat OpenStack Platform</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">See all products</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">Red Hat Store</a></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#"
+                              >Red Hat Enterprise Linux</a
+                            ></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">Red Hat OpenShift</a></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">Contact training</a></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#"
+                              >Red Hat OpenStack Platform</a
+                            ></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">See all products</a></rh-footer-link
+                          >
                         </rh-footer-links>
                       </slot>
                       <slot name="links-column4">
                         <rh-footer-links class="links-item" part="links-item">
                           <h3 slot="header">Communicate</h3>
-                          <rh-footer-link class="link" part="link"><a href="#">Contact us</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Feedback</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Social</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Red Hat newsletter</a></rh-footer-link>
-                          <rh-footer-link class="link" part="link"><a href="#">Email preferences</a></rh-footer-link>
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">Contact us</a></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">Feedback</a></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">Social</a></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">Red Hat newsletter</a></rh-footer-link
+                          >
+                          <rh-footer-link class="link" part="link"
+                            ><a href="#">Email preferences</a></rh-footer-link
+                          >
                         </rh-footer-links>
                       </slot>
                       <slot name="links-end"></slot>
                     </slot>
-                  </${this.linksWrapperTag()}>
+                  </rh-footer-links-wrapper>
                 </slot>
               </div>
               <div class="main-secondary" part="main-secondary">
                 <slot name="main-secondary">
                   <rh-footer-block>
                     <h3 slot="header">About Red Hat</h3>
-                    <p>We’re the world’s leading provider of enterprise open source solutions―including Linux, cloud, container, and Kubernetes. We deliver hardened solutions that make it easier for enterprises to work across platforms and environments, from the core datacenter to the network edge.</p>
+                    <p>
+                      We’re the world’s leading provider of enterprise open
+                      source solutions―including Linux, cloud, container, and
+                      Kubernetes. We deliver hardened solutions that make it
+                      easier for enterprises to work across platforms and
+                      environments, from the core datacenter to the network
+                      edge.
+                    </p>
                   </rh-footer-block>
                 </slot>
               </div>
@@ -500,35 +587,125 @@ export class RhFooter extends LitElement {
             <slot name="footer">
               <div class="footer-logo" part="footer-logo">
                 <slot name="footer-logo">
-                  <a class="footer-logo-anchor" part="footer-logo-anchor" href="/en" alt="Visit Red Hat">
-                    <svg title="Red Hat logo" class="footer-logo-image" part="footer-logo-image" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 145"><defs><style>.band{fill:transparent;}</style></defs><path class="band" d="M157.77,62.61a14,14,0,0,1,.31,3.42c0,14.88-18.1,17.46-30.61,17.46C78.83,83.49,42.53,53.26,42.53,44a6.43,6.43,0,0,1,.22-1.94l-3.66,9.06a18.45,18.45,0,0,0-1.51,7.33c0,18.11,41,45.48,87.74,45.48,20.69,0,36.43-7.76,36.43-21.77,0-1.08,0-1.94-1.73-10.13Z"/><path class="cls-1" d="M127.47,83.49c12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89,8.69,103.76.5,97.51.5,91.69.5,90,8,83.06,8c-6.68,0-11.64-5.6-17.89-5.6-6,0-9.91,4.09-12.93,12.5,0,0-8.41,23.72-9.49,27.16A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33C22.27,52,.5,55,.5,74.22c0,31.48,74.59,70.28,133.65,70.28,45.28,0,56.7-20.48,56.7-36.65,0-12.72-11-27.16-30.83-35.78"/></svg>
+                  <a
+                    class="footer-logo-anchor"
+                    part="footer-logo-anchor"
+                    href="/en"
+                    alt="Visit Red Hat"
+                  >
+                    <svg
+                      title="Red Hat logo"
+                      class="footer-logo-image"
+                      part="footer-logo-image"
+                      data-name="Layer 1"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 192 145"
+                    >
+                      <defs>
+                        <style>
+                          .band {
+                            fill: transparent;
+                          }
+                        </style>
+                      </defs>
+                      <path
+                        class="band"
+                        d="M157.77,62.61a14,14,0,0,1,.31,3.42c0,14.88-18.1,17.46-30.61,17.46C78.83,83.49,42.53,53.26,42.53,44a6.43,6.43,0,0,1,.22-1.94l-3.66,9.06a18.45,18.45,0,0,0-1.51,7.33c0,18.11,41,45.48,87.74,45.48,20.69,0,36.43-7.76,36.43-21.77,0-1.08,0-1.94-1.73-10.13Z"
+                      />
+                      <path
+                        class="cls-1"
+                        d="M127.47,83.49c12.51,0,30.61-2.58,30.61-17.46a14,14,0,0,0-.31-3.42l-7.45-32.36c-1.72-7.12-3.23-10.35-15.73-16.6C124.89,8.69,103.76.5,97.51.5,91.69.5,90,8,83.06,8c-6.68,0-11.64-5.6-17.89-5.6-6,0-9.91,4.09-12.93,12.5,0,0-8.41,23.72-9.49,27.16A6.43,6.43,0,0,0,42.53,44c0,9.22,36.3,39.45,84.94,39.45M160,72.07c1.73,8.19,1.73,9.05,1.73,10.13,0,14-15.74,21.77-36.43,21.77C78.54,104,37.58,76.6,37.58,58.49a18.45,18.45,0,0,1,1.51-7.33C22.27,52,.5,55,.5,74.22c0,31.48,74.59,70.28,133.65,70.28,45.28,0,56.7-20.48,56.7-36.65,0-12.72-11-27.16-30.83-35.78"
+                      />
+                    </svg>
                   </a>
                 </slot>
               </div>
               <div class="footer-primary" part="footer-primary">
                 <slot name="footer-primary">
-                  <rh-footer-links class="traditional-links" part="traditional-links" aria-label="Red Hat corporate links">
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">About Red Hat</a></rh-footer-link>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Jobs</a></rh-footer-link>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Events</a></rh-footer-link>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Locations</a></rh-footer-link>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Contact Red Hat</a></rh-footer-link>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Red Hat Blog</a></rh-footer-link>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Diversity, equity, and inclusion</a></rh-footer-link>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Cool Stuff Store</a></rh-footer-link>
+                  <rh-footer-links
+                    class="traditional-links"
+                    part="traditional-links"
+                    aria-label="Red Hat corporate links"
+                  >
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#">About Red Hat</a></rh-footer-link
+                    >
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#">Jobs</a></rh-footer-link
+                    >
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#">Events</a></rh-footer-link
+                    >
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#">Locations</a></rh-footer-link
+                    >
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#">Contact Red Hat</a></rh-footer-link
+                    >
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#">Red Hat Blog</a></rh-footer-link
+                    >
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#"
+                        >Diversity, equity, and inclusion</a
+                      ></rh-footer-link
+                    >
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#">Cool Stuff Store</a></rh-footer-link
+                    >
                   </rh-footer-links>
                 </slot>
               </div>
               <div class="spacer" part="spacer"></div>
               <div class="footer-secondary" part="footer-secondary">
                 <slot name="footer-secondary">
-                  <rh-footer-links class="traditional-item" part="traditional-item-tertiary" aria-label="Red Hat compliance links">
+                  <rh-footer-links
+                    class="traditional-item"
+                    part="traditional-item-tertiary"
+                    aria-label="Red Hat compliance links"
+                  >
                     <rh-footer-copyright></rh-footer-copyright>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Privacy statement</a>             </rh-footer-link>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Terms of use</a>                  </rh-footer-link>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">All policies and guidelines</a>   </rh-footer-link>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Digital accessibility</a>         </rh-footer-link>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Cookie preferences</a>            </rh-footer-link>
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#">Privacy statement</a>
+                    </rh-footer-link>
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#">Terms of use</a>
+                    </rh-footer-link>
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#">All policies and guidelines</a>
+                    </rh-footer-link>
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#">Digital accessibility</a>
+                    </rh-footer-link>
+                    <rh-footer-link
+                      class="traditional-link"
+                      part="traditional-link"
+                      ><a href="#">Cookie preferences</a>
+                    </rh-footer-link>
                   </rh-footer-links>
                 </slot>
               </div>
@@ -546,20 +723,11 @@ export class RhFooter extends LitElement {
    * Isomorphic import.meta.url function
    * Requires a node.js dom shim that sets window.location
    */
-  getImportURL(relativeLocation: string | URL): string | URL {
+  static getImportURL(relativeLocation: string | URL): string | URL {
     const url = new URL(relativeLocation, import.meta.url);
     if (url.protocol === 'file:') {
       return new URL(relativeLocation, window.location.href);
     }
     return url;
-  }
-
-  _langChangeHandler(): void {
-    if (document.querySelector) {
-      const lang = document?.querySelector('[lang]')?.getAttribute('lang');
-      if (lang) {
-        this._lang = lang;
-      }
-    }
   }
 }
