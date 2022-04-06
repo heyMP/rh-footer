@@ -4,7 +4,6 @@ import { html, literal } from 'lit/static-html.js';
 import { pfelement } from "@patternfly/pfe-core/decorators";
 import { MatchMediaController } from './lib/MatchMediaController.js';
 import { desktopSmallBreakpoint, desktopLargeBreakpoint, mobileLandscapeBreakpoint, mobileBreakpoint, mobileXlBreakpoint, tabletLandscapeBreakpoint } from './lib/tokens.js';
-import './rh-footer-social-links.js';
 import './rh-footer-social-link.js';
 import './rh-footer-links.js';
 import './rh-footer-link.js';
