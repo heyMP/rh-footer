@@ -2,41 +2,41 @@ import { css, LitElement, html } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
 export class RhDemo extends LitElement {
-	constructor() {
-		super();
-		import("@patternfly/pfe-accordion/dist/pfe-accordion.js");
-		// @ts-ignore
-		import("https://unpkg.com/@lrnwebcomponents/code-sample?module");
-	}
+  constructor() {
+    super();
+    import("@patternfly/pfe-accordion/dist/pfe-accordion.js");
+    // @ts-ignore
+    import("https://unpkg.com/@lrnwebcomponents/code-sample?module");
+  }
 
-	protected createRenderRoot(): Element | ShadowRoot {
-		return this;
-	}
+  protected createRenderRoot(): Element | ShadowRoot {
+    return this;
+  }
 
-	firstUpdated() {
-		this.syncCodeEditor();
-	}
+  firstUpdated() {
+    this.syncCodeEditor();
+  }
 
-	public syncCodeEditor() {
-		const template = this.querySelector('template');
-		if (template) {
-			const output = this.renderRoot.querySelector('.rh-demo-code-area template');
-			if (output) {
-				output.innerHTML = template.innerHTML;
-				this.syncPreview();
-			}
-		}
-	}
+  public syncCodeEditor() {
+    const template = this.querySelector('template');
+    if (template) {
+      const output = this.renderRoot.querySelector('.rh-demo-code-area template');
+      if (output) {
+        output.innerHTML = template.innerHTML;
+        this.syncPreview();
+      }
+    }
+  }
 
-	public syncPreview() {
-		const preview = this.renderRoot.querySelector('.rh-demo-preview-area');
-		if (preview) {
-			preview.innerHTML = this.renderRoot.querySelector('.rh-demo-code-area template')?.innerHTML || '';
-		}
-	}
+  public syncPreview() {
+    const preview = this.renderRoot.querySelector('.rh-demo-preview-area');
+    if (preview) {
+      preview.innerHTML = this.renderRoot.querySelector('.rh-demo-code-area template')?.innerHTML || '';
+    }
+  }
 
-	render() {
-		return html`
+  render() {
+    return html`
 			<style>
 				pfe-accordion {
 					--pfe-accordion--MaxWidth--content: none;
@@ -62,7 +62,7 @@ export class RhDemo extends LitElement {
 				</pfe-accordion>
 			</div>
     `;
-	}
+  }
 }
 
 customElements.define('rh-demo', RhDemo);
