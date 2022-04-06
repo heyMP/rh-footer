@@ -41,6 +41,7 @@ export class RhFooterSocialLink extends LitElement {
       });
       newDiv.innerHTML = `<pfe-icon icon="${this.icon}">${newDiv.innerHTML}</pfe-icon>`;
       // add a11y settings
+      /** @todo add logging that warns the user there is an empty label */
       newDiv.setAttribute('aria-label', newDiv.textContent || '');
       if (oldDiv.parentNode) {
         oldDiv.parentNode.replaceChild(newDiv, oldDiv);
