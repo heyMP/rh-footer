@@ -385,8 +385,7 @@ export class RhFooter extends LitElement {
                 <slot name="header-secondary">
                   <div class="social-links">
                     <slot name="social-links">
-                      <rh-footer-links class="social-links-item" part="social-links-item" header-hidden>
-                        <h3 slot="header">Social Media Links</h3>
+                      <rh-footer-links class="social-links-item" part="social-links-item" aria-label="Red Hat social media links">
                         <slot name="social-links-start"></slot>
                         <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-linkedin"><a href="#LinkedIn">LinkedIn</a></rh-footer-social-link>
                         <rh-footer-social-link class="social-link" part="social-link" icon="web-icon-youtube"><a href="#Youtube">Youtube</a></rh-footer-social-link>
@@ -477,22 +476,22 @@ export class RhFooter extends LitElement {
               </div>
               <div class="footer-primary" part="footer-primary">
                 <slot name="footer-primary">
-                  <rh-footer-links class="traditional-links" part="traditional-links">
+                  <rh-footer-links class="traditional-links" part="traditional-links" aria-label="Red Hat corporate links">
                     <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">About Red Hat</a></rh-footer-link>
                     <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Jobs</a></rh-footer-link>
                     <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Events</a></rh-footer-link>
                     <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Locations</a></rh-footer-link>
                     <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Contact Red Hat</a></rh-footer-link>
                     <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Red Hat Blog</a></rh-footer-link>
-                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Cool Stuff Store</a></rh-footer-link>
                     <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Diversity, equity, and inclusion</a></rh-footer-link>
+                    <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Cool Stuff Store</a></rh-footer-link>
                   </rh-footer-links>
                 </slot>
               </div>
               <div class="spacer" part="spacer"></div>
               <div class="footer-secondary" part="footer-secondary">
                 <slot name="footer-secondary">
-                  <rh-footer-links class="traditional-item" part="traditional-item-tertiary">
+                  <rh-footer-links class="traditional-item" part="traditional-item-tertiary" aria-label="Red Hat compliance links">
                     <rh-footer-copyright></rh-footer-copyright>
                     <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Privacy statement</a>             </rh-footer-link>
                     <rh-footer-link class="traditional-link" part="traditional-link"><a href="#">Terms of use</a>                  </rh-footer-link>
