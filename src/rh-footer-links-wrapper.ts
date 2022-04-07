@@ -32,6 +32,9 @@ export class RhFooterLinkWrapper extends LitElement {
         --pfe-accordion--FontWeight--header: 300;
         --pfe-accordion--accent--expanded: var(--_accent-color);
         --pfe-accordion--accent--active: var(--_accent-color);
+      }
+
+      :host([is-mobile]) {
         --link-font-size: 16px;
       }
 
