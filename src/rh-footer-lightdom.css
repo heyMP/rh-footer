@@ -1,4 +1,5 @@
-rh-footer ul[slot="links"] {
+rh-footer ul[slot="links"],
+rh-footer [slot="links"] ul {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
@@ -7,30 +8,30 @@ rh-footer ul[slot="links"] {
 	padding: 0;
 }
 
-rh-footer ul:is([slot="links"]) :is(h1, h2, h3, h4, h5) {
+rh-footer :is([slot="links"]) :is(h1, h2, h3, h4, h5) {
 	font-weight: 500;
 	font-size: 14px;
 	margin-top: 0;
 	margin-bottom: 0;
 }
 
-rh-footer ul:is([slot="links"]) li {
+rh-footer :is([slot="links"]) li {
 	margin: 0;
 	padding: 0;
 }
 
-rh-footer ul:is([slot="links"]) a {
+rh-footer :is([slot="links"]) a {
 	--_color: var(--link-color, #fff);
 	--_font-size: var(--link-font-size, 14px);
 	display: block;
 }
 
-rh-footer ul:is([slot="links"]) a {
+rh-footer :is([slot="links"]) a {
 	color: var(--_color) !important;
 	font-size: var(--_font-size);
 	text-decoration: none;
 }
 
-rh-footer ul:is([slot="links"]) a:is(:hover, :focus-within) {
+rh-footer :is([slot="links"]) a:is(:hover, :focus-within) {
 	text-decoration: underline;
 }

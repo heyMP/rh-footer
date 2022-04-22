@@ -49,6 +49,12 @@ export class RhFooterLinkWrapper extends LitElement {
         margin-bottom: var(--pf-global--spacer--md, 16px);
       }
 
+      ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
       @media screen and (min-width: ${mobileBreakpoint}) {
         .link {
           width: calc(50%);
@@ -74,16 +80,14 @@ export class RhFooterLinkWrapper extends LitElement {
           .map(item => ({
             // for each header we need to create an array of panel items that it's associated with.
             header: item.querySelector('[slot="header"]'),
-            // collect all of the headers siblings
-            panel: [...item.children]
-              .filter(child => child.getAttribute('slot') !== 'header')
-              .map(child => {
-                // ensure it has a class of .link
-                child.classList.add('link');
-                // ensure it has a part name of link
-                child.setAttribute('part', 'link');
-                return child;
-              }),
+            // collect all of the rh-footer-link items and add attributes
+            panel: [...item.querySelectorAll('rh-footer-link')].map(child => {
+              // ensure it has a class of .link
+              child.classList.add('link');
+              // ensure it has a part name of link
+              child.setAttribute('part', 'link');
+              return child;
+            }),
           }));
 
         if (linkSets) {

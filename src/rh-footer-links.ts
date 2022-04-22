@@ -53,8 +53,6 @@ export class RhFooterLinks extends LitElement {
   }
 
   public updateAccessibility() {
-    // set the role for this element to be a list item
-    this.setAttribute('role', 'list');
     // ensure we've rendered to our shadowroot
     const header: HTMLElement | null = this.querySelector('[slot="header"]');
     if (header) {

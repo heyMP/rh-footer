@@ -345,7 +345,7 @@ export class RhFooter extends LitElement {
         }
 
         .links rh-footer-links,
-        .links slot::slotted(rh-footer-links) {
+        .links slot::slotted(*) {
           width: calc(
             (100% / var(--rh-footer--links-columns, 4)) -
               var(--pf-global--spacer--xl, 32px)
