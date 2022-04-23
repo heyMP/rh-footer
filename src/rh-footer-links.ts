@@ -55,12 +55,17 @@ export class RhFooterLinks extends LitElement {
   public updateAccessibility() {
     // ensure we've rendered to our shadowroot
     const header: HTMLElement | null = this.querySelector('[slot="header"]');
-    if (header) {
+    const ul: HTMLElement | null = this.querySelector('ul');
+    if (header && ul) {
       // ensure there is an id on the header slot
       const headerId = header.id || getRandomId('rh-footer-links');
       if (headerId !== header.id) header.id = headerId;
       header.id = headerId;
-      this.setAttribute('aria-labelledby', headerId);
+      ul.setAttribute('aria-labelledby', headerId);
+    } else {
+      this.logger.warn(
+        "This links set doesn't have a valid header associated with it."
+      );
     }
   }
 
