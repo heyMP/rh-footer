@@ -344,14 +344,6 @@ export class RhFooter extends LitElement {
           flex-wrap: wrap;
         }
 
-        .links rh-footer-links,
-        .links slot::slotted(*) {
-          width: calc(
-            (100% / var(--rh-footer--links-columns, 4)) -
-              var(--pf-global--spacer--xl, 32px)
-          );
-        }
-
         #footer-logo {
           width: 42px;
         }
@@ -450,7 +442,9 @@ export class RhFooter extends LitElement {
             <slot name="main">
               <div class="main-primary" part="main-primary">
                 <slot name="main-primary">
-                  <slot name="links"></slot>
+                  <div class="links" part="links">
+                    <slot name="links"></slot>
+                  </div>
                 </slot>
               </div>
               <div class="main-secondary" part="main-secondary">

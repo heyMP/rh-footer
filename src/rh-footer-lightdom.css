@@ -1,10 +1,11 @@
 rh-footer-links {
 	display: flex;
 	flex-direction: column;
-	gap: 10px;
-}
-
-rh-footer-links :is([dynamic-slot="header"]) {
+	gap: var(--rh-footer-links-gap, 10px);
+  width: calc(
+    (100% / var(--rh-footer--links-columns, 4)) -
+      var(--pf-global--spacer--xl, 32px)
+  );
 }
 
 rh-footer-links :is([dynamic-slot="panel"]) {

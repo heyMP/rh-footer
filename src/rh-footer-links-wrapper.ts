@@ -5,7 +5,7 @@ import { mobileBreakpoint } from './lib/tokens.js';
 
 interface LinkSet {
   header: HTMLElement | null;
-  panel: Element[];
+  panel: HTMLElement | null;
 }
 
 export class RhFooterLinkWrapper extends LitElement {
@@ -21,7 +21,7 @@ export class RhFooterLinkWrapper extends LitElement {
   static get styles() {
     return css`
       :host {
-        display: block;
+        display: contents;
         width: 100%;
         --pfe-accordion--Color: #fff;
         --pfe-accordion--Color--expanded: #fff;
@@ -42,10 +42,11 @@ export class RhFooterLinkWrapper extends LitElement {
         width: 100%;
       }
 
-      .link {
+      ::slotted(rh-footer-links) {
+        --rh-footer--links-columns: 1;
+        --rh-footer-links-gap: var(--pf-global--spacer--lg, 24px);
         display: inline-flex;
         width: 100%;
-        gap: var(--pf-global--spacer--lg, 24px);
         margin-bottom: var(--pf-global--spacer--md, 16px);
       }
 
@@ -56,8 +57,8 @@ export class RhFooterLinkWrapper extends LitElement {
       }
 
       @media screen and (min-width: ${mobileBreakpoint}) {
-        .link {
-          width: calc(50%);
+        :host {
+          --links-width: 50%;
         }
       }
     `;
@@ -68,29 +69,57 @@ export class RhFooterLinkWrapper extends LitElement {
   }
 
   async build(): Promise<void> {
+    // get a list of rh-footer-links items
+    if (this.shadowRoot) {
+      const children = this.shadowRoot
+        .querySelector('slot')
+        ?.assignedElements({ flatten: true });
+      if (children && children.length > 0) {
+        const linkSets: LinkSet[] | undefined = [...this.querySelectorAll('rh-footer-links')]
+          .map(item => ({
+            // for each header we need to create an array of panel items that it's associated with.
+            header: item.querySelector('[slot="header"]'),
+            panel: item as HTMLElement,
+            // collect all of the rh-footer-link items and add attributes
+            // panel: [...item.querySelectorAll('rh-footer-link')].map(child => {
+            //   // ensure it has a class of .link
+            //   child.classList.add('link');
+            //   // ensure it has a part name of link
+            //   child.setAttribute('part', 'link');
+            //   return child;
+            // }),
+          }));
+
+        this.linkSets = linkSets;
+
+        // updated the lightdom
+        for (let index in linkSets) {
+          const set = linkSets[index];
+          if (set.header) {
+            set.header.setAttribute('slot', `header-${index}`)
+            this.appendChild(set.header);
+          }
+          if (set.panel) {
+            set.panel.setAttribute('slot', `panel-${index}`)
+            this.appendChild(set.panel);
+          }
+        }
+      }
+    }
   }
 
   render() {
     return html`
-      ${this.isMobile
-        ? html`
-            <div id="dynamic-links" class="base" part="base">
-              ${this.linkSets
-                ? html`
-                    <pfe-accordion part="accordion">
-                      ${this.linkSets?.map(
-                        item => html`
-                          <pfe-accordion-header part="accordion-header" slot="header"></pfe-accordion-header>
-                          <pfe-accordion-panel part="accordion-panel" slot="panel"></pfe-accordion-panel>
-                        `
-                      )}
-                    </pfe-accordion>
-                  `
-                : ''}
-            </div>
-            <slot id="default-slot" hidden> </slot>
-          `
-        : html` <slot></slot> `}
+      ${this.isMobile && this.linkSets ? html`
+        <pfe-accordion>
+          ${this.linkSets.map((_, index) => html`
+            <pfe-accordion-header><slot name="header-${index}"></slot></pfe-accordion-header>
+            <pfe-accordion-panel><slot name="panel-${index}"></slot></pfe-accordion-panel>
+          `)}
+        </pfe-accordion>
+      ` : html`
+        <slot></slot>
+      `}
     `;
   }
 }
