@@ -68,33 +68,6 @@ export class RhFooterLinkWrapper extends LitElement {
   }
 
   async build(): Promise<void> {
-    // get a list of rh-footer-links items
-    if (this.shadowRoot) {
-      const children = this.shadowRoot
-        .querySelector('slot')
-        ?.assignedElements({ flatten: true });
-      if (children && children.length > 0) {
-        const linkSets: LinkSet[] | undefined = this.shadowRoot
-          .querySelector('slot')
-          ?.assignedElements({ flatten: true })
-          .map(item => ({
-            // for each header we need to create an array of panel items that it's associated with.
-            header: item.querySelector('[slot="header"]'),
-            // collect all of the rh-footer-link items and add attributes
-            panel: [...item.querySelectorAll('rh-footer-link')].map(child => {
-              // ensure it has a class of .link
-              child.classList.add('link');
-              // ensure it has a part name of link
-              child.setAttribute('part', 'link');
-              return child;
-            }),
-          }));
-
-        if (linkSets) {
-          this.linkSets = linkSets;
-        }
-      }
-    }
   }
 
   render() {
@@ -107,16 +80,8 @@ export class RhFooterLinkWrapper extends LitElement {
                     <pfe-accordion part="accordion">
                       ${this.linkSets?.map(
                         item => html`
-                          <pfe-accordion-header part="accordion-header"
-                            >${unsafeHTML(
-                              item.header?.outerHTML
-                            )}</pfe-accordion-header
-                          >
-                          <pfe-accordion-panel part="accordion-panel"
-                            >${item.panel.map(
-                              _item => html`${unsafeHTML(_item.outerHTML)}`
-                            )}
-                          </pfe-accordion-panel>
+                          <pfe-accordion-header part="accordion-header" slot="header"></pfe-accordion-header>
+                          <pfe-accordion-panel part="accordion-panel" slot="panel"></pfe-accordion-panel>
                         `
                       )}
                     </pfe-accordion>

@@ -54,9 +54,9 @@
           <rh-footer-social-link slot="social-links-end" icon="web-icon-github"><a aria-label="Github"
               href="#github">Github</a>
           </rh-footer-social-link>
-          <rh-footer-links slot="links">
-            <h3 slot="header">Products</h3>
-            <ul>
+          <rh-footer-links-wrapper slot="links">
+            <h3 dynamic-slot="header">Products</h3>
+            <ul dynamic-slot="panel">
               <li><rh-footer-link><a href="#">Red Hat Ansible Automation Platform</a></rh-footer-link></li>
               <li><rh-footer-link><a href="#">Red Hat Enterprise Linux</a></rh-footer-link></li>
               <li><rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link></li>
@@ -64,10 +64,8 @@
               <li><rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link></li>
               <li><rh-footer-link><a href="#">See all products</a></rh-footer-link></li>
             </ul>
-          </rh-footer-links>
-          <rh-footer-links slot="links">
-            <h3 slot="header">Tools</h3>
-            <ul>
+            <h3 dynamic-slot="header">Tools</h3>
+            <ul dynamic-slot="panel">
               <li><rh-footer-link><a href="#">My account</a></rh-footer-link></li>
               <li><rh-footer-link><a href="#">Customer support</a></rh-footer-link></li>
               <li><rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link></li>
@@ -75,10 +73,8 @@
               <li><rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link></li>
               <li><rh-footer-link><a href="#">See all products</a></rh-footer-link></li>
             </ul>
-          </rh-footer-links>
-          <rh-footer-links slot="links">
-            <h3 slot="header">Try, buy, sell</h3>
-            <ul>
+            <h3 dynamic-slot="header">Try, buy, sell</h3>
+            <ul dynamic-slot="panel">
               <li><rh-footer-link><a href="#">Red Hat Store</a></rh-footer-link></li>
               <li><rh-footer-link><a href="#">Red Hat Enterprise Linux</a></rh-footer-link></li>
               <li><rh-footer-link><a href="#">Red Hat OpenShift</a></rh-footer-link></li>
@@ -86,10 +82,8 @@
               <li><rh-footer-link><a href="#">Red Hat OpenStack Platform</a></rh-footer-link></li>
               <li><rh-footer-link><a href="#">See all products</a></rh-footer-link></li>
             </ul>
-          </rh-footer-links>
-          <rh-footer-links slot="links">
-            <h3 id="communicate" slot="header">Communicate</h3>
-            <ul>
+            <h3 dynamic-slot="header" id="communicate">Communicate</h3>
+            <ul dynamic-slot="panel">
               <li><rh-footer-link><a href="#">Contact us</a></rh-footer-link></li>
               <li><rh-footer-link><a href="#">Feedback</a></rh-footer-link></li>
               <li><rh-footer-link><a href="#">Social</a></rh-footer-link></li>
