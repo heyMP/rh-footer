@@ -71,28 +71,25 @@ export class RhFooterLinkWrapper extends LitElement {
   async build(): Promise<void> {
     // get a list of rh-footer-links items
     if (this.shadowRoot) {
-      const children = this.shadowRoot
-        .querySelector('slot')
-        ?.assignedElements({ flatten: true });
-      if (children && children.length > 0) {
-        const linkSets: LinkSet[] | undefined = [...this.querySelectorAll('rh-footer-links')]
-          .map(item => ({
-            // for each header we need to create an array of panel items that it's associated with.
-            header: item.querySelector('[slot="header"]'),
-            panel: item as HTMLElement,
-            // collect all of the rh-footer-link items and add attributes
-            // panel: [...item.querySelectorAll('rh-footer-link')].map(child => {
-            //   // ensure it has a class of .link
-            //   child.classList.add('link');
-            //   // ensure it has a part name of link
-            //   child.setAttribute('part', 'link');
-            //   return child;
-            // }),
-          }));
+      const linkSets: LinkSet[] | undefined = [...this.querySelectorAll('rh-footer-links')]
+        .map(item => ({
+          // for each header we need to create an array of panel items that it's associated with.
+          header: item.querySelector('[slot="header"]'),
+          panel: item as HTMLElement,
+          // collect all of the rh-footer-link items and add attributes
+          // panel: [...item.querySelectorAll('rh-footer-link')].map(child => {
+          //   // ensure it has a class of .link
+          //   child.classList.add('link');
+          //   // ensure it has a part name of link
+          //   child.setAttribute('part', 'link');
+          //   return child;
+          // }),
+        }));
 
-        this.linkSets = linkSets;
+      this.linkSets = linkSets;
 
-        // updated the lightdom
+      // updated the lightdom
+      if (this.isMobile) {
         for (let index in linkSets) {
           const set = linkSets[index];
           if (set.header) {

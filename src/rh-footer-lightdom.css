@@ -25,6 +25,7 @@ rh-footer :is([slot="links"]) :is(h1, h2, h3, h4, h5) {
 rh-footer :is([slot="links"]) li {
 	margin: 0;
 	padding: 0;
+  /* display: contents; */
 }
 
 rh-footer :is([slot="links"]) a {

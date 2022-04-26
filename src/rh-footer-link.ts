@@ -10,8 +10,10 @@ export class RhFooterLink extends LitElement {
       :host {
         --_color: var(--link-color, #fff);
         --_font-size: var(--link-font-size, 14px);
-        display: block;
-        width: var(--link-width, auto);
+        /* display: inline-flex; */
+        /* width: 100%; */
+        /* gap: var(--pf-global--spacer--lg,24px); */
+        /* margin-bottom: var(--pf-global--spacer--md,16px); */
       }
       ::slotted(*) {
         color: var(--_color) !important;
