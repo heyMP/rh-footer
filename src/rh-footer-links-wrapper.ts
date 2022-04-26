@@ -1,7 +1,6 @@
 import { css, html, LitElement } from 'lit';
 import { state, property } from 'lit/decorators.js';
-import { tabletLandscapeBreakpoint, mobileBreakpoint } from './lib/tokens.js';
-import { MatchMediaController } from './lib/MatchMediaController.js';
+import { mobileBreakpoint } from './lib/tokens.js';
 
 interface LinkSet {
   header: HTMLElement | null;
@@ -14,7 +13,9 @@ export class RhFooterLinkWrapper extends LitElement {
   }
 
   @property({ type: Boolean, attribute: 'is-mobile' })
-  public isMobile: boolean = false; @state() private linkSets?: LinkSet[];
+  public isMobile: boolean = false;
+
+  @state() private linkSets?: LinkSet[];
 
   static get styles() {
     return css`
@@ -64,25 +65,25 @@ export class RhFooterLinkWrapper extends LitElement {
   async build(): Promise<void> {
     // get a list of rh-footer-links items
     if (this.shadowRoot) {
-      const linkSets: LinkSet[] | undefined = [...this.querySelectorAll('rh-footer-links')]
-        .map(item => ({
-          // for each header we need to create an array of panel items that it's associated with.
-          header: item.querySelector('[slot="header"]'),
-          panel: item as HTMLElement,
-        }));
+      const linkSets: LinkSet[] | undefined = [
+        ...this.querySelectorAll('rh-footer-links'),
+      ].map(item => ({
+        // for each header we need to create an array of panel items that it's associated with.
+        header: item.querySelector('[slot="header"]'),
+        panel: item as HTMLElement,
+      }));
 
       this.linkSets = linkSets;
 
       // update the lightdom
       if (this.isMobile) {
-        for (let index in linkSets) {
-          const set = linkSets[index];
+        for (const [index, set] of Object.entries(linkSets)) {
           if (set.header) {
-            set.header.setAttribute('slot', `header-${index}`)
+            set.header.setAttribute('slot', `header-${index}`);
             this.appendChild(set.header);
           }
           if (set.panel) {
-            set.panel.setAttribute('slot', `panel-${index}`)
+            set.panel.setAttribute('slot', `panel-${index}`);
             this.appendChild(set.panel);
           }
         }
@@ -93,16 +94,22 @@ export class RhFooterLinkWrapper extends LitElement {
   render() {
     this.build();
     return html`
-      ${this.isMobile && this.linkSets ? html`
-        <pfe-accordion>
-          ${this.linkSets.map((_, index) => html`
-            <pfe-accordion-header><slot name="header-${index}"></slot></pfe-accordion-header>
-            <pfe-accordion-panel><slot name="panel-${index}"></slot></pfe-accordion-panel>
-          `)}
-        </pfe-accordion>
-      ` : html`
-        <slot></slot>
-      `}
+      ${this.isMobile && this.linkSets
+        ? html`
+            <pfe-accordion>
+              ${this.linkSets.map(
+                (_, index) => html`
+                  <pfe-accordion-header
+                    ><slot name="header-${index}"></slot
+                  ></pfe-accordion-header>
+                  <pfe-accordion-panel
+                    ><slot name="panel-${index}"></slot
+                  ></pfe-accordion-panel>
+                `
+              )}
+            </pfe-accordion>
+          `
+        : html` <slot></slot> `}
     `;
   }
 }

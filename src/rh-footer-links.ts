@@ -82,4 +82,3 @@ export class RhFooterLinks extends LitElement {
 }
 
 customElements.define('rh-footer-links', RhFooterLinks);
-
