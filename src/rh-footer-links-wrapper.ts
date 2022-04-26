@@ -34,28 +34,24 @@ export class RhFooterLinkWrapper extends LitElement {
 
       :host([is-mobile]) {
         --link-font-size: 16px;
+        --rh-footer--links-columns: 1;
+        --rh-footer-links-flex-direction: row;
+        --rh-footer-links-width: 100% !important;
+        --rh-footer-link-width: 100% !important;
+      }
+
+      /* Add a touch of padding to the bottom of pfe-accordion-panels */
+      :host([is-mobile]) ::slotted(rh-footer-links) {
+        padding-bottom: 16px;
       }
 
       .base {
         width: 100%;
       }
 
-      ::slotted(rh-footer-links) {
-        --rh-footer-links-gap: var(--pf-global--spacer--lg, 24px);
-        display: inline-flex;
-        width: 100%;
-        margin-bottom: var(--pf-global--spacer--md, 16px);
-      }
-
-      ul {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-
       @media screen and (min-width: ${mobileBreakpoint}) {
-        :host {
-          --links-width: 50%;
+        :host([is-mobile]) {
+          --rh-footer-link-width: calc(50% - 5px) !important;
         }
       }
     `;
