@@ -1,7 +1,7 @@
 import { css, html, LitElement } from 'lit';
 import { state, property } from 'lit/decorators.js';
-import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { mobileBreakpoint } from './lib/tokens.js';
+import { tabletLandscapeBreakpoint, mobileBreakpoint } from './lib/tokens.js';
+import { MatchMediaController } from './lib/MatchMediaController.js';
 
 interface LinkSet {
   header: HTMLElement | null;
@@ -12,9 +12,6 @@ export class RhFooterLinkWrapper extends LitElement {
   static get tag() {
     return `rh-footer-links-wrapper`;
   }
-
-  @property({ type: Boolean, attribute: 'is-mobile' })
-  public isMobile: boolean = false;
 
   @state() private linkSets?: LinkSet[];
 
@@ -43,7 +40,6 @@ export class RhFooterLinkWrapper extends LitElement {
       }
 
       ::slotted(rh-footer-links) {
-        --rh-footer--links-columns: 1;
         --rh-footer-links-gap: var(--pf-global--spacer--lg, 24px);
         display: inline-flex;
         width: 100%;
@@ -64,6 +60,16 @@ export class RhFooterLinkWrapper extends LitElement {
     `;
   }
 
+  private isMobile;
+
+  constructor() {
+    super();
+    this.isMobile = new MatchMediaController(
+      this,
+      `(max-width: ${tabletLandscapeBreakpoint})`
+    );
+  }
+
   firstUpdated() {
     this.build();
   }
@@ -76,20 +82,12 @@ export class RhFooterLinkWrapper extends LitElement {
           // for each header we need to create an array of panel items that it's associated with.
           header: item.querySelector('[slot="header"]'),
           panel: item as HTMLElement,
-          // collect all of the rh-footer-link items and add attributes
-          // panel: [...item.querySelectorAll('rh-footer-link')].map(child => {
-          //   // ensure it has a class of .link
-          //   child.classList.add('link');
-          //   // ensure it has a part name of link
-          //   child.setAttribute('part', 'link');
-          //   return child;
-          // }),
         }));
 
       this.linkSets = linkSets;
 
-      // updated the lightdom
-      if (this.isMobile) {
+      // update the lightdom
+      if (this.isMobile.value) {
         for (let index in linkSets) {
           const set = linkSets[index];
           if (set.header) {
@@ -106,8 +104,9 @@ export class RhFooterLinkWrapper extends LitElement {
   }
 
   render() {
+    this.build();
     return html`
-      ${this.isMobile && this.linkSets ? html`
+      ${this.isMobile.value && this.linkSets ? html`
         <pfe-accordion>
           ${this.linkSets.map((_, index) => html`
             <pfe-accordion-header><slot name="header-${index}"></slot></pfe-accordion-header>

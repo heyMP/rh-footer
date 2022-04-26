@@ -1,17 +1,10 @@
-rh-footer-links {
+rh-footer ul[slot="links"],
+rh-footer [slot="links"] ul {
 	display: flex;
 	flex-direction: column;
-	gap: var(--rh-footer-links-gap, 10px);
-  width: calc(
-    (100% / var(--rh-footer--links-columns, 4)) -
-      var(--pf-global--spacer--xl, 32px)
-  );
-}
-
-rh-footer-links :is([dynamic-slot="panel"]) {
-  display: contents;
-	list-style: none;
+	gap: 10px;
 	margin: 0;
+	list-style: none;
 	padding: 0;
 }
 
@@ -25,7 +18,13 @@ rh-footer :is([slot="links"]) :is(h1, h2, h3, h4, h5) {
 rh-footer :is([slot="links"]) li {
 	margin: 0;
 	padding: 0;
-  /* display: contents; */
+}
+
+rh-footer-links-wrapper:not(is-mobile) rh-footer-links {
+  width: calc(
+    (100% / var(--rh-footer--links-columns, 4)) -
+      var(--pf-global--spacer--xl, 32px)
+  );
 }
 
 rh-footer :is([slot="links"]) a {
