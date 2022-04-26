@@ -12,7 +12,7 @@ export class RhFooterLinkWrapper extends LitElement {
     return `rh-footer-links-wrapper`;
   }
 
-  @property({ type: Boolean, attribute: 'is-mobile' })
+  @property({ type: Boolean, attribute: 'is-mobile', reflect: true })
   public isMobile: boolean = false;
 
   @state() private linkSets?: LinkSet[];
@@ -58,33 +58,45 @@ export class RhFooterLinkWrapper extends LitElement {
     `;
   }
 
-  firstUpdated() {
-    this.build();
-  }
-
   async build(): Promise<void> {
     // get a list of rh-footer-links items
     if (this.shadowRoot) {
-      const linkSets: LinkSet[] | undefined = [
-        ...this.querySelectorAll('rh-footer-links'),
-      ].map(item => ({
-        // for each header we need to create an array of panel items that it's associated with.
-        header: item.querySelector('[slot="header"]'),
-        panel: item as HTMLElement,
-      }));
-
-      this.linkSets = linkSets;
-
       // update the lightdom
       if (this.isMobile) {
+        const linkSets: LinkSet[] | undefined = [
+          ...this.querySelectorAll('rh-footer-links'),
+        ].map(item => ({
+          // for each header we need to create an array of panel items that it's associated with.
+          header: item.querySelector('[slot="header"]'),
+          panel: item as HTMLElement,
+        }));
+        // store the linkSets to the local state
+        this.linkSets = linkSets;
+
+        // if mobile then we need to apply the dynamic slots
         for (const [index, set] of Object.entries(linkSets)) {
           if (set.header) {
+            // move the header out of the pfe-footer-links
+            // and into the scope of this pfe-footer-links-wrapper
+            // insertBefore ensures that they will be direct siblings
+            this.insertBefore(set.header, set.panel);
             set.header.setAttribute('slot', `header-${index}`);
-            this.appendChild(set.header);
           }
           if (set.panel) {
             set.panel.setAttribute('slot', `panel-${index}`);
-            this.appendChild(set.panel);
+          }
+        }
+      }
+      // clean up dynamic links if we have a linkSet
+      else if (this.linkSets) {
+        for (const set of Object.values(this.linkSets)) {
+          if (set.header) {
+            // move the header back into pfe-footer-links
+            set.panel?.prepend(set.header);
+            set.header.setAttribute('slot', `header`);
+          }
+          if (set.panel) {
+            set.panel.removeAttribute('slot');
           }
         }
       }
@@ -92,6 +104,8 @@ export class RhFooterLinkWrapper extends LitElement {
   }
 
   render() {
+    // make sure we check if we need to rebuild
+    // the dynamic slots
     this.build();
     return html`
       ${this.isMobile && this.linkSets
