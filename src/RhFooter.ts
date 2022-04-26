@@ -1,7 +1,6 @@
 import { css, LitElement } from 'lit';
-import { html, literal } from 'lit/static-html.js';
+import { html } from 'lit/static-html.js';
 import { pfelement } from '@patternfly/pfe-core/decorators';
-import { MatchMediaController } from './lib/MatchMediaController.js';
 import {
   desktopLargeBreakpoint,
   mobileBreakpoint,
@@ -351,25 +350,11 @@ export class RhFooter extends LitElement {
     ];
   }
 
-  private isMobile;
-
-  constructor() {
-    super();
-    this.isMobile = new MatchMediaController(
-      this,
-      `(max-width: ${tabletLandscapeBreakpoint})`
-    );
-  }
-
   connectedCallback() {
     super.connectedCallback();
     // load these lazily, outside of the constructor. Must do this for SSR to work
     import('@patternfly/pfe-icon/dist/pfe-icon.js');
     import('@patternfly/pfe-accordion/dist/pfe-accordion.js');
-  }
-
-  linksWrapperTag(): unknown {
-    return this.isMobile.value ? literal`rh-footer-links-mobile` : literal`div`;
   }
 
   render() {

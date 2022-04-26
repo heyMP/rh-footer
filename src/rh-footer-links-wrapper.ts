@@ -1,6 +1,7 @@
 import { css, html, LitElement } from 'lit';
 import { state, property } from 'lit/decorators.js';
 import { mobileBreakpoint } from './lib/tokens.js';
+import { MatchMediaController } from './lib/MatchMediaController.js';
 
 interface LinkSet {
   header: HTMLElement | null;
@@ -13,7 +14,10 @@ export class RhFooterLinkWrapper extends LitElement {
   }
 
   @property({ type: Boolean, attribute: 'is-mobile', reflect: true })
-  public isMobile: boolean = false;
+  public isMobile: boolean = new MatchMediaController(
+    this,
+    '(max-width): 600px'
+  ).value;
 
   @state() private linkSets?: LinkSet[];
 
