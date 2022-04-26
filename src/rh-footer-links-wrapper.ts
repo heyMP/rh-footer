@@ -13,7 +13,8 @@ export class RhFooterLinkWrapper extends LitElement {
     return `rh-footer-links-wrapper`;
   }
 
-  @state() private linkSets?: LinkSet[];
+  @property({ type: Boolean, attribute: 'is-mobile' })
+  public isMobile: boolean = false; @state() private linkSets?: LinkSet[];
 
   static get styles() {
     return css`
@@ -60,16 +61,6 @@ export class RhFooterLinkWrapper extends LitElement {
     `;
   }
 
-  private isMobile;
-
-  constructor() {
-    super();
-    this.isMobile = new MatchMediaController(
-      this,
-      `(max-width: ${tabletLandscapeBreakpoint})`
-    );
-  }
-
   firstUpdated() {
     this.build();
   }
@@ -87,7 +78,7 @@ export class RhFooterLinkWrapper extends LitElement {
       this.linkSets = linkSets;
 
       // update the lightdom
-      if (this.isMobile.value) {
+      if (this.isMobile) {
         for (let index in linkSets) {
           const set = linkSets[index];
           if (set.header) {
@@ -106,7 +97,7 @@ export class RhFooterLinkWrapper extends LitElement {
   render() {
     this.build();
     return html`
-      ${this.isMobile.value && this.linkSets ? html`
+      ${this.isMobile && this.linkSets ? html`
         <pfe-accordion>
           ${this.linkSets.map((_, index) => html`
             <pfe-accordion-header><slot name="header-${index}"></slot></pfe-accordion-header>
