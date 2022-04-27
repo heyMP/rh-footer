@@ -1,4 +1,4 @@
-rh-footer :is([slot=links]) ul {
+rh-footer :is([slot^=links]) {
 	display: flex;
 	flex-direction: var(--rh-footer-links-flex-direction, column);
 	gap: var(--rh-footer-links-gap, 10px);
@@ -8,31 +8,31 @@ rh-footer :is([slot=links]) ul {
   flex-wrap: wrap;
 }
 
-rh-footer :is(rh-footer-links-wrapper, rh-footer-links) :is(h1, h2, h3, h4, h5) {
-	font-weight: 500;
-	font-size: 14px;
-	margin-top: 0;
-	margin-bottom: 0;
-}
-
-rh-footer :is(rh-footer-links-wrapper, rh-footer-links) li {
-	margin: 0;
-	padding: 0;
-  display: contents;
-}
-
-rh-footer :is([slot=links]) rh-footer-links {
+rh-footer :is([slot^=links]) {
   width: var(--rh-footer-links-width, calc(
     (100% / var(--rh-footer--links-columns, 4)) -
       var(--pf-global--spacer--xl, 32px)
   ));
 }
 
-rh-footer :is([slot=links]) a {
+rh-footer :is([slot^=links]) a {
   width: var(--rh-footer-link-width, 100%);
 }
 
-rh-footer :is(rh-footer-links-wrapper, rh-footer-links) a {
+rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-secondary]):is(h1, h2, h3, h4, h5) {
+	font-weight: 500;
+	font-size: 14px;
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-secondary]) li {
+	margin: 0;
+	padding: 0;
+  display: contents;
+}
+
+rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-secondary]) a {
 	--_color: var(--link-color, #fff);
 	--_font-size: var(--link-font-size, 14px);
 	display: block;
@@ -41,10 +41,10 @@ rh-footer :is(rh-footer-links-wrapper, rh-footer-links) a {
 	text-decoration: none;
 }
 
-rh-footer :is(rh-footer-links-wrapper, rh-footer-links) a:is(:hover, :focus-within) {
+rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-secondary]) a:is(:hover, :focus-within) {
 	text-decoration: underline;
 }
 
-rh-footer :is([slot=footer-primary], [slot=footer-secondary]) ul {
+rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-secondary]) ul {
   display: contents;
 }

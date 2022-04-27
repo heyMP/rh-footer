@@ -521,11 +521,37 @@ export class RhFooter extends LitElement {
                 </slot>
               </div>
               <div class="footer-primary" part="footer-primary">
-                <slot name="footer-primary"></slot>
+                <slot name="footer-primary">
+                  <div class="footer-primary-start" part="footer-primary-start">
+                    <slot name="footer-primary-start"></slot>
+                  </div>
+                  <div class="footer-links-primary" part="footer-links-primary">
+                    <slot name="footer-links-primary"></slot>
+                  </div>
+                  <div class="footer-primary-end" part="footer-primary-end">
+                    <slot name="footer-primary-end"></slot>
+                  </div>
+                </slot>
               </div>
               <div class="spacer" part="spacer"></div>
               <div class="footer-secondary" part="footer-secondary">
-                <slot name="footer-secondary"></slot>
+                <slot name="footer-secondary">
+                  <div
+                    class="footer-secondary-start"
+                    part="footer-secondary-start"
+                  >
+                    <slot name="footer-secondary-start"></slot>
+                  </div>
+                  <div
+                    class="footer-links-secondary"
+                    part="footer-links-secondary"
+                  >
+                    <slot name="footer-links-secondary"></slot>
+                  </div>
+                  <div class="footer-secondary-end" part="footer-secondary-end">
+                    <slot name="footer-secondary-end"></slot>
+                  </div>
+                </slot>
               </div>
               <div class="footer-tertiary" part="footer-tertiary">
                 <slot name="footer-tertiary"></slot>
