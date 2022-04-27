@@ -1,7 +1,7 @@
 import { css, html, LitElement } from 'lit';
-import { state, property } from 'lit/decorators.js';
+import { state, property, queryAssignedElements } from 'lit/decorators.js';
 import { mobileBreakpoint } from './lib/tokens.js';
-import { MatchMediaController } from './lib/MatchMediaController.js';
+// import { MatchMediaController } from './lib/MatchMediaController.js';
 
 interface LinkSet {
   header: HTMLElement | null;
@@ -14,12 +14,11 @@ export class RhFooterLinkWrapper extends LitElement {
   }
 
   @property({ type: Boolean, attribute: 'is-mobile', reflect: true })
-  public isMobile: boolean = new MatchMediaController(
-    this,
-    '(max-width): 600px'
-  ).value;
+  public isMobile = false;
 
   @state() private linkSets?: LinkSet[];
+
+  @queryAssignedElements({ slot: 'links' }) private links?: HTMLElement[];
 
   static get styles() {
     return css`
@@ -67,18 +66,17 @@ export class RhFooterLinkWrapper extends LitElement {
     if (this.shadowRoot) {
       // update the lightdom
       if (this.isMobile) {
-        const linkSets: LinkSet[] | undefined = [
-          ...this.querySelectorAll('rh-footer-links'),
-        ].map(item => ({
+        this.linkSets = (
+          this.querySelector('slot')?.assignedElements?.() ?? []
+        ).map(item => ({
           // for each header we need to create an array of panel items that it's associated with.
           header: item.querySelector('[slot="header"]'),
           panel: item as HTMLElement,
         }));
-        // store the linkSets to the local state
-        this.linkSets = linkSets;
+        console.log(this.linkSets);
 
         // if mobile then we need to apply the dynamic slots
-        for (const [index, set] of Object.entries(linkSets)) {
+        for (const [index, set] of Object.entries(this.linkSets ?? [])) {
           if (set.header) {
             // move the header out of the pfe-footer-links
             // and into the scope of this pfe-footer-links-wrapper
@@ -93,7 +91,7 @@ export class RhFooterLinkWrapper extends LitElement {
       }
       // clean up dynamic links if we have a linkSet
       else if (this.linkSets) {
-        for (const set of Object.values(this.linkSets)) {
+        for (const set of Object.values(this.linkSets ?? [])) {
           if (set.header) {
             // move the header back into pfe-footer-links
             set.panel?.prepend(set.header);
@@ -108,6 +106,7 @@ export class RhFooterLinkWrapper extends LitElement {
   }
 
   render() {
+    console.log(this.isMobile);
     // make sure we check if we need to rebuild
     // the dynamic slots
     this.build();

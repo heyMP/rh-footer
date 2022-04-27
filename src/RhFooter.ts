@@ -12,6 +12,7 @@ import './rh-footer-links.js';
 import './rh-footer-links-wrapper.js';
 import './rh-footer-block.js';
 import './rh-footer-copyright.js';
+import { MatchMediaController } from './lib/MatchMediaController.js';
 
 @pfelement()
 export class RhFooter extends LitElement {
@@ -348,6 +349,8 @@ export class RhFooter extends LitElement {
     ];
   }
 
+  private isMobile = new MatchMediaController(this, '(max-width: 600px)');
+
   connectedCallback() {
     super.connectedCallback();
     // load these lazily, outside of the constructor. Must do this for SSR to work
@@ -426,7 +429,9 @@ export class RhFooter extends LitElement {
               <div class="main-primary" part="main-primary">
                 <slot name="main-primary">
                   <div class="links" part="links">
-                    <slot name="links"></slot>
+                    <rh-footer-links-wrapper ?is-mobile=${this.isMobile.value}>
+                      <slot name="links"></slot>
+                    </rh-footer-links-wrapper>
                   </div>
                 </slot>
               </div>
