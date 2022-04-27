@@ -431,19 +431,7 @@ export class RhFooter extends LitElement {
                 </slot>
               </div>
               <div class="main-secondary" part="main-secondary">
-                <slot name="main-secondary">
-                  <rh-footer-block>
-                    <h3 slot="header">About Red Hat</h3>
-                    <p>
-                      We’re the world’s leading provider of enterprise open
-                      source solutions―including Linux, cloud, container, and
-                      Kubernetes. We deliver hardened solutions that make it
-                      easier for enterprises to work across platforms and
-                      environments, from the core datacenter to the network
-                      edge.
-                    </p>
-                  </rh-footer-block>
-                </slot>
+                <slot name="main-secondary"></slot>
               </div>
             </slot>
           </div>
@@ -485,93 +473,11 @@ export class RhFooter extends LitElement {
                 </slot>
               </div>
               <div class="footer-primary" part="footer-primary">
-                <slot name="footer-primary">
-                  <rh-footer-links
-                    class="traditional-links"
-                    part="traditional-links"
-                    aria-label="Red Hat corporate links"
-                  >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">About Red Hat</a></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Jobs</a></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Events</a></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Locations</a></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Contact Red Hat</a></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Red Hat Blog</a></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#"
-                        >Diversity, equity, and inclusion</a
-                      ></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Cool Stuff Store</a></rh-footer-link
-                    >
-                  </rh-footer-links>
-                </slot>
+                <slot name="footer-primary"></slot>
               </div>
               <div class="spacer" part="spacer"></div>
               <div class="footer-secondary" part="footer-secondary">
-                <slot name="footer-secondary">
-                  <rh-footer-links
-                    class="traditional-item"
-                    part="traditional-item-tertiary"
-                    aria-label="Red Hat compliance links"
-                  >
-                    <rh-footer-copyright></rh-footer-copyright>
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Privacy statement</a>
-                    </rh-footer-link>
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Terms of use</a>
-                    </rh-footer-link>
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">All policies and guidelines</a>
-                    </rh-footer-link>
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Digital accessibility</a>
-                    </rh-footer-link>
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Cookie preferences</a>
-                    </rh-footer-link>
-                  </rh-footer-links>
-                </slot>
+                <slot name="footer-secondary"></slot>
               </div>
               <div class="footer-tertiary" part="footer-tertiary">
                 <slot name="footer-tertiary"></slot>
