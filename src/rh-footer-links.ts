@@ -76,6 +76,7 @@ export class RhFooterLinks extends LitElement {
       </div>
       <div part="default" class="default">
         <slot name="panel"></slot>
+        <slot></slot>
       </div>
     `;
   }
