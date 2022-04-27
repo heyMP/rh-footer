@@ -36,6 +36,12 @@ export class MatchMediaController implements ReactiveController {
       this.value = value;
       // request a render update
       this.host.requestUpdate();
+      // toggle the attribute
+      if (this.value) {
+        this.host.setAttribute('is-mobile', '');
+      } else {
+        this.host.removeAttribute('is-mobile');
+      }
     }
   }
 }
