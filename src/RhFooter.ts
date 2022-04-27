@@ -9,7 +9,6 @@ import {
 } from './lib/tokens.js';
 import './rh-footer-social-link.js';
 import './rh-footer-links.js';
-import './rh-footer-link.js';
 import './rh-footer-links-wrapper.js';
 import './rh-footer-block.js';
 import './rh-footer-copyright.js';
@@ -203,15 +202,14 @@ export class RhFooter extends LitElement {
 
         .footer-primary rh-footer-links,
         .footer-primary slot::slotted(rh-footer-links) {
-          display: grid;
-          justify-content: left;
-          grid-template-columns: 1fr 1fr;
+          display: flex;
           gap: 8px 24px;
         }
 
-        @media screen and (min-width: ${mobileBreakpoint}) {
+        @media screen and (min-width: 500px) {
           .footer-primary rh-footer-links,
           .footer-primary slot::slotted(rh-footer-links) {
+            display: grid;
             grid-template-columns: 1fr 1fr 1fr;
           }
         }

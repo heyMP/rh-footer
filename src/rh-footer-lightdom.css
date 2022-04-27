@@ -1,5 +1,4 @@
-rh-footer ul[slot="links"],
-rh-footer [slot="links"] ul {
+rh-footer :is([slot=links]) ul {
 	display: flex;
 	flex-direction: var(--rh-footer-links-flex-direction, column);
 	gap: var(--rh-footer-links-gap, 10px);
@@ -9,34 +8,31 @@ rh-footer [slot="links"] ul {
   flex-wrap: wrap;
 }
 
-rh-footer :is([slot="links"]) :is(h1, h2, h3, h4, h5) {
+rh-footer :is(rh-footer-links-wrapper, rh-footer-links) :is(h1, h2, h3, h4, h5) {
 	font-weight: 500;
 	font-size: 14px;
 	margin-top: 0;
 	margin-bottom: 0;
 }
 
-rh-footer :is([slot="links"]) li {
+rh-footer :is(rh-footer-links-wrapper, rh-footer-links) li {
 	margin: 0;
 	padding: 0;
   display: contents;
 }
 
-rh-footer [slot="links"] rh-footer-links {
+rh-footer :is([slot=links]) rh-footer-links {
   width: var(--rh-footer-links-width, calc(
     (100% / var(--rh-footer--links-columns, 4)) -
       var(--pf-global--spacer--xl, 32px)
   ));
 }
 
-rh-footer [slot="links"] rh-footer-link {
+rh-footer :is([slot=links]) a {
   width: var(--rh-footer-link-width, 100%);
 }
 
-rh-footer-links-wrapper:not([is-mobile]) rh-footer-links {
-}
-
-rh-footer :is([slot="links"]) a {
+rh-footer :is(rh-footer-links-wrapper, rh-footer-links) a {
 	--_color: var(--link-color, #fff);
 	--_font-size: var(--link-font-size, 14px);
 	display: block;
@@ -45,6 +41,10 @@ rh-footer :is([slot="links"]) a {
 	text-decoration: none;
 }
 
-rh-footer :is([slot="links"]) a:is(:hover, :focus-within) {
+rh-footer :is(rh-footer-links-wrapper, rh-footer-links) a:is(:hover, :focus-within) {
 	text-decoration: underline;
+}
+
+rh-footer :is([slot=footer-primary], [slot=footer-secondary]) ul {
+  display: contents;
 }
