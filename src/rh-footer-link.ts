@@ -23,11 +23,6 @@ export class RhFooterLink extends LitElement {
     `;
   }
 
-  constructor() {
-    super();
-    this.setAttribute('role', 'listitem');
-  }
-
   render() {
     return html` <slot></slot> `;
   }
