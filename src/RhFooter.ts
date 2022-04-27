@@ -9,7 +9,6 @@ import {
 } from './lib/tokens.js';
 import './rh-footer-social-link.js';
 import './rh-footer-links.js';
-import './rh-footer-links-wrapper.js';
 import './rh-footer-block.js';
 import './rh-footer-copyright.js';
 import { MatchMediaController } from './lib/MatchMediaController.js';
@@ -358,6 +357,52 @@ export class RhFooter extends LitElement {
     import('@patternfly/pfe-accordion/dist/pfe-accordion.js');
   }
 
+  renderLinksTemplate() {
+    // gather all of the links that need to be wrapped into the accordion
+    // give them a designation of either 'header' or 'panel'
+    const children = [...this.querySelectorAll(':scope > [slot^=links]')].map(
+      child => ({
+        type: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(child.tagName)
+          ? 'header'
+          : 'panel',
+        ref: child,
+      })
+    );
+
+    // Update the dynamic slot names if on mobile
+    children.forEach((child, index) => {
+      if (this.isMobile.value) {
+        child.ref.setAttribute('slot', `links-${index}`);
+      } else {
+        child.ref.setAttribute('slot', `links`);
+      }
+    });
+
+    return html`
+      ${this.isMobile.value && children
+        ? html`
+            <pfe-accordion>
+              ${children.map(
+                (child, index) => html`
+                  ${child.type === 'header'
+                    ? html`
+                        <pfe-accordion-header
+                          ><slot name="links-${index}"></slot
+                        ></pfe-accordion-header>
+                      `
+                    : html`
+                        <pfe-accordion-panel
+                          ><slot name="links-${index}"></slot
+                        ></pfe-accordion-panel>
+                      `}
+                `
+              )}
+            </pfe-accordion>
+          `
+        : html` <slot name="links"></slot> `}
+    `;
+  }
+
   render() {
     return html`
       <footer class="base" part="base">
@@ -429,9 +474,7 @@ export class RhFooter extends LitElement {
               <div class="main-primary" part="main-primary">
                 <slot name="main-primary">
                   <div class="links" part="links">
-                    <rh-footer-links-wrapper ?is-mobile=${this.isMobile.value}>
-                      <slot name="links"></slot>
-                    </rh-footer-links-wrapper>
+                    ${this.renderLinksTemplate()}
                   </div>
                 </slot>
               </div>
