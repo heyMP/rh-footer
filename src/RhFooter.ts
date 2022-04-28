@@ -336,6 +336,18 @@ export class RhFooter extends LitElement {
         }
 
         .links {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, 25%);
+          grid-template-rows: repeat(2, min-content auto);
+          gap: var(--rh-footer-links-gap, 10px);
+        }
+
+        .links ::slotted(ul) {
+          padding: 0;
+          margin: 0;
+        }
+
+        :host([is-mobile]) .links {
           display: flex;
           gap: var(--pf-global--spacer--xl, 32px);
           flex-wrap: wrap;
@@ -348,7 +360,10 @@ export class RhFooter extends LitElement {
     ];
   }
 
-  private isMobile = new MatchMediaController(this, '(max-width: 600px)');
+  private isMobile = new MatchMediaController(
+    this,
+    `(max-width: ${tabletLandscapeBreakpoint})`
+  );
 
   connectedCallback() {
     super.connectedCallback();
