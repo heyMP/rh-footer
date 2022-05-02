@@ -335,22 +335,120 @@ export class RhFooter extends LitElement {
           gap: 16px;
         }
 
-        .links {
+        :host(:not([is-mobile])) .links {
           display: grid;
-          grid-template-columns: repeat(auto-fill, 25%);
+          grid-template-columns: repeat(1fr, 25%);
           grid-template-rows: repeat(2, min-content auto);
-          gap: var(--rh-footer-links-gap, 10px);
+          grid-template-columns: 25%;
+          gap: var(--rh-footer-links-column-gap, 32px);
         }
 
-        .links ::slotted(ul) {
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(1)) {
+          grid-column: 1/2;
+          grid-row: 1/2;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(2)) {
+          grid-column: 2/3;
+          grid-row: 1/2;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(3)) {
+          grid-column: 3/4;
+          grid-row: 1/2;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(4)) {
+          grid-column: 4/5;
+          grid-row: 1/2;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(5)) {
+          grid-column: 1/2;
+          grid-row: 3/4;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(6)) {
+          grid-column: 2/3;
+          grid-row: 3/4;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(7)) {
+          grid-column: 3/4;
+          grid-row: 3/4;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(8)) {
+          grid-column: 4/5;
+          grid-row: 3/4;
+        }
+
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(1))) {
+          grid-column: 1/2;
+          grid-row: 2/3;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(2))) {
+          grid-column: 2/3;
+          grid-row: 2/3;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(3))) {
+          grid-column: 3/4;
+          grid-row: 2/3;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(4))) {
+          grid-column: 4/5;
+          grid-row: 2/3;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(5))) {
+          grid-column: 1/2;
+          grid-row: 4/5;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(6))) {
+          grid-column: 2/3;
+          grid-row: 4/5;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(7))) {
+          grid-column: 3/4;
+          grid-row: 4/5;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(8))) {
+          grid-column: 4/5;
+          grid-row: 4/5;
+        }
+
+        :host(:not([is-mobile])) .links ::slotted(ul) {
           padding: 0;
           margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: var(--rh-footer-links-gap, 10px);
+          margin-top: calc(
+            var(--rh-footer-links-column-gap, 32px) * -1 +
+              var(--rh-footer-links-gap, 10px)
+          );
         }
 
-        :host([is-mobile]) .links {
-          display: flex;
-          gap: var(--pf-global--spacer--xl, 32px);
-          flex-wrap: wrap;
+        :host([is-mobile]) .links ::slotted(ul) {
+          padding: 0;
+          margin: 0;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: var(--rh-footer-links-column-gap, 16px);
+        }
+
+        @media screen and (min-width: ${mobileBreakpoint}) {
+          :host([is-mobile]) .links ::slotted(ul) {
+            grid-template-columns: 1fr 1fr;
+          }
         }
 
         #footer-logo {

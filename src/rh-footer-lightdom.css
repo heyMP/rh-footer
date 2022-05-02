@@ -1,34 +1,5 @@
-/* rh-footer :is([slot^=links]) { */
-/* 	display: flex; */
-/* 	flex-direction: var(--rh-footer-links-flex-direction, column); */
-/* 	gap: var(--rh-footer-links-gap, 10px); */
-/* 	margin: 0; */
-/* 	list-style: none; */
-/* 	padding: 0; */
-/*   flex-wrap: wrap; */
-/* } */
-/**/
-/* rh-footer :is([slot^=links]) { */
-/*   width: var(--rh-footer-links-width, calc( */
-/*     (100% / var(--rh-footer--links-columns, 4)) - */
-/*       var(--pf-global--spacer--xl, 32px) */
-/*   )); */
-/* } */
-
-/* @todo see if these selectors work in ::slotted() */
-rh-footer :is([slot^=links]):is(h2, h3, h4, h5, h6):nth-of-type(1) { grid-column: 1/2; grid-row: 1/2; }
-rh-footer :is([slot^=links]):is(h2, h3, h4, h5, h6):nth-of-type(2) { grid-column: 2/3; grid-row: 1/2; }
-rh-footer :is([slot^=links]):is(h2, h3, h4, h5, h6):nth-of-type(3) { grid-column: 3/4; grid-row: 1/2; }
-rh-footer :is([slot^=links]):is(h2, h3, h4, h5, h6):nth-of-type(4) { grid-column: 4/5; grid-row: 1/2; }
-rh-footer :is([slot^=links]):is(h2, h3, h4, h5, h6):nth-of-type(5) { grid-column: 1/2; grid-row: 3/4; }
-rh-footer :is([slot^=links]):is(ul:nth-of-type(1)) { grid-column: 1/2; grid-row: 2/3; }
-rh-footer :is([slot^=links]):is(ul:nth-of-type(2)) { grid-column: 2/3; grid-row: 2/3; }
-rh-footer :is([slot^=links]):is(ul:nth-of-type(3)) { grid-column: 3/4; grid-row: 2/3; }
-rh-footer :is([slot^=links]):is(ul:nth-of-type(4)) { grid-column: 4/5; grid-row: 2/3; }
-rh-footer :is([slot^=links]):is(ul:nth-of-type(5)) { grid-column: 1/2; grid-row: 4/5; }
-
 rh-footer :is([slot^=links]) a {
-  width: var(--rh-footer-link-width, 100%);
+  gap: var(--rh-footer-links-gap, 10px);
 }
 
 rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-secondary]):is(h1, h2, h3, h4, h5) {
@@ -36,6 +7,10 @@ rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-sec
 	font-size: 14px;
 	margin-top: 0;
 	margin-bottom: 0;
+}
+
+rh-footer :is([slot=footer-links-primary], [slot=footer-links-secondary]) ul {
+  display: contents;
 }
 
 rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-secondary]) li {
@@ -55,8 +30,4 @@ rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-sec
 
 rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-secondary]) a:is(:hover, :focus-within) {
 	text-decoration: underline;
-}
-
-rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-secondary]) ul {
-  display: contents;
 }
