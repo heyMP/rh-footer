@@ -9,8 +9,10 @@ rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-sec
 	margin-bottom: 0;
 }
 
-rh-footer :is([slot=footer-links-primary], [slot=footer-links-secondary]) ul {
+rh-footer :is(ul):is([slot=footer-links-primary], [slot=footer-links-secondary]) {
   display: contents;
+  margin: 0;
+  padding: 0;
 }
 
 rh-footer :is([slot^=links], [slot=footer-links-primary], [slot=footer-links-secondary]) li {

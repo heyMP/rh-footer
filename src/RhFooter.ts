@@ -200,45 +200,48 @@ export class RhFooter extends LitElement {
           }
         }
 
-        .footer-primary rh-footer-links,
-        .footer-primary slot::slotted(rh-footer-links) {
+        .footer-links-primary {
           display: flex;
+          flex-direction: column;
           gap: 8px 24px;
         }
 
         @media screen and (min-width: 500px) {
-          .footer-primary rh-footer-links,
-          .footer-primary slot::slotted(rh-footer-links) {
+          .footer-links-primary {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
           }
         }
 
         @media screen and (min-width: ${mobileXlBreakpoint}) {
-          .footer-primary rh-footer-links,
-          .footer-primary slot::slotted(rh-footer-links) {
+          .footer-links-primary {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
           }
         }
 
-        .footer-secondary rh-footer-links,
-        .footer-secondary slot::slotted(rh-footer-links) {
+        .footer-links-secondary {
           display: flex;
+          flex-direction: column;
           gap: 8px 24px;
         }
 
         @media screen and (min-width: 500px) {
-          .footer-secondary rh-footer-links,
-          .footer-secondary slot::slotted(rh-footer-links) {
+          .footer-links-secondary {
             display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+          }
+        }
+
+        @media screen and (min-width: ${mobileBreakpoint}) {
+          .footer-links-secondary {
             grid-template-columns: 1fr 1fr;
           }
         }
+
         @media screen and (min-width: ${mobileXlBreakpoint}) {
-          .footer-secondary rh-footer-links,
-          .footer-secondary slot::slotted(rh-footer-links) {
+          .footer-links-secondary {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
