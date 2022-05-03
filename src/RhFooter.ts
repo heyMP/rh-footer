@@ -1,6 +1,8 @@
 import { css, LitElement } from 'lit';
 import { html } from 'lit/static-html.js';
 import { pfelement } from '@patternfly/pfe-core/decorators';
+import { getRandomId } from '@patternfly/pfe-core/functions/random';
+import { Logger } from '@patternfly/pfe-core/controllers/logger';
 import {
   desktopLargeBreakpoint,
   mobileBreakpoint,
@@ -15,6 +17,8 @@ import { MatchMediaController } from './lib/MatchMediaController.js';
 
 @pfelement()
 export class RhFooter extends LitElement {
+  private logger = new Logger(this);
+
   static get styles() {
     return [
       css`
@@ -483,6 +487,39 @@ export class RhFooter extends LitElement {
     // load these lazily, outside of the constructor. Must do this for SSR to work
     import('@patternfly/pfe-icon/dist/pfe-icon.js');
     import('@patternfly/pfe-accordion/dist/pfe-accordion.js');
+    // wire up accessbility aria-lables with unordered lists
+    this.updateAccessibility();
+  }
+
+  public updateAccessibility(): void {
+    // get any uls that are in the designated link slots
+    const lists = [
+      ...this.querySelectorAll(
+        ':is([slot^=links],[slot=footer-links-primary],[slot=footer-links-secondary]):is(ul)'
+      ),
+    ] as HTMLElement[];
+    // asyncronously update each list and header if we need to.
+    lists.forEach(list => {
+      // if we already have a label then we assume that the user
+      // has wired this up themselves.
+      if (list.hasAttribute('aria-labelledby')) return;
+      // get the corresponding header that should be the previous sibling
+      const header = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(
+        list.previousElementSibling?.tagName ?? ''
+      )
+        ? list.previousElementSibling
+        : null;
+      if (!header) {
+        this.logger.warn(
+          "This links set doesn't have a valid header associated with it."
+        );
+        return;
+      }
+      // add an ID to the header if we need it
+      header.id ||= getRandomId('rh-footer');
+      // add that header id to the aria-labelledby tagk
+      list.setAttribute('aria-labelledby', header.id);
+    });
   }
 
   renderLinksTemplate() {
