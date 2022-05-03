@@ -39,6 +39,17 @@ export class RhFooter extends LitElement {
           font-size: 18px;
           display: flex;
           flex-direction: column;
+
+          /* Style Accordions */
+          --pfe-accordion--Color: #fff;
+          --pfe-accordion--Color--expanded: #fff;
+          --pfe-accordion--Color--active: #fff;
+          --pfe-accordion--BackgroundColor: transparent;
+          --pfe-accordion--BackgroundColor--expanded: #151515;
+          --pfe-accordion--BorderColor: var(--_border-color);
+          --pfe-accordion--FontWeight--header: 300;
+          --pfe-accordion--accent--expanded: var(--_accent-color);
+          --pfe-accordion--accent--active: var(--_accent-color);
         }
 
         * {
@@ -441,6 +452,7 @@ export class RhFooter extends LitElement {
         }
 
         :host([is-mobile]) .links ::slotted(ul) {
+          --link-font-size: 16px;
           padding: 0;
           margin: 0;
           display: grid;
