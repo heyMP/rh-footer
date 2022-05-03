@@ -1,7 +1,8 @@
 import { css, LitElement } from 'lit';
-import { html, literal } from 'lit/static-html.js';
+import { html } from 'lit/static-html.js';
 import { pfelement } from '@patternfly/pfe-core/decorators';
-import { MatchMediaController } from './lib/MatchMediaController.js';
+import { getRandomId } from '@patternfly/pfe-core/functions/random';
+import { Logger } from '@patternfly/pfe-core/controllers/logger';
 import {
   desktopLargeBreakpoint,
   mobileBreakpoint,
@@ -10,13 +11,14 @@ import {
 } from './lib/tokens.js';
 import './rh-footer-social-link.js';
 import './rh-footer-links.js';
-import './rh-footer-link.js';
-import './rh-footer-links-wrapper.js';
 import './rh-footer-block.js';
 import './rh-footer-copyright.js';
+import { MatchMediaController } from './lib/MatchMediaController.js';
 
 @pfelement()
 export class RhFooter extends LitElement {
+  private logger = new Logger(this);
+
   static get styles() {
     return [
       css`
@@ -41,6 +43,17 @@ export class RhFooter extends LitElement {
           font-size: 18px;
           display: flex;
           flex-direction: column;
+
+          /* Style Accordions */
+          --pfe-accordion--Color: #fff;
+          --pfe-accordion--Color--expanded: #fff;
+          --pfe-accordion--Color--active: #fff;
+          --pfe-accordion--BackgroundColor: transparent;
+          --pfe-accordion--BackgroundColor--expanded: #151515;
+          --pfe-accordion--BorderColor: var(--_border-color);
+          --pfe-accordion--FontWeight--header: 300;
+          --pfe-accordion--accent--expanded: var(--_accent-color);
+          --pfe-accordion--accent--active: var(--_accent-color);
         }
 
         * {
@@ -202,46 +215,48 @@ export class RhFooter extends LitElement {
           }
         }
 
-        .footer-primary rh-footer-links,
-        .footer-primary slot::slotted(rh-footer-links) {
-          display: grid;
-          justify-content: left;
-          grid-template-columns: 1fr 1fr;
+        .footer-links-primary {
+          display: flex;
+          flex-direction: column;
           gap: 8px 24px;
         }
 
-        @media screen and (min-width: ${mobileBreakpoint}) {
-          .footer-primary rh-footer-links,
-          .footer-primary slot::slotted(rh-footer-links) {
+        @media screen and (min-width: 500px) {
+          .footer-links-primary {
+            display: grid;
             grid-template-columns: 1fr 1fr 1fr;
           }
         }
 
         @media screen and (min-width: ${mobileXlBreakpoint}) {
-          .footer-primary rh-footer-links,
-          .footer-primary slot::slotted(rh-footer-links) {
+          .footer-links-primary {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
           }
         }
 
-        .footer-secondary rh-footer-links,
-        .footer-secondary slot::slotted(rh-footer-links) {
+        .footer-links-secondary {
           display: flex;
+          flex-direction: column;
           gap: 8px 24px;
         }
 
         @media screen and (min-width: 500px) {
-          .footer-secondary rh-footer-links,
-          .footer-secondary slot::slotted(rh-footer-links) {
+          .footer-links-secondary {
             display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+          }
+        }
+
+        @media screen and (min-width: ${mobileBreakpoint}) {
+          .footer-links-secondary {
             grid-template-columns: 1fr 1fr;
           }
         }
+
         @media screen and (min-width: ${mobileXlBreakpoint}) {
-          .footer-secondary rh-footer-links,
-          .footer-secondary slot::slotted(rh-footer-links) {
+          .footer-links-secondary {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
@@ -338,18 +353,121 @@ export class RhFooter extends LitElement {
           gap: 16px;
         }
 
-        .links {
-          display: flex;
-          gap: var(--pf-global--spacer--xl, 32px);
-          flex-wrap: wrap;
+        :host(:not([is-mobile])) .links {
+          display: grid;
+          grid-template-columns: repeat(1fr, 25%);
+          grid-template-rows: repeat(2, min-content auto);
+          grid-template-columns: 25%;
+          gap: var(--rh-footer-links-column-gap, 32px);
         }
 
-        .links rh-footer-links,
-        .links slot::slotted(rh-footer-links) {
-          width: calc(
-            (100% / var(--rh-footer--links-columns, 4)) -
-              var(--pf-global--spacer--xl, 32px)
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(1)) {
+          grid-column: 1/2;
+          grid-row: 1/2;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(2)) {
+          grid-column: 2/3;
+          grid-row: 1/2;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(3)) {
+          grid-column: 3/4;
+          grid-row: 1/2;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(4)) {
+          grid-column: 4/5;
+          grid-row: 1/2;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(5)) {
+          grid-column: 1/2;
+          grid-row: 3/4;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(6)) {
+          grid-column: 2/3;
+          grid-row: 3/4;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(7)) {
+          grid-column: 3/4;
+          grid-row: 3/4;
+        }
+        :host(:not([is-mobile]))
+          .links
+          ::slotted(:is(h2, h3, h4, h5, h6):nth-of-type(8)) {
+          grid-column: 4/5;
+          grid-row: 3/4;
+        }
+
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(1))) {
+          grid-column: 1/2;
+          grid-row: 2/3;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(2))) {
+          grid-column: 2/3;
+          grid-row: 2/3;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(3))) {
+          grid-column: 3/4;
+          grid-row: 2/3;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(4))) {
+          grid-column: 4/5;
+          grid-row: 2/3;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(5))) {
+          grid-column: 1/2;
+          grid-row: 4/5;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(6))) {
+          grid-column: 2/3;
+          grid-row: 4/5;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(7))) {
+          grid-column: 3/4;
+          grid-row: 4/5;
+        }
+        :host(:not([is-mobile])) .links ::slotted(:is(ul:nth-of-type(8))) {
+          grid-column: 4/5;
+          grid-row: 4/5;
+        }
+
+        :host(:not([is-mobile])) .links ::slotted(ul) {
+          padding: 0;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          gap: var(--rh-footer-links-gap, 10px);
+          margin-top: calc(
+            var(--rh-footer-links-column-gap, 32px) * -1 +
+              var(--rh-footer-links-gap, 10px)
           );
+        }
+
+        :host([is-mobile]) .links ::slotted(ul) {
+          --link-font-size: 16px;
+          padding: 0;
+          margin: 0;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: var(--rh-footer-links-column-gap, 16px);
+        }
+
+        @media screen and (min-width: ${mobileBreakpoint}) {
+          :host([is-mobile]) .links ::slotted(ul) {
+            grid-template-columns: 1fr 1fr;
+          }
         }
 
         #footer-logo {
@@ -359,25 +477,95 @@ export class RhFooter extends LitElement {
     ];
   }
 
-  private isMobile;
-
-  constructor() {
-    super();
-    this.isMobile = new MatchMediaController(
-      this,
-      `(max-width: ${tabletLandscapeBreakpoint})`
-    );
-  }
+  private isMobile = new MatchMediaController(
+    this,
+    `(max-width: ${tabletLandscapeBreakpoint})`
+  );
 
   connectedCallback() {
     super.connectedCallback();
     // load these lazily, outside of the constructor. Must do this for SSR to work
     import('@patternfly/pfe-icon/dist/pfe-icon.js');
     import('@patternfly/pfe-accordion/dist/pfe-accordion.js');
+    // wire up accessbility aria-lables with unordered lists
+    this.updateAccessibility();
   }
 
-  linksWrapperTag(): unknown {
-    return this.isMobile.value ? literal`rh-footer-links-mobile` : literal`div`;
+  public updateAccessibility(): void {
+    // get any uls that are in the designated link slots
+    const lists = [
+      ...this.querySelectorAll(
+        ':is([slot^=links],[slot=footer-links-primary],[slot=footer-links-secondary]):is(ul)'
+      ),
+    ] as HTMLElement[];
+    // asyncronously update each list and header if we need to.
+    lists.forEach(list => {
+      // if we already have a label then we assume that the user
+      // has wired this up themselves.
+      if (list.hasAttribute('aria-labelledby')) return;
+      // get the corresponding header that should be the previous sibling
+      const header = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(
+        list.previousElementSibling?.tagName ?? ''
+      )
+        ? list.previousElementSibling
+        : null;
+      if (!header) {
+        this.logger.warn(
+          "This links set doesn't have a valid header associated with it."
+        );
+        return;
+      }
+      // add an ID to the header if we need it
+      header.id ||= getRandomId('rh-footer');
+      // add that header id to the aria-labelledby tagk
+      list.setAttribute('aria-labelledby', header.id);
+    });
+  }
+
+  renderLinksTemplate() {
+    // gather all of the links that need to be wrapped into the accordion
+    // give them a designation of either 'header' or 'panel'
+    const children = [...this.querySelectorAll(':scope > [slot^=links]')].map(
+      child => ({
+        type: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(child.tagName)
+          ? 'header'
+          : 'panel',
+        ref: child,
+      })
+    );
+
+    // Update the dynamic slot names if on mobile
+    children.forEach((child, index) => {
+      if (this.isMobile.value) {
+        child.ref.setAttribute('slot', `links-${index}`);
+      } else {
+        child.ref.setAttribute('slot', `links`);
+      }
+    });
+
+    return html`
+      ${this.isMobile.value && children
+        ? html`
+            <pfe-accordion>
+              ${children.map(
+                (child, index) => html`
+                  ${child.type === 'header'
+                    ? html`
+                        <pfe-accordion-header
+                          ><slot name="links-${index}"></slot
+                        ></pfe-accordion-header>
+                      `
+                    : html`
+                        <pfe-accordion-panel
+                          ><slot name="links-${index}"></slot
+                        ></pfe-accordion-panel>
+                      `}
+                `
+              )}
+            </pfe-accordion>
+          `
+        : html` <slot name="links"></slot> `}
+    `;
   }
 
   render() {
@@ -450,136 +638,13 @@ export class RhFooter extends LitElement {
             <slot name="main">
               <div class="main-primary" part="main-primary">
                 <slot name="main-primary">
-                  <rh-footer-links-wrapper
-                    ?is-mobile=${this.isMobile.value}
-                    class="links"
-                    part="links"
-                    exportparts="link"
-                  >
-                    <slot name="links">
-                      <slot name="links-start"></slot>
-                      <slot name="links-column1">
-                        <rh-footer-links class="links-item" part="links-item">
-                          <h3 slot="header">Products</h3>
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#"
-                              >Red Hat Ansible Automation Platform</a
-                            ></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#"
-                              >Red Hat Enterprise Linux</a
-                            ></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">Red Hat OpenShift</a></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#"
-                              >Red Hat OpenShift Container Storage</a
-                            ></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#"
-                              >Red Hat OpenStack Platform</a
-                            ></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">See all products</a></rh-footer-link
-                          >
-                        </rh-footer-links>
-                      </slot>
-                      <slot name="links-column2">
-                        <rh-footer-links class="links-item" part="links-item">
-                          <h3 slot="header">Tools</h3>
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">My account</a></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">Customer support</a></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">Red Hat OpenShift</a></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">Contact training</a></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#"
-                              >Red Hat OpenStack Platform</a
-                            ></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">See all products</a></rh-footer-link
-                          >
-                        </rh-footer-links>
-                      </slot>
-                      <slot name="links-column3">
-                        <rh-footer-links class="links-item" part="links-item">
-                          <h3 slot="header">Try, buy, sell</h3>
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">Red Hat Store</a></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#"
-                              >Red Hat Enterprise Linux</a
-                            ></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">Red Hat OpenShift</a></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">Contact training</a></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#"
-                              >Red Hat OpenStack Platform</a
-                            ></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">See all products</a></rh-footer-link
-                          >
-                        </rh-footer-links>
-                      </slot>
-                      <slot name="links-column4">
-                        <rh-footer-links class="links-item" part="links-item">
-                          <h3 slot="header">Communicate</h3>
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">Contact us</a></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">Feedback</a></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">Social</a></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">Red Hat newsletter</a></rh-footer-link
-                          >
-                          <rh-footer-link class="link" part="link"
-                            ><a href="#">Email preferences</a></rh-footer-link
-                          >
-                        </rh-footer-links>
-                      </slot>
-                      <slot name="links-end"></slot>
-                    </slot>
-                  </rh-footer-links-wrapper>
+                  <div class="links" part="links">
+                    ${this.renderLinksTemplate()}
+                  </div>
                 </slot>
               </div>
               <div class="main-secondary" part="main-secondary">
-                <slot name="main-secondary">
-                  <rh-footer-block>
-                    <h3 slot="header">About Red Hat</h3>
-                    <p>
-                      We’re the world’s leading provider of enterprise open
-                      source solutions―including Linux, cloud, container, and
-                      Kubernetes. We deliver hardened solutions that make it
-                      easier for enterprises to work across platforms and
-                      environments, from the core datacenter to the network
-                      edge.
-                    </p>
-                  </rh-footer-block>
-                </slot>
+                <slot name="main-secondary"></slot>
               </div>
             </slot>
           </div>
@@ -622,91 +687,35 @@ export class RhFooter extends LitElement {
               </div>
               <div class="footer-primary" part="footer-primary">
                 <slot name="footer-primary">
-                  <rh-footer-links
-                    class="traditional-links"
-                    part="traditional-links"
-                    aria-label="Red Hat corporate links"
-                  >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">About Red Hat</a></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Jobs</a></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Events</a></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Locations</a></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Contact Red Hat</a></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Red Hat Blog</a></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#"
-                        >Diversity, equity, and inclusion</a
-                      ></rh-footer-link
-                    >
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Cool Stuff Store</a></rh-footer-link
-                    >
-                  </rh-footer-links>
+                  <div class="footer-primary-start" part="footer-primary-start">
+                    <slot name="footer-primary-start"></slot>
+                  </div>
+                  <div class="footer-links-primary" part="footer-links-primary">
+                    <slot name="footer-links-primary"></slot>
+                  </div>
+                  <div class="footer-primary-end" part="footer-primary-end">
+                    <slot name="footer-primary-end"></slot>
+                  </div>
                 </slot>
               </div>
               <div class="spacer" part="spacer"></div>
               <div class="footer-secondary" part="footer-secondary">
                 <slot name="footer-secondary">
-                  <rh-footer-links
-                    class="traditional-item"
-                    part="traditional-item-tertiary"
-                    aria-label="Red Hat compliance links"
+                  <div
+                    class="footer-secondary-start"
+                    part="footer-secondary-start"
                   >
-                    <rh-footer-copyright></rh-footer-copyright>
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Privacy statement</a>
-                    </rh-footer-link>
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Terms of use</a>
-                    </rh-footer-link>
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">All policies and guidelines</a>
-                    </rh-footer-link>
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Digital accessibility</a>
-                    </rh-footer-link>
-                    <rh-footer-link
-                      class="traditional-link"
-                      part="traditional-link"
-                      ><a href="#">Cookie preferences</a>
-                    </rh-footer-link>
-                  </rh-footer-links>
+                    <slot name="footer-secondary-start"></slot>
+                  </div>
+                  <div
+                    class="footer-links-secondary"
+                    part="footer-links-secondary"
+                  >
+                    <slot name="footer-links-secondary"></slot>
+                  </div>
+                  <div class="footer-secondary-end" part="footer-secondary-end">
+                    <slot name="footer-secondary-end"></slot>
+                  </div>
                 </slot>
               </div>
               <div class="footer-tertiary" part="footer-tertiary">
